@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Lam (Harmony) -->
+<!-- DATA -->
+<!--
+NovaMenu contain group of Panel. Each Panel contain other control like buton, split button, combo
+textbox, checkbox......
+
+Controls
+  +Attributes
+    -text: Display text of button
+    -orientation: Vertical or Horizontal. Default is horizontal
+    -size: Large or Normal. Default is normal
+    -toolTip: Display tooltip of button
+    -showText: True or False. Default is True
+    -showImage: True or False. Default is True
+  +ChildNode
+    -Image: Normal image of button 
+    -LargeImage: Large image of button. If this node is null large image = image
+-->
+<RPBM_MENU title="RPBM">
+	<Panel title="Cấu hình hệ thống">
+		<RowPanel title="Cài đặt">
+			<SplitButton text="Hệ thống" orientation="Vertical" size="Large" isSynchronizedWithCurrentItem="False" image="HeThong.bmp" isSplit="False">
+				<Button name="Đăng nhập" toolTip="Đăng nhập hệ thống" image="DangNhap.bmp" id="DangNhap" cmd="RB_DANGNHAP" isEnabled="True"/>
+				<Button name="Đăng xuất" toolTip="Đăng xuất hệ thống" image="DangXuat.bmp" id="DangXuat" cmd="RB_DANGXUAT" isEnabled="True"/>
+				<Button name="Thay đổi mật khẩu" toolTip="Thay đổi mật khẩu" image="ThayDoiMK.bmp" id="ThayDoiMatKhau" cmd="RB_DOIMK" isEnabled="True"/>
+				<Button name="Khôi phục dữ liệu" toolTip="Khôi phục dữ liệu Database" image="KhoiphucDL.bmp" id="KhoiPhucDuLieu" cmd="RB_KPDATABASE" isEnabled="True"/>
+				<Button name="Sao lưu dữ liệu" toolTip="Backup dữ liệu Database" image="SaoLuu.bmp" id="SaoLuuDuLieu" cmd="RB_BUDATABASE" isEnabled="True"/>
+				<Button name="Cập nhật thông tin người sử dụng" toolTip="Cập nhật thông tin người sử dụng" image="CapNhatTT.bmp" id="CapNhatThongTinNguoiSuDung" cmd="RB_CAPNHAT" isEnabled="True"/>
+				<Button name="Lưu dữ liệu" toolTip="Lưu dữ liệu" image="SaoLuu.bmp" id="DangNhap" cmd="RB_LuuBanVe" isEnabled="True"/>
+				<Button name="Lưu dữ liệu và thoát" toolTip="Lưu dữ liệu và thoát" image="SaoLuu.bmp" id="DangNhap" cmd="RB_LuuVaThoatBanVe" isEnabled="True"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Quản trị danh mục">
+		<RowPanel title="Quản lý">
+			<SplitButton text="Quản lý đơn vị" orientation="Vertical" size="Large" image="QLDA.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Quản lý đơn vị" toolTip="QLDA.bmp" image="QLDA.bmp" help="ImportTEXT_1" id="QuanLyDonVi" cmd="RB_QuanLyDonVi"/>
+			</SplitButton>
+			<SplitButton text="Quản lý nhiệm vụ RPBM" orientation="Vertical" size="Large" image="NVRPBM.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Quản lý nhiệm vụ RPBM" toolTip="Chia ô lưới" image="NVRPBM.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_QuanLyThongTinRPBM"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Cài đặt">
+		<RowPanel title="Cài đặt">
+			<SplitButton text="Cài đặt" orientation="Vertical" size="Large" isSynchronizedWithCurrentItem="False" image="Toolsicon.bmp" isSplit="False">
+				<Button name="Khởi động cùng Civil3D" toolTip="Khởi động cùng Civil 3D " image="khoidongcungCIVIL16.bmp" id="KhoiDongCungCivil3D" cmd="RB_RegisterStartup" isEnabled="True"/>
+				<Button name="Bỏ khởi động cùng Civil3D" toolTip="Bỏ khởi động cùng Civil 3D" image="bokhoidongCIVIL16.bmp" id="BoKhoiDongCungCivil3D" cmd="RB_UnRegisterStartup" isEnabled="True"/>
+				<Button name="Thông tin phần mềm" toolTip="Thông tin về phần mềm" image="thongtinPM16.bmp" id="ThongTinPhanMem" cmd="RB_About" isEnabled="True"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+</RPBM_MENU>

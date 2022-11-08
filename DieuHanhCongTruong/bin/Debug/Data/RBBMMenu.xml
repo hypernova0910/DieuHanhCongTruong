@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Lam (Harmony) -->
+<!-- DATA -->
+<!--
+NovaMenu contain group of Panel. Each Panel contain other control like buton, split button, combo
+textbox, checkbox....
+
+Controls
+  +Attributes
+    -text: Display text of button
+    -orientation: Vertical or Horizontal. Default is horizontal
+    -size: Large or Normal. Default is normal
+    -toolTip: Display tooltip of button
+    -showText: True or False. Default is True
+    -showImage: True or False. Default is True
+  +ChildNode
+    -Image: Normal image of button 
+    -LargeImage: Large image of button. If this node is null large image = image
+-->
+<RPBM_MENU title="RPBM">
+	<Panel title="Quản trị danh mục">
+		<RowPanel title="Dữ liệu hỗ trợ">
+			<SplitButton text="Dữ liệu hỗ trợ" orientation="Vertical" size="Large" image="DuLieuHoTro32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Quản lý đơn vị" toolTip="Quản lý đơn vị" image="QuanLyDonVi16.bmp" help="ImportTEXT_1" id="QuanLyDonVi" cmd="RB_QuanLyDonVi" groupItem=""/>
+				<!-- 
+				<Button name="Danh sách người dùng" toolTip="Danh sách người dùng" image="DanhSachNguoiDung16.bmp" help="ImportTEXT_1" id="QuanLyDonVi" cmd="RB_CAPNHAT" groupItem=""/>
+				-->
+			</SplitButton>
+			<SplitButton text="Quản lý dự án" orientation="Vertical" size="Large" image="QuanLyDuAn32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Danh sách các dự án" toolTip="Danh sách các dự án" image="DanhSachCacDuAn16.bmp" help="ImportTEXT_1" id="QuanLyDonVi" cmd="RB_DanhSachDuAn" groupItem=""/>
+				<!-- 
+				<Button name="Quản lý kế hoạch dự án" toolTip="QLDA.bmp" image="QuanLyKeHoachDuAn16.bmp" help="ImportTEXT_1" id="QuanLyDonVi" cmd="" groupItem=""/>
+				-->
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="In ấn bản đồ">
+		<RowPanel title="In ấn bản đồ">
+			<SplitButton text="In ấn bản đồ" orientation="Vertical" size="Large" image="InAnBanDo32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Định nghĩa vùng dự án" toolTip="Định nghĩa vùng dự án" image="DinhNghiaVungDuAn16.bmp" help="ImportTEXT_1" id="InAn" cmd="RB_DUONGBAODUAN" groupItem=""/>
+				<Button name="Chia ô lưới" toolTip="Chia ô lưới" image="ChiaOLuoi16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_CHIAOLUOIKHAOSAT" groupItem="OLuoi"/>
+				<Button name="Chỉnh sửa ô lưới" toolTip="Chỉnh sửa ô lưới" image="ChinhSuaOLuoi16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_CHINHSUAOKHAOSAT" groupItem="OLuoi"/>
+				<Button name="Chia trục mặt cắt từ trường" toolTip="Chia trục mặt cắt từ trường" image="ChiaTrucMatCatTuTruong16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_CHIAMATCATTUTRUONG" groupItem=""/>
+				<Button name="Chia trục mặt cắt theo ô lưới" toolTip="Chia trục mặt cắt theo ô lưới" image="ChiaTrucMatCatTuTruong16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_CHIARANHDOTHEOOLUOI" groupItem=""/>
+				<Button name="Chỉnh sửa trục mặt cắt theo ô lưới" toolTip="Chỉnh sửa trục mặt cắt theo ô lưới" image="ChiaTrucMatCatTuTruong16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_CHINHSUARANHDOTHEOOLUOI" groupItem=""/>
+				<Button name="Phân mảnh bản đồ" toolTip="Phân mảnh bản đồ" image="PhanManhBanDo16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_PMBDKHAOSAT" groupItem="InManh"/>
+				<Button name="In mảnh bản đồ" toolTip="In mảnh bản đồ" image="InManhBanDo16.bmp" help="ImportTXT_1" id="InAn" cmd="RB_IMBDKHAOSAT" groupItem="InManh"/>
+				<Button name="In mảnh bản đồ theo ô lưới" toolTip="In mảnh bản đồ theo ô lưới" image="puzzle.png" help="ImportTXT_1" id="InAn" cmd="RB_PMBD_OLUOI" groupItem="InManh"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Điều hành, giám sát">
+		<RowPanel title="Điều hành, giám sát">
+			<SplitButton text="Điều hành, giám sát" orientation="Vertical" size="Large" image="DieuHanhGiamSat32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Điều hành dự án" toolTip="Điều hành dự án" image="DieuHanhDuAn16.bmp" help="ImportTXT_1" id="DieuHanhDuAn" cmd="RB_QuanLyThongTinRPBM" groupItem=""/>
+				<Button name="Nhận dữ liệu từ máy dò" toolTip="Nhận dữ liệu từ máy dò" image="NhanDuLieuTuMayDo16.bmp" id="KhoiDongCungCivil3D" isEnabled="True" cmd="RB_NhanDuLieu" groupItem=""/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Phân tích">
+		<RowPanel title="Phân tích">
+			<SplitButton text="Phân tích dữ liệu" orientation="Vertical" size="Large" image="PhanTichKhaoSat32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Tự động phân tích dữ liệu" toolTip="Tự động phân tích dữ liệu" image="NhanDuLieuTuMayDo16.bmp" id="KhoiDongCungCivil3D" isEnabled="True" cmd="RB_TUDONGPHANTICH" groupItem=""/>
+				<Button name="Cập nhật dữ liệu từ máy dò" toolTip="Cập nhật dữ liệu từ máy dò" image="CapNhatDuLieuTuMayDo16.bmp" id="KhaoSat" isEnabled="True" cmd="RB_TaoBeMatPhanBoTuTruong" groupItem=""/>
+				<Button name="Vẽ mặt cắt từ trường" toolTip="Vẽ mặt cắt từ trường" image="VeMatCatTuTruong16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_VEMATCATTUTRUONG" groupItem="MatCatKhaoSat"/>
+				<Button name="Chỉnh sửa mặt cắt từ trường" toolTip="Chỉnh sửa mặt cắt từ trường" image="ChinhSuaMatCatTuTruong16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_CHINHSUAMATCATTUTRUONG" groupItem="MatCatKhaoSat"/>
+				<Button name="Tìm điểm từ trường dựa vào mặt cắt" toolTip="Tìm điểm từ trường dựa vào mặt cắt" image="TimDiemTuTruongDuaVaoMatCat16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_TIMDIEMTRACDOC" groupItem="MatCatKhaoSat"/>
+				<Button name="Tìm điểm từ trường dựa vào đường chia mặt cắt" toolTip="Tìm điểm từ trường dựa vào đường chia mặt cắt" image="TimDiemDuongChiaMC.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_TIMDIEMLINE" groupItem="MatCatKhaoSat"/>
+				<Button name="Phân tích độ sâu dựa vào khoảng giảm nghi ngờ" toolTip="Phân tích độ sâu dựa vào khoảng giảm nghi ngờ" image="PhanTichDoSauDuaVaoKhoangGiamNghiNgo16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_KHOANGGIAMNGHINGO" groupItem="PhanTichKhaoSat"/>
+				<Button name="Phân tích khoảng giảm nghi ngờ" toolTip="Phân tích khoảng giảm nghi ngờ" image="PhanTichKhoangGiamNghiNgo16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_VIEWKHOANGGIAMNGHINGO" groupItem="PhanTichKhaoSat"/>
+				<Button name="Phân tích dải màu" toolTip="Phân tích dải màu" image="PhanTichDaiMau16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_PHANTICHDAIMAU" groupItem="PhanTichKhaoSat"/>
+				<Button name="Giá trị từ trường đường đồng mức" toolTip="Cao độ đường đồng mức" image="GiaTriTuTruongDuongDongMuc16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_LABELCONTOURLINE" groupItem="PhanTichKhaoSat"/>
+				<Button name="Biểu đồ từ trường" toolTip="Biểu đồ từ trường" image="BieuDoTuTruong16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_CAPNHATBDTT" groupItem="PhanTichKhaoSat"/>
+				<Button name="Đường bao màu ô" toolTip="Đường bao màu ô" image="DuongBaoMauO16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_LOANGKHAOSAT" groupItem="PhanTichKhaoSat"/>
+				<Button name="Bật tắt đối tượng" toolTip="Bật tắt đối tượng" image="BatTatDoiTuong16.bmp" help="ImportGSI_1" id="KhaoSat" cmd="RB_GROUPLAYERKHAOSAT" groupItem="PhanTichKhaoSat"/>
+				<Button text="Danh sách BMVN" name="Danh sách BMVN" toolTip="Danh sách BMVN" image="KQ17.png" id="Cài đặt Panel" cmd="RB_DANHSACHBMVN" isEnabled="True" groupItem="BaoCao"/>
+			</SplitButton>
+			<!-- 
+			<SplitButton text=" Phân tích rà phá " orientation="Vertical" size="Large" image="PhanTichRaPha32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Cập nhật dữ liệu từ máy dò" toolTip="Cập nhật dữ liệu từ máy dò" image="CapNhatDuLieuTuMayDo16.bmp" id="ThiCong" cmd="RB_TaoBeMatPhanBoTuTruong" isEnabled="True" groupItem=""/>
+				<Button name="Vẽ mặt cắt từ trường" toolTip="Vẽ mặt cắt từ trường" image="VeMatCatTuTruong16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_VEMATCATTUTRUONG" groupItem="MatCatThiCong"/>
+				<Button name="Chỉnh sửa mặt cắt từ trường" toolTip="Chỉnh sửa mặt cắt từ trường" image="ChinhSuaMatCatTuTruong16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_CHINHSUAMATCATTUTRUONG" groupItem="MatCatThiCong"/>
+				<Button name="Tìm điểm từ trường dựa vào mặt cắt" toolTip="Tìm điểm từ trường dựa vào mặt cắt" image="TimDiemTuTruongDuaVaoMatCat16.bmp" help="ImportTXT_1" id="KhaoSat" cmd="RB_TIMDIEMTRACDOC" groupItem="MatCatThiCong"/>
+				<Button name="Tìm điểm từ trường dựa vào mặt cắt" toolTip="Tìm điểm từ trường dựa vào mặt cắt" image="TimDiemDuongChiaMC.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_TIMDIEMTRACDOC" groupItem="MatCatThiCong"/>
+				<Button name="Phân tích độ sâu dựa vào khoảng giảm nghi ngờ" toolTip="Phân tích độ sâu dựa vào khoảng giảm nghi ngờ" image="PhanTichDoSauDuaVaoKhoangGiamNghiNgo16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_KHOANGGIAMNGHINGO" groupItem="PhanTichThiCong"/>
+				<Button name="Phân tích khoảng giảm nghi ngờ" toolTip="Phân tích khoảng giảm nghi ngờ" image="PhanTichKhoangGiamNghiNgo16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_VIEWKHOANGGIAMNGHINGO" groupItem="PhanTichThiCong"/>
+				<Button name="Phân tích dải màu" toolTip="Phân tích dải màu" image="PhanTichDaiMau16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_PHANTICHDAIMAU" groupItem="PhanTichThiCong"/>
+				<Button name="Giá trị từ trường đường đồng mức" toolTip="Cao độ đường đồng mức" image="GiaTriTuTruongDuongDongMuc16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_LABELCONTOURLINE" groupItem="PhanTichThiCong"/>
+				<Button name="Biểu đồ từ trường" toolTip="Biểu đồ từ trường" image="BieuDoTuTruong16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_CAPNHATBDTT" groupItem="PhanTichThiCong"/>
+				<Button name="Đường bao màu ô" toolTip="Đường bao màu ô" image="DuongBaoMauO16.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_LOANGTHICONG" groupItem="PhanTichThiCong"/>
+				<Button name="Bật tắt đối tượng" toolTip="Bật tắt đối tượng" image="BatTatDoiTuong16.bmp" help="ImportGSI_1" id="ThiCong" cmd="RB_GROUPLAYERTHICONG" groupItem="PhanTichThiCong"/>
+			</SplitButton>
+			-->
+		</RowPanel>
+	</Panel>
+	<Panel title="Tiện ích">
+		<RowPanel title="Tiện ích">
+			<SplitButton text="Tiện ích" orientation="Vertical" size="Large" image="TienIchTrongPhanTich32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Khoảng cách" toolTip="Khoảng cách" image="KhoangCach16.bmp" help="ImportSDR_1" id="KhoangCach" cmd="RB_DOKHOANGCACH" groupItem=""/>
+				<!-- 
+				<Button name="Chèn bản đồ" toolTip="Chèn bản đồ" image="ChenBanDo16.bmp" help="ImportGSI_1" id="ChenBandP" cmd="RB_CHENBANDO" groupItem="BanDo"/>
+				<Button name="Sửa nền bản đồ" toolTip="Sửa nền bản đồ" image="SuaNenBanDo16.bmp" help="ImportGSI_1" id="ChenBandP" cmd="_.m" groupItem="BanDo"/>
+				-->
+				<Button name="Thay đổi kiểu hiển thị đường đồng mức" toolTip="Thay đổi kiểu hiển thị đường đồng mức" image="ThayDoiKieuHienThiDuongDongMuc16.bmp" help="ImportGSI_1" id="DDM" cmd="RB_HIENTHIDDM" groupItem="DuongDongMuc"/>
+				<Button name="Tạo nhãn đường đồng mức" toolTip="Tạo nhãn đường đồng mức" image="TaoNhanDuongDongMuc16.bmp" help="ImportGSI_1" id="NDDM" cmd="RB_TAONDDM" groupItem="DuongDongMuc"/>
+				<Button name="Thay đổi kiểu hiển thị nhãn đường đồng mức" toolTip="Thay đổi kiểu hiển thị  nhãn đường đồng mức" image="ThayDoiKieuHienThiNhanDuongDongMuc16.bmp" help="ImportGSI_1" id="NDDM" cmd="RB_HIENTHINDDM" groupItem="DuongDongMuc"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Báo cáo">
+		<RowPanel title="Báo cáo">
+			<SplitButton text="Kết quả KS" orientation="Vertical" size="Large" image="BaoCao32.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button text="Kế hoạch khảo sát kỹ thuật" name="Kế hoạch khảo sát kỹ thuật" toolTip="Kế hoạch khảo sát kỹ thuật" image="KQ11.png" id="Cài đặt Panel" cmd="RB_KHKSKT" isEnabled="True" groupItem="BaoCao"/>
+				<Button text="Báo cáo kết quả khảo sát hàng ngày" name="Báo cáo kết quả khảo sát hàng ngày" toolTip="Báo cáo kết quả khảo sát hàng ngày" image="BaoCaoKetQuaKhaoSatHangNgay16.bmp" id="Cài đặt Panel" cmd="RB_BAOCAO" isEnabled="True" groupItem="BaoCao"/>
+				<Button text="Báo cáo khu vực khẳng định ô nhiễm" name="Báo cáo khu vực khẳng định ô nhiễm" toolTip="Báo cáo khu vực khẳng định ô nhiễm" image="BaoCaoKhuVucKhangDinhONhiem16.bmp" id="Cài đặt Panel" cmd="RB_BAOCAOKVON" isEnabled="True" groupItem="BaoCao"/>
+				<Button text="Báo cáo hoàn thành khảo sát một khu vực" name="Báo cáo hoàn thành khảo sát một khu vực" toolTip="Báo cáo hoàn thành khảo sát một khu vực" image="BaoCaoHoanThanhKhaoSatMotKhuVuc16.bmp" id="Cài đặt Panel" cmd="RB_BAOCAO_KV" isEnabled="True" groupItem="BaoCao"/>
+				<Button text="Báo cáo tổng hợp kết quả điều tra khảo sát" name="Báo cáo tổng hợp kết quả điều tra khảo sát" toolTip="Báo cáo tổng hợp kết quả điều tra khảo sát" image="BaoCaoTongHopKetQuaDieuTraKhaoSat16.bmp" id="Cài đặt Panel" cmd="RB_BAOCAOTHKS" isEnabled="True" groupItem="BaoCao"/>
+				<!-- <Button text="Báo cáo nhật kí thi công" name="Báo cáo nhật kí thi công" toolTip="Báo cáo nhật kí thi công" image="BaoCaoNhatKyThiCong16.bmp" id="Cài đặt Panel" cmd="RB_BAOCAONKTC" isEnabled="True" groupItem="BaoCao"/>-->
+			</SplitButton>
+		  <SplitButton text="Kết quả RP" orientation="Vertical" size="Large" image="BaoCaoRP.png" isSynchronizedWithCurrentItem="False" isSplit="False">
+			<Button text="Biên bản bàn giao mặt bằng cho khảo sát rà phá bom mìn vật nổ" name="Biên bản bàn giao mặt bằng cho khảo sát rà phá bom mìn vật nổ" toolTip="Biên bản bàn giao mặt bằng cho khảo sát rà phá bom mìn vật nổ" image="KQ1.png" id="Cài đặt Panel" cmd="RB_RPBM1" isEnabled="True" groupItem="Kết quả RP"/>
+			<Button text="Nhật ký thi công khảo sát rà phá bom mìn" name="Nhật ký thi công khảo sát rà phá bom mìn" toolTip="Nhật ký thi công khảo sát rà phá bom mìn" image="KQ2.png" id="Cài đặt Panel" cmd="RB_RPBM2" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản nghiệm thu kết quả khảo sát phục vụ cho lập phương án kỹ thuật thi công và dự toán rà phá bom mìn vật nổ" name="Nghiệm thu kết quả khảo sát phục vụ cho lập phương án kỹ thuật thi công và dự toán rà phá bom mìn vật nổ" toolTip="Nghiệm thu kết quả khảo sát phục vụ cho lập phương án kỹ thuật thi công và dự toán rà phá bom mìn vật nổ" image="KQ3.png" id="Cài đặt Panel" cmd="RB_RPBM3" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Báo cáo Kết quả thi công khảo sát rà phá bom mìn vật nổ" name="Báo cáo Kết quả thi công khảo sát rà phá bom mìn vật nổ" toolTip="Báo cáo Kết quả thi công khảo sát rà phá bom mìn vật nổ" image="KQ4.png" id="Cài đặt Panel" cmd="RB_RPBM4" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản bàn giao mặt bằng cho thi công rà phá bom mìn vật nổ" name="Biên bản bàn giao mặt bằng cho thi công rà phá bom mìn vật nổ" toolTip="Biên bản bàn giao mặt bằng cho thi công rà phá bom mìn vật nổ" image="KQ5.png" id="Cài đặt Panel" cmd="RB_RPBM5" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản kiểm tra quân số, trang bị kỹ thuật trước thi công rà phá bom mìn vật nổ" name="Biên bản kiểm tra quân số, trang bị kỹ thuật trước thi công rà phá bom mìn vật nổ" toolTip="Biên bản kiểm tra quân số, trang bị kỹ thuật trước thi công rà phá bom mìn vật nổ" image="KQ6.png" id="Cài đặt Panel" cmd="RB_RPBM6" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Nhật kí thi công" name="Nhật kí thi công" toolTip="Nhật kí thi công" image="KQ7.png" id="Cài đặt Panel" cmd="RB_RPBM7" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản kiểm tra xác suất hiện trường" name="Biên bản kiểm tra xác suất hiện trường" toolTip="Biên bản kiểm tra xác suất hiện trường" image="KQ8.png" id="Cài đặt Panel" cmd="RB_RPBM8" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản nghiệm thu nội bộ rà phá bom mìn vật nổ" name="Biên bản nghiệm thu nội bộ rà phá bom mìn vật nổ" toolTip="Biên bản nghiệm thu nội bộ rà phá bom mìn vật nổ" image="KQ9.png" id="Cài đặt Panel" cmd="RB_RPBM9" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Phiếu yêu cầu nghiệm thu" name="Phiếu yêu cầu nghiệm thu" toolTip="Phiếu yêu cầu nghiệm thu" image="KQ10.png" id="Cài đặt Panel" cmd="RB_RPBM10" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản xác nhận số lượng, chủng loại bom mìn vật nổ thu gom trong thi công" name="Biên bản xác nhận số lượng, chủng loại bom mìn vật nổ thu gom trong thi công" toolTip="Biên bản xác nhận số lượng, chủng loại bom mìn vật nổ thu gom trong thi công" image="KQ11.png" id="Cài đặt Panel" cmd="RB_RPBM11" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản nghiệm thu hoàn thành thi công rà phá bom mìn vật nổ đưa vào sử dụng" name="Biên bản nghiệm thu hoàn thành thi công rà phá bom mìn vật nổ đưa vào sử dụng" toolTip="Biên bản nghiệm thu hoàn thành thi công rà phá bom mìn vật nổ đưa vào sử dụng" image="KQ12.png" id="Cài đặt Panel" cmd="RB_RPBM12" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản bàn giao mặt bằng đã thi công rà phá bom mìn vật nổ" name="Biên bản bàn giao mặt bằng đã thi công rà phá bom mìn vật nổ" toolTip="Biên bản bàn giao mặt bằng đã thi công rà phá bom mìn vật nổ" image="KQ13.png" id="Cài đặt Panel" cmd="RB_RPBM13" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Cam kết bảo đảm an toàn mặt bằng đã RPBM vật nổ" name="Cam kết bảo đảm an toàn mặt bằng đã RPBM vật nổ" toolTip="Cam kết bảo đảm an toàn mặt bằng đã RPBM vật nổ" image="KQ14.png" id="Cài đặt Panel" cmd="RB_RPBM14" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Kế hoạch hủy bom mìn vật nổ thu gom trong điều tra, khảo sát, rà phá bom mìn vật nổ" name="Kế hoạch hủy bom mìn vật nổ thu gom trong điều tra, khảo sát, rà phá bom mìn vật nổ" toolTip="Kế hoạch hủy bom mìn vật nổ thu gom trong điều tra, khảo sát, rà phá bom mìn vật nổ" image="KQ15.png" id="Cài đặt Panel" cmd="RB_RPBM15" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Biên bản xác nhận số lượng bom mìn vật nổ đã hủy (xử lý)" name="Biên bản xác nhận số lượng bom mìn vật nổ đã hủy (xử lý)" toolTip="Biên bản xác nhận số lượng bom mìn vật nổ đã hủy (xử lý)" image="KQ16.png" id="Cài đặt Panel" cmd="RB_RPBM16" isEnabled="True" groupItem="BaoCao"/>
+			<Button text="Báo cáo kết quả thi công gói thầu rà phá bom mìn vật nổ" name="Báo cáo kết quả thi công gói thầu rà phá bom mìn vật nổ" toolTip="Báo cáo kết quả thi công gói thầu rà phá bom mìn vật nổ" image="KQ17.png" id="Cài đặt Panel" cmd="RB_RPBM17" isEnabled="True" groupItem="BaoCao"/>
+			
+		  </SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Cài đặt">
+		<RowPanel title="Cài đặt">
+			<SplitButton text="Cài đặt" orientation="Vertical" size="Large" isSynchronizedWithCurrentItem="False" image="CaiDat32.bmp" isSplit="False">
+				<Button name="Cài đặt chung" toolTip="Cài đặt chung" image="CaiDatChung16.bmp" id="Cài đặt Panel" cmd="RB_CaiDatPanel" isEnabled="True" groupItem=""/>
+				<Button name="Thông tin phần mềm" toolTip="Thông tin về phần mềm" image="ThongTinPhanMem16.bmp" id="ThongTinPhanMem" cmd="RB_About" isEnabled="True" groupItem=""/>
+				<Button name="Pan" toolTip="Pan" image="Pan16.bmp" id="SubMenuItem" cmd="_.PAN" isEnabled="True" isVisible="False" groupItem=""/>
+				<Button name="Undo" toolTip="Undo" image="Undo16.bmp" help="ImportTXT_1" id="SubMenuItem" cmd="RB_Undo" isEnabled="True" isVisible="False" groupItem=""/>
+				<Button name="ReUndo" toolTip="ReUndo" image="ReUndo16.bmp" help="ImportTXT_1" id="SubMenuItem" cmd="RB_ReUndo" isEnabled="True" isVisible="False" groupItem=""/>
+				<Button name="ZoomExtend" toolTip="ZoomExtend" image="ZoomE16.bmp" help="ImportTXT_1" id="SubMenuItem" cmd="RB_ZoomE" isEnabled="True" isVisible="False" groupItem=""/>
+				<Button name="ZoomWindows" toolTip="ZoomWindows" image="ZoomWindows16.bmp" help="ImportTXT_1" id="SubMenuItem" cmd="RB_ZoomWindows" isEnabled="True" isVisible="False" groupItem=""/>
+				<Button name="ESC" toolTip="ESC" image="ESC16.bmp" help="ImportTXT_1" id="SubMenuItem" cmd="RB_ESC" isEnabled="True" isVisible="False" groupItem=""/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+	<Panel title="Tài khoản">
+		<RowPanel title="Tài khoản">
+      <SplitButton text="Tài khoản" orientation="Vertical" size="Large" isSynchronizedWithCurrentItem="False" image="UserLogOut.png" isSplit="False" id="UserLogin">
+        <Button name="Đăng nhập" toolTip="Đăng nhập" image="DangNhap.bmp" help="Oldinterface" id="DangNhap" cmd="RB_DANGNHAP" isEnabled="True" groupItem=""/>
+        <Button name="Đổi mật khẩu" toolTip="Đổi mật khẩu" image="DoiMatKhau16.bmp" help="NewInterface" id="DangXuat" cmd="RB_DOIMK" isEnabled="True" groupItem=""/>
+        <Button name="Đăng xuất" toolTip="Đăng xuất" image="DangXuat.bmp" help="NewInterface" id="DangXuat" cmd="RB_DANGXUAT" isEnabled="True" groupItem=""/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+</RPBM_MENU>

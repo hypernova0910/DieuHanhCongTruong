@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Lam (Harmony) -->
+<!-- DATA -->
+<!--
+NovaMenu contain group of Panel. Each Panel contain other control like buton, split button, combo
+textbox, checkbox....
+
+Controls
+  +Attributes
+    -text: Display text of button
+    -orientation: Vertical or Horizontal. Default is horizontal
+    -size: Large or Normal. Default is normal
+    -toolTip: Display tooltip of button
+    -showText: True or False. Default is True
+    -showImage: True or False. Default is True
+  +ChildNode
+    -Image: Normal image of button 
+    -LargeImage: Large image of button. If this node is null large image = image
+-->
+<RPBM_MENU title="RPBM">
+	<Panel title="Quản trị danh mục">
+		<RowPanel title="Quản lý">
+			<SplitButton text="Nghiệp vụ khảo sát" orientation="Vertical" size="Large" image="DanhMuc.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Định nghĩa vùng dự án" toolTip="Định nghĩa vùng dự án" image="VeVung.bmp" help="ImportTEXT_1" id="NghiepVuKS" cmd="RB_DUONGBAODUAN"/>
+				<Button name="Chia ô lưới" toolTip="Chia ô lưới" image="ChiaOLuoi.bmp" help="ImportTXT_1" id="NghiepVuKS" cmd="RB_CHIAOLUOIKHAOSAT"/>
+				<Button name="Chỉnh sửa ô lưới" toolTip="Chỉnh sửa ô lưới" image="ChinhSuaOLuoi.bmp" help="ImportTXT_1" id="NghiepVuKS" cmd="RB_CHINHSUAOKHAOSAT"/>
+				<Button name="PhanManh" toolTip="Phân mảnh bản đồ" image="ChiaManh.bmp" help="ImportTXT_1" id="NghiepVuKS" cmd="RB_PMBDKHAOSAT"/>
+				<Button name="In mảnh" toolTip="InManhBanDo" image="InManh.bmp" help="ImportTXT_1" id="NghiepVuKS" cmd="RB_IMBDKHAOSAT"/>
+				<Button name="Đường bao màu ô" toolTip="Loang ô" image="DuongBaoO.bmp" help="ImportTXT_1" id="NghiepVuKS" cmd="RB_LOANGKHAOSAT"/>
+				<Button name="Bật tắt đối tượng" toolTip="Bật tắt đối tượng" image="BatTatDoiTuong.bmp" help="ImportGSI_1" id="NghiepVuKS" cmd="RB_GROUPLAYERKHAOSAT"/>
+			</SplitButton>
+			<SplitButton text="Thi công" orientation="Vertical" size="Large" image="DanhMuc.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Chia ô lưới" toolTip="Chia ô lưới" image="ChiaOLuoi.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_CHIAOLUOITHICONG"/>
+				<Button name="Chỉnh sửa ô lưới" toolTip="Chỉnh sửa ô lưới" image="ChinhSuaOLuoi.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_CHINHSUAOTHICONG"/>
+				<Button name="PhanManh" toolTip="Phân mảnh bản đồ" image="ChiaManh.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_PMBDTHICONG"/>
+				<Button name="In mảnh" toolTip="InManhBanDo" image="InManh.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_IMBDTHICONG"/>
+				<Button name="Đường bao màu ô" toolTip="Loang ô" image="DuongBaoO.bmp" help="ImportTXT_1" id="ThiCong" cmd="RB_LOANGTHICONG"/>
+				<Button name="Bật tắt đối tượng" toolTip="Bật tắt đối tượng" image="BatTatDoiTuong.bmp" help="ImportGSI_1" id="ThiCong" cmd="RB_GROUPLAYERTHICONG"/>
+			</SplitButton>
+			<SplitButton text="Bản đồ dự án" orientation="Vertical" size="Large" image="BDDA.bmp" isSynchronizedWithCurrentItem="False" isSplit="False">
+				<Button name="Khoảng cách" toolTip="Khoảng cách" image="KhoangCach.bmp" help="ImportSDR_1" id="KhoangCach" cmd="DIST"/>
+				<Button name="Chèn bản đồ" toolTip="Chèn bản đồ" image="ChenBanDo.bmp" help="ImportGSI_1" id="ChenBandP" cmd="RB_CHENBANDO"/>
+				<Button name="Di chuyển bản đồ" toolTip="Di chuyển đối tượng" image="DiChuyenBanDo.bmp" help="ImportGSI_1" id="ChenBandP" cmd="_.m"/>
+				<Button name="Thay đổi kiểu hiển thị đường đồng mức" toolTip="Thay đổi kiểu hiển thị đường đồng mức" image="ThayDoiKieuHTDDM.bmp" help="ImportGSI_1" id="DDM" cmd="RB_HIENTHIDDM"/>
+				<Button name="Tạo nhãn đường đồng mức" toolTip="Tạo nhãn đường đồng mức" image="NhanDuongDongMuc.bmp" help="ImportGSI_1" id="NDDM" cmd="RB_TAONDDM"/>
+				<Button name="Thay đổi kiểu hiển thị nhãn đường đồng mức" toolTip="Thay đổi kiểu hiển thị  nhãn đường đồng mức" image="KHTNhanDDM.bmp" help="ImportGSI_1" id="NDDM" cmd="RB_HIENTHINDDM"/>
+				<Button name="Đọc file .LAS" toolTip="Đọc file .LAS" image="KHTNhanDDM.bmp" help="ImportGSI_1" id="NDDM" cmd="RB_ImportLas"/>
+			</SplitButton>
+		</RowPanel>
+	</Panel>
+</RPBM_MENU>
