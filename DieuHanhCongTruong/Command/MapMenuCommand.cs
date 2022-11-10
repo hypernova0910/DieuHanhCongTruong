@@ -40,7 +40,7 @@ namespace DieuHanhCongTruong.Command
         private static int suspectPointLayerMine = -1;
         private static int flagLayer = -1;
         private static int flagRealTimeLayer = -1;
-        private static int imageLayer = -1;
+        private static List<int> imageLayers = new List<int>();
         private static int deepLayer = -1;
         private static int pointLayer = -1;
         private static int greenFlagLayer = -1;
@@ -56,7 +56,7 @@ namespace DieuHanhCongTruong.Command
 
         public static void LoadMap()
         {
-            InitImageLayer();
+            //InitImageLayer();
             initPolygonLayer();
             InitPointImageLayer();
             InitLineLayer();
@@ -88,8 +88,8 @@ namespace DieuHanhCongTruong.Command
 
         public static void LoadImage(string path, double xmax, double xmin, double ymax, double ymin)
         {
-            MapWinGIS.Image img = axMap1.get_Image(imageLayer);
-            img.Open(path, ImageType.USE_FILE_EXTENSION);
+            MapWinGIS.Image img = AppUtils.OpenImage(path);
+            //img.Open(path, ImageType.USE_FILE_EXTENSION);
             //Image img = OpenImage(path);
             img.OriginalDX = (xmax - xmin) / img.OriginalWidth;
             img.OriginalDY = (ymax - ymin) / img.OriginalHeight;
@@ -98,28 +98,53 @@ namespace DieuHanhCongTruong.Command
             //img.SetVisibleExtents(xmin, ymin, xmax, ymax, 500, 10);
             img.OriginalXllCenter = xmin;
             img.OriginalYllCenter = ymin;
+            int imageLayer = axMap1.AddLayer(img, true);
+            imageLayers.Add(imageLayer);
         }
 
-        public static void AddValueToDrawing()
+        //private static void InitImageLayer()
+        //{
+
+        //    double xmin = 106.828998;
+        //    double xmax = 106.844626;
+        //    double ymin = 17.261828;
+        //    double ymax = 17.27483;
+
+        //    //double xminUTM = 1909441.791;
+        //    //double xmaxUTM = 1910895.457;
+        //    //double yminUTM = 696088.270;
+        //    //double ymaxUTM = 694439.028;
+
+        //    var pathpng = AppUtils.GetAppDataPath();
+        //    pathpng = System.IO.Path.Combine(pathpng, "11111111.png");
+
+        //    MapWinGIS.Image img = AppUtils.OpenImage(pathpng);
+        //    img.OriginalDX = (xmax - xmin) / img.OriginalWidth;
+        //    img.OriginalDY = (ymax - ymin) / img.OriginalHeight;
+        //    //MessageBox.Show("width = " + img.OriginalDX + " / height = " + img.OriginalDY);
+        //    //img.ProjectionToImage(xmin, ymin, out int x, out int y);
+        //    //img.SetVisibleExtents(xmin, ymin, xmax, ymax, 500, 10);
+        //    img.OriginalXllCenter = xmin;
+        //    img.OriginalYllCenter = ymin;
+
+        //    imageLayer = axMap1.AddLayer(img, true);
+
+        //    axMap1.Redraw();
+        //}
+
+        public static void drawPolygon(double[] xPoints, double[] yPoints)
         {
-
-        }
-
-        private static void InitImageLayer()
-        {
-
-            //MapWinGIS.Image img = AppUtils.OpenImage(pathpng);
-            MapWinGIS.Image img = new MapWinGIS.Image();
-            //img.OriginalDX = (xmax - xmin) / img.OriginalWidth;
-            //img.OriginalDY = (ymax - ymin) / img.OriginalHeight;
-            //img.OriginalXllCenter = xmin;
-            //img.OriginalYllCenter = ymin;
-
-            imageLayer = axMap1.AddLayer(img, true);
-
+            if (xPoints.Length != yPoints.Length)
+            {
+                MessageBox.Show("Invalid Polygon Coordinates");
+                return;
+            }
+            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            object X = xPoints;
+            object Y = yPoints;
+            int size = xPoints.Length;
+            axMap1.DrawPolygon(ref X, ref Y, size, AppUtils.ColorToUint(Color.FromArgb(173, 38, 169)), true);
             axMap1.Redraw();
-
-            //axMap1.SetLatitudeLongitude(17.261828, 106.828998);
         }
 
         private static void InitPointImageLayer()
@@ -878,18 +903,44 @@ namespace DieuHanhCongTruong.Command
             //axMap1.MouseDownEvent += AxMap1MouseDownEvent;   // change MapEvents to axMap1
         }
 
-        private void LoadKhuVuc(long idKV)
+        public static void SetBound(double xmin, double ymin, double xmax, double ymax)
         {
-            SqlCommandBuilder sqlCommand = null;
+            Extents extents = new Extents();
+            extents.SetBounds(xmin, ymin, 0, xmax, ymax, 0);
+            axMap1.Extents = extents;
+        }
+
+        public static void SetBoundKVDA(long idKV)
+        {
             SqlDataAdapter sqlAdapter = null;
-            System.Data.DataTable datatable = new System.Data.DataTable();
+            DataTable datatable = new DataTable();
+            string sql = "SELECT " +
+                "position_lat, position_long, " +
+                "left_long, right_long, bottom_lat, top_lat " +
+                "FROM cecm_program_area_map where id = " + idKV;
+            sqlAdapter = new SqlDataAdapter(sql, frmLoggin.sqlCon);
+            sqlAdapter.Fill(datatable);
+            double xmax = 0, xmin = 0, ymax = 0, ymin = 0;
+            foreach (DataRow dr in datatable.Rows)
+            {
+                xmin = double.Parse(dr["left_long"].ToString());
+                xmax = double.Parse(dr["right_long"].ToString());
+                ymin = double.Parse(dr["bottom_lat"].ToString());
+                ymax = double.Parse(dr["top_lat"].ToString());
+            }
+            SetBound(xmin, ymin, xmax, ymax);
+        }
+
+        public static void LoadKhuVuc(long idKV, long idDA)
+        {
+            SqlDataAdapter sqlAdapter = null;
+            DataTable datatable = new DataTable();
             string sql = "SELECT " +
                 "position_lat, position_long, " +
                 "photo_file, " +
                 "left_long, right_long, bottom_lat, top_lat " +
                 "FROM cecm_program_area_map where id = " + idKV;
             sqlAdapter = new SqlDataAdapter(sql, frmLoggin.sqlCon);
-            sqlCommand = new SqlCommandBuilder(sqlAdapter);
             sqlAdapter.Fill(datatable);
             string photoFileName = "unknown.png";
             double xmax = 0, xmin = 0, ymax = 0, ymin = 0;
@@ -902,21 +953,19 @@ namespace DieuHanhCongTruong.Command
                 ymin = double.Parse(dr["bottom_lat"].ToString());
                 ymax = double.Parse(dr["top_lat"].ToString());
             }
-            Extents extents = new Extents();
-            extents.SetBounds(xmin, ymin, 0, xmax, ymax, 0);
-            axMap1.Extents = extents;
-            string pathTemp = AppUtils.GetFolderTemp((int)MyMainMenu2.idDADH);
+            SetBound(xmin, ymin, xmax, ymax);
+            string pathTemp = AppUtils.GetFolderTemp((int)idDA);
             string fullPath = System.IO.Path.Combine(pathTemp, photoFileName);
             if (File.Exists(fullPath))
             {
                 LoadImage(fullPath, xmax, xmin, ymax, ymin);
             }
-            else
-            {
-                //axMap1.set_Image(imageLayer, null);
-                Image img = axMap1.get_Image(imageLayer);
-                img.Clear();
-            }
+            //else
+            //{
+            //    //axMap1.set_Image(imageLayer, null);
+            //    Image img = axMap1.get_Image(imageLayer);
+            //    img.Clear();
+            //}
             SqlCommandBuilder sqlCommand3 = null;
             SqlDataAdapter sqlAdapter3 = null;
             System.Data.DataTable datatable3 = new System.Data.DataTable();
@@ -989,7 +1038,29 @@ namespace DieuHanhCongTruong.Command
             //cb50x50.ValueMember = "gid";
         }
 
-        private void drawOluoi(
+        public static void LoadDuAn(long idDA)
+        {
+            foreach(int imageLayer in imageLayers)
+            {
+                axMap1.RemoveLayer(imageLayer);
+            }
+            imageLayers.Clear();
+            axMap1.ClearDrawing(oluoiLayer);
+            SqlDataAdapter sqlAdapter = null;
+            DataTable datatable = new DataTable();
+            string sql = "SELECT " +
+                "id " +
+                "FROM cecm_program_area_map where cecm_program_id = " + idDA;
+            sqlAdapter = new SqlDataAdapter(sql, frmLoggin.sqlCon);
+            sqlAdapter.Fill(datatable);
+            foreach (DataRow dr in datatable.Rows)
+            {
+                long.TryParse(dr["id"].ToString(), out long idKV);
+                LoadKhuVuc(idKV, idDA);
+            }
+        }
+
+        private static void drawOluoi(
             double lat_corner1, double long_corner1,
             double lat_corner2, double long_corner2,
             double lat_corner3, double long_corner3,
@@ -999,6 +1070,11 @@ namespace DieuHanhCongTruong.Command
             axMap1.DrawLineEx(oluoiLayer, long_corner2, lat_corner2, long_corner3, lat_corner3, 5, AppUtils.ColorToUint(Color.White));
             axMap1.DrawLineEx(oluoiLayer, long_corner3, lat_corner3, long_corner4, lat_corner4, 5, AppUtils.ColorToUint(Color.White));
             axMap1.DrawLineEx(oluoiLayer, long_corner4, lat_corner4, long_corner1, lat_corner1, 5, AppUtils.ColorToUint(Color.White));
+        }
+
+        public static void LoadPoints(Dictionary<long, Dictionary<string, List<InfoConnect>>> idKV__Points)
+        {
+
         }
     }
 }

@@ -62,7 +62,6 @@ namespace VNRaPaBomMin
             this.btnPoint = new System.Windows.Forms.ToolStripButton();
             this.btnShowPoint = new System.Windows.Forms.ToolStripButton();
             this.btnModel = new System.Windows.Forms.ToolStripButton();
-            this.axMap1 = new AxMapWinGIS.AxMap();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnPara = new System.Windows.Forms.Button();
             this.cb50x50 = new System.Windows.Forms.ComboBox();
@@ -85,6 +84,7 @@ namespace VNRaPaBomMin
             this.btnModelHistory = new System.Windows.Forms.Button();
             this.btnModel_ = new System.Windows.Forms.Button();
             this.btnModelRealTime = new System.Windows.Forms.Button();
+            this.axMap1 = new AxMapWinGIS.AxMap();
             this.metroTabControl2.SuspendLayout();
             this.machineBombTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_bomb)).BeginInit();
@@ -96,11 +96,11 @@ namespace VNRaPaBomMin
             this.tableTab.SuspendLayout();
             this.mapTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.machineTab.SuspendLayout();
             this.resultTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.SuspendLayout();
             // 
             // metroTabControl2
@@ -364,7 +364,7 @@ namespace VNRaPaBomMin
             this.btnModel});
             this.toolStrip1.Location = new System.Drawing.Point(2, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(998, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(998, 31);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -374,7 +374,7 @@ namespace VNRaPaBomMin
             this.btnDistance.Image = global::DieuHanhCongTruong.Properties.Resources.distance;
             this.btnDistance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDistance.Name = "btnDistance";
-            this.btnDistance.Size = new System.Drawing.Size(29, 24);
+            this.btnDistance.Size = new System.Drawing.Size(29, 28);
             this.btnDistance.Text = "Đo khoảng cách";
             this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
             // 
@@ -384,7 +384,7 @@ namespace VNRaPaBomMin
             this.btnPoint.Image = global::DieuHanhCongTruong.Properties.Resources.marker;
             this.btnPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPoint.Name = "btnPoint";
-            this.btnPoint.Size = new System.Drawing.Size(29, 24);
+            this.btnPoint.Size = new System.Drawing.Size(29, 28);
             this.btnPoint.Text = "Lấy tọa độ điểm";
             this.btnPoint.Click += new System.EventHandler(this.btnPoint_Click);
             // 
@@ -394,7 +394,7 @@ namespace VNRaPaBomMin
             this.btnShowPoint.Image = global::DieuHanhCongTruong.Properties.Resources.show;
             this.btnShowPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowPoint.Name = "btnShowPoint";
-            this.btnShowPoint.Size = new System.Drawing.Size(29, 24);
+            this.btnShowPoint.Size = new System.Drawing.Size(29, 28);
             this.btnShowPoint.Tag = "";
             this.btnShowPoint.Text = "Hiện điểm dò được";
             this.btnShowPoint.Click += new System.EventHandler(this.btnShowPoint_Click);
@@ -406,21 +406,10 @@ namespace VNRaPaBomMin
             this.btnModel.Image = global::DieuHanhCongTruong.Properties.Resources.model_on;
             this.btnModel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnModel.Name = "btnModel";
-            this.btnModel.Size = new System.Drawing.Size(29, 24);
+            this.btnModel.Size = new System.Drawing.Size(29, 28);
             this.btnModel.Text = "Bật nắn điểm";
             this.btnModel.ToolTipText = "Bật nắn điểm";
             this.btnModel.Click += new System.EventHandler(this.btnModel_Click);
-            // 
-            // axMap1
-            // 
-            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMap1.Enabled = true;
-            this.axMap1.Location = new System.Drawing.Point(2, 2);
-            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
-            this.axMap1.Name = "axMap1";
-            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(998, 698);
-            this.axMap1.TabIndex = 0;
             // 
             // panel2
             // 
@@ -595,7 +584,7 @@ namespace VNRaPaBomMin
             this.pnlKQPTContainer.Location = new System.Drawing.Point(2, 2);
             this.pnlKQPTContainer.Margin = new System.Windows.Forms.Padding(2);
             this.pnlKQPTContainer.Name = "pnlKQPTContainer";
-            this.pnlKQPTContainer.Size = new System.Drawing.Size(876, 377);
+            this.pnlKQPTContainer.Size = new System.Drawing.Size(876, 464);
             this.pnlKQPTContainer.TabIndex = 17;
             // 
             // tabControl1
@@ -628,7 +617,7 @@ namespace VNRaPaBomMin
             this.resultTab.Margin = new System.Windows.Forms.Padding(2);
             this.resultTab.Name = "resultTab";
             this.resultTab.Padding = new System.Windows.Forms.Padding(2);
-            this.resultTab.Size = new System.Drawing.Size(880, 381);
+            this.resultTab.Size = new System.Drawing.Size(880, 468);
             this.resultTab.TabIndex = 1;
             this.resultTab.Text = "Kết quả phân tích";
             this.resultTab.UseVisualStyleBackColor = true;
@@ -693,6 +682,17 @@ namespace VNRaPaBomMin
             this.btnModelRealTime.UseVisualStyleBackColor = true;
             this.btnModelRealTime.Click += new System.EventHandler(this.btnModelRealTime_Click);
             // 
+            // axMap1
+            // 
+            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axMap1.Enabled = true;
+            this.axMap1.Location = new System.Drawing.Point(2, 2);
+            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
+            this.axMap1.Name = "axMap1";
+            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
+            this.axMap1.Size = new System.Drawing.Size(998, 698);
+            this.axMap1.TabIndex = 0;
+            // 
             // MonitorFormNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -729,12 +729,12 @@ namespace VNRaPaBomMin
             this.mapTab.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.machineTab.ResumeLayout(false);
             this.resultTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

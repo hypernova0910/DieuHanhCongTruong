@@ -47,6 +47,9 @@
     <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
+    <Reference Include="MIConvexHull, Version=1.1.19.1018, Culture=neutral, PublicKeyToken=2644b6f8be52c998, processorArchitecture=MSIL">
+      <HintPath>..\packages\MIConvexHull.1.1.19.1019\lib\netstandard2.0\MIConvexHull.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -178,6 +181,8 @@
     <Compile Include="Command\MapMenuCommand.cs" />
     <Compile Include="Command\MenuCommand.cs" />
     <Compile Include="Command\MenuCommand2.cs" />
+    <Compile Include="Command\DHDACommand.cs" />
+    <Compile Include="Command\TINCommand.cs" />
     <Compile Include="Common\AppUtils.cs" />
     <Compile Include="Common\AutoDivide.cs" />
     <Compile Include="Common\ConnectionWithExtraInfo.cs" />
@@ -799,6 +804,7 @@
     <Compile Include="Models\ObjectModel.cs" />
     <Compile Include="Models\OLuoi.cs" />
     <Compile Include="Models\Point2d.cs" />
+    <Compile Include="Models\Point3d.cs" />
     <Compile Include="Models\PointDTO.cs" />
     <Compile Include="Models\TimeQuery.cs" />
     <Compile Include="Models\Vertex.cs" />

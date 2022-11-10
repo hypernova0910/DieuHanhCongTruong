@@ -97,7 +97,7 @@ namespace DieuHanhCongTruong.Forms
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     this.Show();
-                    //MapMenuCommand.LoadMap();
+                    MapMenuCommand.LoadMap();
                 }
                 else
                 {

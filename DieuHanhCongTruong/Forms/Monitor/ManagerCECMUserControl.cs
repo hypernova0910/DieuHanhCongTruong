@@ -1,4 +1,5 @@
-﻿using DieuHanhCongTruong.Common;
+﻿using DieuHanhCongTruong.Command;
+using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms.Account;
 using System;
 using System.Collections.Generic;
@@ -161,6 +162,9 @@ namespace VNRaPaBomMin
             {
                 //TaoDiemDoCMD cmdDiemDo = new TaoDiemDoCMD();
                 //cmdDiemDo.ExecuteCMD(frm._TenDuAn, frm._IdDuAn, true);
+                MapMenuCommand.LoadDuAn(frm._IdDuAn);
+                DHDACommand command = new DHDACommand();
+                command.Execute(frm._IdDuAn);
             }
             //else if (frm.DialogResult == System.Windows.Forms.DialogResult.Yes)
             //{
@@ -525,6 +529,7 @@ namespace VNRaPaBomMin
                 {
                     // Zoom to duong bao
                     //MaganerCecmUsercontrolCmd.ZoomToDuongBao(tenDuongBao);
+                    MapMenuCommand.SetBoundKVDA(idFuAnVungDuAnSelected);
                 }
             }
             catch (Exception ex)
