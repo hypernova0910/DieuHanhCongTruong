@@ -1,5 +1,6 @@
 ﻿using DieuHanhCongTruong.Command;
 using DieuHanhCongTruong.Common;
+using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace VNRaPaBomMin
@@ -162,9 +164,9 @@ namespace VNRaPaBomMin
             {
                 //TaoDiemDoCMD cmdDiemDo = new TaoDiemDoCMD();
                 //cmdDiemDo.ExecuteCMD(frm._TenDuAn, frm._IdDuAn, true);
+                MyMainMenu2.idDADH = frm._IdDuAn;
                 MapMenuCommand.LoadDuAn(frm._IdDuAn);
-                DHDACommand command = new DHDACommand();
-                command.Execute(frm._IdDuAn);
+                MagneticCommand.Execute(frm._IdDuAn);
             }
             //else if (frm.DialogResult == System.Windows.Forms.DialogResult.Yes)
             //{

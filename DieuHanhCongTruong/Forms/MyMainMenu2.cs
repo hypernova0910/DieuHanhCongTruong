@@ -55,6 +55,8 @@ namespace DieuHanhCongTruong.Forms
             điềuHànhDựÁnToolStripMenuItem.Click += new EventHandler(MenuCommand2.DieuHanhDuAn);
             nhậnDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.NhanDuLieuMayDo);
             //Tiện ích
+            tựĐộngPhânTíchDữLiệuToolStripMenuItem.Click += new EventHandler(MenuCommand2.TuDongPhanTich);
+            cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.CapNhatDuLieuTuMayDo);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
             //Menu báo cáo KS
             ks01ToolStripMenuItem.Click += new EventHandler(MenuCommand2.KS01);
@@ -98,6 +100,7 @@ namespace DieuHanhCongTruong.Forms
                 {
                     this.Show();
                     MapMenuCommand.LoadMap();
+                    rbtnBomb.Checked = true;
                 }
                 else
                 {
@@ -105,6 +108,45 @@ namespace DieuHanhCongTruong.Forms
                 }
             }
             
+        }
+
+        private void btnShowPolygon_Click(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygon(true);
+        }
+
+        private void btnHidePolygon_Click(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygon(false);
+        }
+
+        //private void btnShowPolygonBombMine_Click(object sender, EventArgs e)
+        //{
+        //    if(btnShowPolygonBombMine.Text == "Từ trường máy mìn")
+        //    {
+        //        btnShowPolygonBombMine.Text = "Từ trường máy bom";
+        //        MapMenuCommand.showPolygonMine();
+        //    }
+        //    else
+        //    {
+        //        btnShowPolygonBombMine.Text = "Từ trường máy mìn";
+        //        MapMenuCommand.showPolygonBomb();
+        //    }
+        //}
+
+        private void rbtnBomb_CheckedChanged(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygonBomb(rbtnBomb.Checked);
+        }
+
+        private void rbtnMine_CheckedChanged(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygonMine(rbtnMine.Checked);
+        }
+
+        private void MyMainMenu2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
         }
     }
 }

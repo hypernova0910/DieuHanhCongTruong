@@ -181,8 +181,9 @@
     <Compile Include="Command\MapMenuCommand.cs" />
     <Compile Include="Command\MenuCommand.cs" />
     <Compile Include="Command\MenuCommand2.cs" />
-    <Compile Include="Command\DHDACommand.cs" />
+    <Compile Include="Command\MagneticCommand.cs" />
     <Compile Include="Command\TINCommand.cs" />
+    <Compile Include="Command\PhanTichCommand.cs" />
     <Compile Include="Common\AppUtils.cs" />
     <Compile Include="Common\AutoDivide.cs" />
     <Compile Include="Common\ConnectionWithExtraInfo.cs" />
@@ -801,6 +802,7 @@
     <Compile Include="Models\InfoConnect.cs" />
     <Compile Include="Models\LastModelTime.cs" />
     <Compile Include="Models\MQTTObject.cs" />
+    <Compile Include="Models\CustomFace.cs" />
     <Compile Include="Models\ObjectModel.cs" />
     <Compile Include="Models\OLuoi.cs" />
     <Compile Include="Models\Point2d.cs" />

@@ -12,9 +12,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Image = MapWinGIS.Image;
+using Point = MapWinGIS.Point;
 
 namespace DieuHanhCongTruong.Command
 {
@@ -35,6 +37,9 @@ namespace DieuHanhCongTruong.Command
         private static List<int> machineLineRealTimeModelLayers = new List<int>();
 
         private static int polygonLayer = -1;
+        private static int polygonLayerMine = -1;
+        private static List<int> polygonLayers = new List<int>();
+        private static List<int> polygonLayersMine = new List<int>();
         private static int oluoiLayer = -1;
         private static int suspectPointLayer = -1;
         private static int suspectPointLayerMine = -1;
@@ -53,21 +58,55 @@ namespace DieuHanhCongTruong.Command
         private static int highlightLayer = -1;
         private static int highlightCurrentPointLayer = -1;
         private static int highlightCurrentPointModelLayer = -1;
+        //private static List<int> polygonLayers = new List<int>();
+
+        private static Dictionary<string, Color> machineActive__color = new Dictionary<string, Color>();
+        private static Dictionary<string, int> machineActive__pointLayer = new Dictionary<string, int>();
+        private static Dictionary<string, Point> machineActive__lastPoint = new Dictionary<string, Point>();
+        private static Dictionary<string, int> machineActive__lineLayer = new Dictionary<string, int>();
+        private static Dictionary<string, DateTime> machineActive__lastTime = new Dictionary<string, DateTime>();
+
+        private static int MIN_TIME_NEW_LINE = 90;
+        private static double MIN_DISTANCE_NEW_LINE = 7;
+
+        private static Color[] activeMachineColor;
+
+        //private static string[] machine_colors = {
+        //    "#A2231D",
+        //    "#2271B3",
+        //    "#D0D0D0",
+        //    "#2C5545",
+        //    "#A03472",
+        //    "#A18594",
+        //    "#898176",
+        //    "#F3DA0B",
+        //    "#955F20",
+        //    "#A98307",
+        //    "#49678D",
+        //    "#FFA420",
+        //    "#F5D033",
+        //    "#89AC76",
+        //    "#212121",
+        //    "#4C9141",
+        //    "#8A6642",
+        //    "#6C7059",
+        //};
 
         public static void LoadMap()
         {
+            activeMachineColor = Constants.MACHINE_COLORS.Select(color => ColorTranslator.FromHtml(color)).ToArray();
             //InitImageLayer();
             initPolygonLayer();
             InitPointImageLayer();
             InitLineLayer();
-            InitPointImageModelLayer();
-            InitLineModelLayer();
-            InitPointImageModelHistoryLayer();
-            InitLineModelHistoryLayer();
-            InitPointImageRealTimeLayer();
-            InitLineRealTimeLayer();
-            InitPointImageRealTimeModelLayer();
-            InitLineRealTimeModelLayer();
+            //InitPointImageModelLayer();
+            //InitLineModelLayer();
+            //InitPointImageModelHistoryLayer();
+            //InitLineModelHistoryLayer();
+            //InitPointImageRealTimeLayer();
+            //InitLineRealTimeLayer();
+            //InitPointImageRealTimeModelLayer();
+            //InitLineRealTimeModelLayer();
             InitSuspectPointLayer();
             InitSuspectPointMineLayer();
             InitFlagLayer();
@@ -99,6 +138,7 @@ namespace DieuHanhCongTruong.Command
             img.OriginalXllCenter = xmin;
             img.OriginalYllCenter = ymin;
             int imageLayer = axMap1.AddLayer(img, true);
+            axMap1.MoveLayerBottom(imageLayer);
             imageLayers.Add(imageLayer);
         }
 
@@ -132,24 +172,72 @@ namespace DieuHanhCongTruong.Command
         //    axMap1.Redraw();
         //}
 
-        public static void drawPolygon(double[] xPoints, double[] yPoints)
+        //public static void drawPolygon(double[] xPoints, double[] yPoints, Color color, bool fill)
+        //{
+        //    if (xPoints.Length != yPoints.Length)
+        //    {
+        //        MessageBox.Show("Invalid Polygon Coordinates");
+        //        return;
+        //    }
+        //    //axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+        //    object X = xPoints;
+        //    object Y = yPoints;
+        //    int size = xPoints.Length;
+        //    axMap1.DrawPolygonEx(polygonLayer, ref X, ref Y, size, AppUtils.ColorToUint(color), fill);
+        //    //axMap1.Redraw();
+        //}
+
+        public static void drawPolygon(int colorIndex, double[] xPoints, double[] yPoints, bool isBomb)
         {
-            if (xPoints.Length != yPoints.Length)
+            //if (xPoints.Length != yPoints.Length)
+            //{
+            //    MessageBox.Show("Invalid Polygon Coordinates");
+            //    return;
+            //}
+            ////axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //object X = xPoints;
+            //object Y = yPoints;
+            //int size = xPoints.Length;
+            //if (isBomb)
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayer, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            //else
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayerMine, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            Shapefile sf;
+            if (isBomb)
             {
-                MessageBox.Show("Invalid Polygon Coordinates");
+                //sf = axMap1.get_Shapefile(polygonLayer);
+                sf = axMap1.get_Shapefile(polygonLayers[colorIndex]);
+            }
+            else
+            {
+                //sf = axMap1.get_Shapefile(polygonLayerMine);
+                sf = axMap1.get_Shapefile(polygonLayersMine[colorIndex]);
+            }
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POLYGON);
+            for (int j = 0; j < xPoints.Length; j++)
+            {
+                Point pnt = new Point();
+                pnt.x = xPoints[j];
+                pnt.y = yPoints[j];
+                shp.InsertPoint(pnt, ref j);
+            }
+            int index = sf.NumShapes;
+            if (!sf.EditInsertShape(shp, ref index))
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("drawPolygon()");
                 return;
             }
-            axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-            object X = xPoints;
-            object Y = yPoints;
-            int size = xPoints.Length;
-            axMap1.DrawPolygon(ref X, ref Y, size, AppUtils.ColorToUint(Color.FromArgb(173, 38, 169)), true);
-            axMap1.Redraw();
         }
 
         private static void InitPointImageLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
@@ -191,7 +279,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitLineLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 var sf = new Shapefile();
                 sf.CreateNew("", ShpfileType.SHP_POLYLINE);
@@ -223,7 +311,7 @@ namespace DieuHanhCongTruong.Command
         private static void InitPointImageModelLayer()
         {
 
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
@@ -265,7 +353,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitLineModelLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 var sf = new Shapefile();
                 sf.CreateNew("", ShpfileType.SHP_POLYLINE);
@@ -297,7 +385,7 @@ namespace DieuHanhCongTruong.Command
         private static void InitPointImageModelHistoryLayer()
         {
 
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
@@ -339,7 +427,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitLineModelHistoryLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 var sf = new Shapefile();
                 sf.CreateNew("", ShpfileType.SHP_POLYLINE);
@@ -370,7 +458,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitPointImageRealTimeLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
@@ -412,7 +500,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitLineRealTimeLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 var sf = new Shapefile();
                 sf.CreateNew("", ShpfileType.SHP_POLYLINE);
@@ -443,7 +531,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitPointImageRealTimeModelLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
@@ -485,7 +573,7 @@ namespace DieuHanhCongTruong.Command
 
         private static void InitLineRealTimeModelLayer()
         {
-            foreach (string color in Constants.colors)
+            foreach (string color in Constants.MACHINE_COLORS)
             {
                 var sf = new Shapefile();
                 sf.CreateNew("", ShpfileType.SHP_POLYLINE);
@@ -520,15 +608,78 @@ namespace DieuHanhCongTruong.Command
             ////sf.Open(filename, null);
             //polygonLayer = axMap1.AddLayer(sf, true);
             //sf = axMap1.get_Shapefile(polygonLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
-            Shapefile sf = new Shapefile();
-            if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+
+
+
+
+
+            //polygonLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //polygonLayerMine = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //axMap1.SetDrawingLayerVisible(polygonLayer, false);
+            //axMap1.SetDrawingLayerVisible(polygonLayerMine, false);
+
+            initPolygonLayerBomb();
+            initPolygonLayerMine();
+
+        }
+
+        private static void initPolygonLayerBomb()
+        {
+            polygonLayers.Clear();
+            for (int i = 0; i < Constants.magnetic_colors.Length; i++)
             {
-                MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
-                MessageBox.Show("initPolygonLayer()");
-                return;
+                Shapefile sf_bomb = new Shapefile();
+                if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+                {
+                    MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
+                    MessageBox.Show("initPolygonLayer()");
+                    return;
+                }
+                sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
+                int layer = axMap1.AddLayer(sf_bomb, MyMainMenu2.Instance.rbtnBomb.Checked);
+                axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
+                //axMap1.set_ShapeLayerDrawLine(layer, false);
+                polygonLayers.Add(layer);
+                //axMap1.set_LayerVisible(polygonLayer, MyMainMenu2.Instance.rbtnBomb.Checked);
             }
-            polygonLayer = axMap1.AddLayer(sf, true);
-            bool success = axMap1.MoveLayerBottom(polygonLayer);
+            //Shapefile sf_bomb = new Shapefile();
+            //if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+            //{
+            //    MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
+            //    MessageBox.Show("initPolygonLayer()");
+            //    return;
+            //}
+            //polygonLayer = axMap1.AddLayer(sf_bomb, MyMainMenu2.Instance.rbtnBomb.Checked);
+            //axMap1.set_ShapeLayerFillColor(polygonLayer, AppUtils.ColorToUint(Color.Red));
+        }
+
+        private static void initPolygonLayerMine()
+        {
+            polygonLayersMine.Clear();
+            for (int i = 0; i < Constants.magnetic_colors.Length; i++)
+            {
+                Shapefile sf_mine = new Shapefile();
+                if (!sf_mine.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+                {
+                    MessageBox.Show("Failed to create shapefile: " + sf_mine.ErrorMsg[sf_mine.LastErrorCode]);
+                    MessageBox.Show("initPolygonLayer()");
+                    return;
+                }
+                sf_mine.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
+                int layer = axMap1.AddLayer(sf_mine, MyMainMenu2.Instance.rbtnMine.Checked);
+                axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
+                //axMap1.set_ShapeLayerDrawLine(layer, false);
+                polygonLayersMine.Add(layer);
+                //axMap1.set_LayerVisible(polygonLayerMine, MyMainMenu2.Instance.rbtnMine.Checked);
+            }
+            //Shapefile sf_mine = new Shapefile();
+            //if (!sf_mine.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+            //{
+            //    MessageBox.Show("Failed to create shapefile: " + sf_mine.ErrorMsg[sf_mine.LastErrorCode]);
+            //    MessageBox.Show("initPolygonLayer()");
+            //    return;
+            //}
+            //polygonLayerMine = axMap1.AddLayer(sf_mine, MyMainMenu2.Instance.rbtnMine.Checked);
         }
 
         private static void InitSuspectPointLayer()
@@ -1074,7 +1225,306 @@ namespace DieuHanhCongTruong.Command
 
         public static void LoadPoints(Dictionary<long, Dictionary<string, List<InfoConnect>>> idKV__Points)
         {
+            Dictionary<string, List<InfoConnect>> machine__points = new Dictionary<string, List<InfoConnect>>();
+            foreach(var pair_idKV__Points in idKV__Points)
+            {
+                Dictionary<string, List<InfoConnect>> machine__points_temp = pair_idKV__Points.Value;
+                foreach (var pair_machine__points_temp in machine__points_temp)
+                {
+                    if (machine__points.ContainsKey(pair_machine__points_temp.Key))
+                    {
+                        machine__points[pair_machine__points_temp.Key].AddRange(pair_machine__points_temp.Value);
+                    }
+                    else
+                    {
+                        machine__points.Add(pair_machine__points_temp.Key, pair_machine__points_temp.Value);
+                    }
+                }
+            }
+            foreach (var pair_machine__points in machine__points)
+            {
+                getColorForMachine(pair_machine__points.Key);
+            }
+            foreach (var pair_machine__points in machine__points)
+            {
+                Thread thread = new Thread(() => { 
+                    foreach(InfoConnect infoConnect in pair_machine__points.Value)
+                    {
 
+                        addMachinePoint(infoConnect.coordinate.Coordinates.X, infoConnect.coordinate.Coordinates.Y, pair_machine__points.Key, infoConnect.time_action, false);
+                    }
+                    axMap1.Redraw();
+                });
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        public static void togglePolygon(bool show)
+        {
+            //foreach(int layer in polygonLayers)
+            //{
+            //    axMap1.SetDrawingLayerVisible(layer, show);
+            //}
+            axMap1.SetDrawingLayerVisible(polygonLayer, show);
+        }
+
+        public static void addMachinePoint(double x, double y, string codeMachine, DateTime timeAction, bool isRedraw = true)
+        {
+            try
+            {
+                //if (!machine__label.ContainsKey(codeMachine))
+                //    return;
+
+                getColorForMachine(codeMachine);
+                Shapefile sf = axMap1.get_Shapefile(machineActive__pointLayer[codeMachine]);
+                Shape shp = new Shape();
+                shp.Create(ShpfileType.SHP_POINT);
+                Point pnt = new Point();
+                //axMap1.PixelToProj(x, y, ref x, ref y);
+                pnt.x = x;
+                pnt.y = y;
+                int index = shp.numPoints;
+                shp.InsertPoint(pnt, ref index);
+                index = sf.NumShapes;
+                if (!sf.EditInsertShape(shp, ref index))
+                {
+                    MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                    MessageBox.Show("addMachinePoint()");
+                    return;
+                }
+                //if (!machine__shapeIndex_time.ContainsKey(codeMachine))
+                //{
+                //    machine__shapeIndex_time.Add(codeMachine, new Dictionary<int, DateTime>());
+                //}
+                //machine__shapeIndex_time[codeMachine].Add(index, time);
+                if (!machineActive__lastTime.ContainsKey(codeMachine))
+                {
+                    machineActive__lastTime.Add(codeMachine, DateTime.MinValue);
+                }
+
+                //if (!machineActive__lastShape.ContainsKey(codeMachine))
+                //{
+                //    machineActive__lastShape.Add(codeMachine, shp);
+                //}
+                //else
+                //{
+                //    Shape recentShape = machineActive__lastShape[codeMachine];
+                //    machineActive__lastShape[codeMachine] = shp;
+                //    Point recentPoint = machineActive__lastPoint[codeMachine];
+                //    double angle = AppUtils.CalculateAngle(recentPoint.x, recentPoint.y, x, y);
+                //    recentShape.Rotate(recentPoint.x + 1, recentPoint.y + 1, angle);
+                //}
+
+                double recentDistance = 0;
+                if (!machineActive__lastPoint.ContainsKey(codeMachine))
+                {
+                    machineActive__lastPoint.Add(codeMachine, pnt);
+                    //machineActive__lastTime[codeMachine] = timeAction;
+                }
+                else
+                {
+                    Point recentPoint = machineActive__lastPoint[codeMachine];
+                    machineActive__lastPoint[codeMachine] = pnt;
+                    recentDistance = AppUtils.DistanceLatLong(recentPoint.y, recentPoint.x, y, x);
+
+
+                    //if((timeAction - machineActive__lastTime[codeMachine]).TotalSeconds <= 20)
+                    //{
+                    //    if (!machineActive__lineLayer.ContainsKey(codeMachine))
+                    //    {
+                    //        int lineLayerNew = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+                    //        if (btnShowPoint.Text == "Hiện điểm dò được" || btnModel.Text == "Tắt nắn điểm")
+                    //        {
+                    //            axMap1.SetDrawingLayerVisible(lineLayerNew, false);
+                    //        }
+                    //        machineActive__lineLayer.Add(codeMachine, lineLayerNew);
+                    //    }
+                    //    int lineLayer = machineActive__lineLayer[codeMachine];
+                    //    axMap1.DrawLineEx(lineLayer, recentPoint.x, recentPoint.y, x, y, 2, ColorToUint(machineActive__color[codeMachine]));
+                    //}
+                    //machineActive__lastTime[codeMachine] = timeAction;
+                }
+                if ((timeAction - machineActive__lastTime[codeMachine]).TotalSeconds <= MIN_TIME_NEW_LINE && recentDistance < MIN_DISTANCE_NEW_LINE)
+                {
+                    addMachineLine(x, y, codeMachine, false);
+                }
+                else
+                {
+                    addMachineLine(x, y, codeMachine, true);
+                }
+                machineActive__lastTime[codeMachine] = timeAction;
+
+                if (isRedraw)
+                {
+                    axMap1.Redraw();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        private static void addMachineLine(double x, double y, string codeMachine, bool isNewLine)
+        {
+            //getLayerLineForMachines(codeMachine);
+            Shapefile sf = axMap1.get_Shapefile(machineActive__lineLayer[codeMachine]);
+            Shape shp;
+            if (isNewLine)
+            {
+                shp = new Shape();
+                shp.Create(ShpfileType.SHP_POLYLINE);
+                int indexShape = sf.NumShapes;
+                sf.EditInsertShape(shp, ref indexShape);
+            }
+            else
+            {
+                shp = sf.Shape[sf.NumShapes - 1];
+            }
+
+            MapWinGIS.Point pnt = new Point();
+            pnt.x = x;
+            pnt.y = y;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt, ref index);
+            //axMap1.Redraw();
+        }
+
+        private static void getColorForMachine(string codeMachine)
+        {
+            //máy online hay offline
+            if (!machineActive__color.ContainsKey(codeMachine))
+            {
+                machineActive__color.Add(codeMachine, activeMachineColor[machineActive__color.Count % activeMachineColor.Length]);
+                //machine__label[codeMachine].setForeColor(machineActive__color[codeMachine]);
+            }
+            getLayerPointForMachines(codeMachine);
+            getLayerLineForMachines(codeMachine);
+        }
+
+        private static void getLayerPointForMachines(string codeMachine)
+        {
+            //Nhằm đồng bộ màu điểm thì gán layer vào cả 2 collection điểm bình thường và điểm nắn
+            if (!machineActive__pointLayer.ContainsKey(codeMachine))
+            {
+                machineActive__pointLayer.Add(codeMachine, machinePointLayers[machineActive__pointLayer.Count % machinePointLayers.Count]);
+                //axMap1.MoveLayerTop(machineActive__pointLayer[codeMachine]);
+            }
+        }
+
+        private static void getLayerLineForMachines(string codeMachine)
+        {
+            if (!machineActive__lineLayer.ContainsKey(codeMachine))
+            {
+                int lineLayer = machineLineLayers[machineActive__lineLayer.Count % machineLineLayers.Count];
+                machineActive__lineLayer.Add(codeMachine, lineLayer);
+                //axMap1.MoveLayerTop(machineActive__lineLayer[codeMachine]);
+            }
+        }
+
+        public static void LoadHistory(List<InfoConnect> lst)
+        {
+            Thread thread = new Thread(() =>
+            {
+                LoadPointsHistory(lst);
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        public static void LoadPointsHistory(List<InfoConnect> lst)
+        {
+            foreach(InfoConnect doc in lst)
+            {
+                addMachinePoint(doc.coordinate.Coordinates.X, doc.coordinate.Coordinates.Y, doc.code, doc.time_action.ToLocalTime(), false);
+            }
+        }
+
+        public static void togglePolygonBomb(bool show)
+        {
+            //axMap1.set_LayerVisible(polygonLayer, show);
+            foreach (int layer in polygonLayers)
+            {
+                axMap1.set_LayerVisible(layer, show);
+            }
+        }
+
+        public static void togglePolygonMine(bool show)
+        {
+            //axMap1.set_LayerVisible(polygonLayerMine, show);
+            foreach (int layer in polygonLayersMine)
+            {
+                axMap1.set_LayerVisible(layer, show);
+            }
+        }
+
+        public static void ClearPolygon()
+        {
+            //axMap1.RemoveLayer(polygonLayer);
+            //axMap1.RemoveLayer(polygonLayerMine);
+            //initPolygonLayer();
+            foreach (int layer in polygonLayers)
+            {
+                Shapefile sf = axMap1.get_Shapefile(layer);
+                sf.EditClear();
+                //axMap1.RemoveLayer(layer);
+            }
+            foreach (int layer in polygonLayersMine)
+            {
+                Shapefile sf = axMap1.get_Shapefile(layer);
+                sf.EditClear();
+                //axMap1.RemoveLayer(layer);
+            }
+            //initPolygonLayer();
+        }
+
+        public static void ClearHistoryPoints()
+        {
+            foreach (int layer in machinePointLayers)
+            {
+                Shapefile sf = axMap1.get_Shapefile(layer);
+                sf.EditClear();
+                //axMap1.RemoveLayer(layer);
+            }
+            foreach (int layer in machineLineLayers)
+            {
+                Shapefile sf = axMap1.get_Shapefile(layer);
+                sf.EditClear();
+            }
+        }
+
+        public static void Redraw()
+        {
+            axMap1.Redraw();
+        }
+
+        public static void addSuspectPoint(double x, double y)
+        {
+            Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POINT);
+            Point pnt = new Point();
+            //axMap1.PixelToProj(x, y, ref x, ref y);
+            pnt.x = x;
+            pnt.y = y;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt, ref index);
+            index = sf.NumShapes;
+            if (!sf.EditInsertShape(shp, ref index))
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("addSuspectPoint()");
+                return;
+            }
+            axMap1.Redraw();
+        }
+
+        public static void ClearSuspectPoints()
+        {
+            Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
+            sf.EditClear();
         }
     }
 }

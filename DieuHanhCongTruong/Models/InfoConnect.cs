@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver.GeoJsonObjectModel;
+﻿using MIConvexHull;
+using MongoDB.Driver.GeoJsonObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace DieuHanhCongTruong.Models
 {
-    public class InfoConnect
+    public class InfoConnect : IVertex, IVertex2D
     {
+        public InfoConnect()
+        {
+
+        }
+
+        public InfoConnect(double lat, double longt)
+        {
+            lat_value = lat;
+            long_value = longt;
+        }
+
         public MongoDB.Bson.ObjectId _id { get; set; }
         public string code { get; set; }
         public long project_id { get; set; }
@@ -26,5 +38,29 @@ namespace DieuHanhCongTruong.Models
         public double dilution { get; set; }
 
         public double satelliteCount { get; set; }
+
+        public double[] Position
+        {
+            get
+            {
+                return new double[] { lat_value, long_value };
+            }
+        }
+
+        public double X
+        {
+            get
+            {
+                return lat_value;
+            }
+        }
+
+        public double Y
+        {
+            get
+            {
+                return long_value;
+            }
+        }
     }
 }

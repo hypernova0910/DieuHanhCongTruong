@@ -1,10 +1,13 @@
 ﻿using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
+using DieuHanhCongTruong.Models;
+using MIConvexHull;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VNRaPaBomMin;
@@ -178,6 +181,32 @@ namespace DieuHanhCongTruong.Command
         {
             MonitorFormNew form = new MonitorFormNew();
             form.ShowDialog();
+        }
+
+        public static void TuDongPhanTich(object sender, EventArgs e)
+        {
+            if (MyMainMenu2.idDADH <= 0)
+            {
+                MessageBox.Show("Chưa điều hành dự án");
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                return;
+            }
+            foreach(List<CustomFace> triangulation in TINCommand.triangulations)
+            {
+                PhanTichCommand cmd = new PhanTichCommand(triangulation);
+                cmd.Execute();
+            }
+        }
+
+        public static void CapNhatDuLieuTuMayDo(object sender, EventArgs e)
+        {
+            if(MyMainMenu2.idDADH <= 0)
+            {
+                MessageBox.Show("Chưa điều hành dự án");
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                return;
+            }
+            MagneticCommand.Execute(MyMainMenu2.idDADH);
         }
 
         public static void DanhSachBMVN(object sender, EventArgs e)

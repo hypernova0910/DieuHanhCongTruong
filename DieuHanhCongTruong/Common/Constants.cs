@@ -18,7 +18,7 @@ namespace DieuHanhCongTruong.Common
         public static string PPXULY_HUYTAICHO = "Hủy tại chỗ";
         public static string PPXULY_THUGOM = "Thu gom";
 
-        public static string[] colors = {
+        public static string[] MACHINE_COLORS = {
             "#A2231D",
             "#2271B3",
             "#D0D0D0",
@@ -39,6 +39,29 @@ namespace DieuHanhCongTruong.Common
             "#6C7059",
         };
 
+        public static Color[] magnetic_colors =
+        {
+            Color.FromArgb(0,0,192),
+            Color.FromArgb(0,0,255),
+            Color.FromArgb(0,48,255),
+            Color.FromArgb(0,96,255),
+            Color.FromArgb(0,144,255),
+            Color.FromArgb(0,192,255),
+            Color.FromArgb(0,255,255),
+            Color.FromArgb(48,255,192),
+            Color.FromArgb(96,255,144),
+            Color.FromArgb(144,255,96),
+            Color.FromArgb(192,255,48),
+            Color.FromArgb(255,255,0),
+            Color.FromArgb(255,204,0),
+            Color.FromArgb(255,136,0),
+            Color.FromArgb(255,85,0),
+            Color.FromArgb(255,0,0),
+        };
+
         public static string ICON_FOLDER = "machine icons extended";
+
+        public static double MAX_Z_BOMB = 14083.0212603552;
+        public static double MIN_Z_BOMB = -18359.2485593716;
     }
 }
