@@ -61,6 +61,7 @@ namespace VNRaPaBomMin
                     int b = int.Parse(dr["blue"].ToString());
                     Color color = Color.FromArgb(r, g, b);
                     buttonCell.Style.BackColor = color;
+                    buttonCell.Style.SelectionBackColor = color;
                 }
             }
             else
@@ -282,7 +283,7 @@ namespace VNRaPaBomMin
             }
             else if (numDaiMau.Value > DGVThongTin.Rows.Count)
             {
-                while (DGVThongTin.Rows.Count > numDaiMau.Value)
+                while (DGVThongTin.Rows.Count < numDaiMau.Value)
                 {
                     DGVThongTin.Rows.Add("0", "0", "");
                     DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[2];
@@ -355,6 +356,7 @@ namespace VNRaPaBomMin
                 DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[cotColor.Index];
                 Color color = Constants.magnetic_colors[i];
                 buttonCell.Style.BackColor = color;
+                buttonCell.Style.SelectionBackColor = color;
             }
             loaded = true;
         }
