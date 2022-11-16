@@ -24,7 +24,6 @@ namespace DieuHanhCongTruong.Command
 
         public void Execute()
         {
-            //MapMenuCommand.ClearSuspectPoints();
             if (triangles == null)
             {
                 return;

@@ -54,10 +54,14 @@ namespace DieuHanhCongTruong.Forms
             //Điều hành, giám sát
             điềuHànhDựÁnToolStripMenuItem.Click += new EventHandler(MenuCommand2.DieuHanhDuAn);
             nhậnDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.NhanDuLieuMayDo);
-            //Tiện ích
+            //Phân tích dữ liệu
             tựĐộngPhânTíchDữLiệuToolStripMenuItem.Click += new EventHandler(MenuCommand2.TuDongPhanTich);
             cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.CapNhatDuLieuTuMayDo);
+            vẽMặtCắtTừTrườngToolStripMenuItem.Click += new EventHandler(MenuCommand2.VeMatCatTuTruong);
+            phânTíchDảiMàuToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
+            //Tiện ích
+            khoảngCáchToolStripMenuItem.Click += new EventHandler(MenuCommand2.KhoangCach);
             //Menu báo cáo KS
             ks01ToolStripMenuItem.Click += new EventHandler(MenuCommand2.KS01);
             ks02ToolStripMenuItem.Click += new EventHandler(MenuCommand2.KS02);
@@ -147,6 +151,21 @@ namespace DieuHanhCongTruong.Forms
         private void MyMainMenu2_FormClosing(object sender, FormClosingEventArgs e)
         {
             Environment.Exit(Environment.ExitCode);
+        }
+
+        //Khi phân tích sẽ disable một số menu
+        public void TogglePhanTichMenu(bool enable)
+        {
+            ToggleMagneticMenu(enable);
+            cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Enabled = enable;
+        }
+
+        //Menu ẩn
+        public void ToggleMagneticMenu(bool enable)
+        {
+            tựĐộngPhânTíchDữLiệuToolStripMenuItem.Enabled = enable;
+            vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
+            phânTíchDảiMàuToolStripMenuItem.Enabled = enable;
         }
     }
 }

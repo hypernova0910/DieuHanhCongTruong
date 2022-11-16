@@ -8,6 +8,7 @@ using MIConvexHull;
 using DieuHanhCongTruong.Common;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Data;
 //using Autodesk.Civil.DatabaseServices;
 //using Autodesk.AutoCAD.DatabaseServices;
 //using Autodesk.Civil.ApplicationServices;
@@ -64,8 +65,8 @@ namespace DieuHanhCongTruong.Command
                 var triangle = Triangulation.CreateDelaunay<InfoConnect, CustomFace>(lst);
                 if (triangle != null)
                 {
-                    double minZ = double.MaxValue;
-                    double maxZ = double.MinValue;
+                    //double minZ = double.MaxValue;
+                    //double maxZ = double.MinValue;
                     List<CustomFace> lstCell = new List<CustomFace>();
                     foreach (var cell in triangle.Cells)
                     {
@@ -83,64 +84,45 @@ namespace DieuHanhCongTruong.Command
                             }
                             cell.Adjacency = faces.ToArray();
                             lstCell.Add(cell);
-                            foreach (var vertice in cell.Vertices)
-                            {
-                                if (vertice.the_value > maxZ)
-                                {
-                                    maxZ = vertice.the_value;
-                                }
-                                if (vertice.the_value < minZ)
-                                {
-                                    minZ = vertice.the_value;
-                                }
-                            }
+                            //foreach (var vertice in cell.Vertices)
+                            //{
+                            //    if (vertice.the_value > maxZ)
+                            //    {
+                            //        maxZ = vertice.the_value;
+                            //    }
+                            //    if (vertice.the_value < minZ)
+                            //    {
+                            //        minZ = vertice.the_value;
+                            //    }
+                            //}
                         }
                     }
                     triangulations.Add(lstCell);
                     //double elevation = (maxZ - minZ) / MapMenuCommand.magnetic_colors.Length;
-                    double elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / Constants.magnetic_colors.Length;
-                    if (elevation != 0)
-                    {
-                        //foreach (var cell in lstCell)
-                        //{
-                        //    List<double> xPoints_triangle = new List<double>();
-                        //    List<double> yPoints_triangle = new List<double>();
-                        //    //double zSum = 0;
-                        //    foreach (var vertice in cell.Vertices)
-                        //    {
-                        //        double latt = 0, longt = 0;
-                        //        AppUtils.ToLatLon(vertice.Position[0], vertice.Position[1], ref latt, ref longt, "48N");
-                        //        xPoints_triangle.Add(longt);
-                        //        yPoints_triangle.Add(latt);
-                        //    }
-                        //    MapMenuCommand.drawPolygon(xPoints_triangle.ToArray(), yPoints_triangle.ToArray(), Color.Black, false);
-                        //}
-                        for (int i = 0; i < Constants.magnetic_colors.Length; i++)
-                        {
-                            double minElevation = minZ + i * elevation;
-                            double maxElevation = minZ + (i + 1) * elevation;
-                            foreach (var cell in lstCell)
-                            {
-                                List<double> xPoints_triangle = new List<double>();
-                                List<double> yPoints_triangle = new List<double>();
-                                List<InfoConnect> infoConnects = GetGiaoTamGiacMatPhang(cell, minElevation, maxElevation);
-                                if(infoConnects != null)
-                                {
-                                    foreach (var vertice in infoConnects)
-                                    {
-                                        double latt = 0, longt = 0;
-                                        AppUtils.ToLatLon(vertice.Position[0], vertice.Position[1], ref latt, ref longt, "48N");
-                                        xPoints_triangle.Add(longt);
-                                        yPoints_triangle.Add(latt);
-                                    }
-                                    MapMenuCommand.drawPolygon(i, xPoints_triangle.ToArray(), yPoints_triangle.ToArray(), isBomb);
-                                }
-                            }
+                    List<DataRow> lstColor = UtilsDatabase.GetAllDataInTable(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong");
 
+                    if (lstColor.Count > 0)
+                    {
+                        //double minZ = double.Parse(lstColor[0]["min"].ToString());
+                        //double maxZ = double.Parse(lstColor[lstColor.Count - 1]["max"].ToString());
+                        //BuildSurface(lstCell, minZ, maxZ, lstColor.Count);
+                        for(int i = 0; i < lstColor.Count; i++)
+                        {
+                            DataRow dr = lstColor[i];
+                            double min = double.Parse(dr["min"].ToString());
+                            double max = double.Parse(dr["max"].ToString());
+                            BuildOneColorSurface(lstCell, min, max, i);
                         }
                         MapMenuCommand.Redraw();
                     }
-                    
+                    else
+                    {
+                        double minZ = Constants.MIN_Z_BOMB;
+                        double maxZ = Constants.MAX_Z_BOMB;
+                        BuildSurface(lstCell, minZ, maxZ, Constants.magnetic_colors.Length);
+                    }
+
+
 
                 }
 
@@ -314,6 +296,43 @@ namespace DieuHanhCongTruong.Command
             infoConnect.long_value = y;
             infoConnect.the_value = z;
             return infoConnect;
+        }
+
+        public static void BuildSurface(List<CustomFace> lstCell, double minZ, double maxZ, int colorCount)
+        {
+            double elevation = (maxZ - minZ) / colorCount;
+            if (elevation != 0)
+            {
+                for (int i = 0; i < Constants.magnetic_colors.Length; i++)
+                {
+                    double minElevation = minZ + i * elevation;
+                    double maxElevation = minZ + (i + 1) * elevation;
+
+                    BuildOneColorSurface(lstCell, minElevation, maxElevation, i);
+                }
+                MapMenuCommand.Redraw();
+            }
+        }
+
+        public static void BuildOneColorSurface(List<CustomFace> lstCell, double minElevation, double maxElevation, int colorIndex)
+        {
+            foreach (var cell in lstCell)
+            {
+                List<double> xPoints_triangle = new List<double>();
+                List<double> yPoints_triangle = new List<double>();
+                List<InfoConnect> infoConnects = GetGiaoTamGiacMatPhang(cell, minElevation, maxElevation);
+                if (infoConnects != null)
+                {
+                    foreach (var vertice in infoConnects)
+                    {
+                        double latt = 0, longt = 0;
+                        AppUtils.ToLatLon(vertice.Position[0], vertice.Position[1], ref latt, ref longt, "48N");
+                        xPoints_triangle.Add(longt);
+                        yPoints_triangle.Add(latt);
+                    }
+                    MapMenuCommand.drawPolygon(colorIndex, xPoints_triangle.ToArray(), yPoints_triangle.ToArray(), true);
+                }
+            }
         }
     }
 }

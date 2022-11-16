@@ -22,7 +22,7 @@ namespace DieuHanhCongTruong.Command
 {
     class MapMenuCommand
     {
-        private static AxMap axMap1 = MyMainMenu2.Instance.axMap1;
+        public static AxMap axMap1 = MyMainMenu2.Instance.axMap1;
 
         private static List<int> machinePointLayers = new List<int>();
         private static List<int> machinePointModelLayers = new List<int>();
@@ -602,7 +602,7 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        private static void initPolygonLayer()
+        public static void initPolygonLayer()
         {
             //Shapefile sf = new Shapefile();
             ////sf.Open(filename, null);
@@ -619,29 +619,75 @@ namespace DieuHanhCongTruong.Command
             //axMap1.SetDrawingLayerVisible(polygonLayerMine, false);
 
             initPolygonLayerBomb();
-            initPolygonLayerMine();
-
+            //initPolygonLayerMine();
+            //foreach(int layer in polygonLayers)
+            //{
+            //    axMap1.MoveLayerBottom(layer);
+            //}
+            //foreach(int layer in imageLayers)
+            //{
+            //    axMap1.MoveLayerBottom(layer);
+            //}
+            foreach (int layer in machinePointLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+            foreach (int layer in machineLineLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
         }
 
         private static void initPolygonLayerBomb()
         {
-            polygonLayers.Clear();
-            for (int i = 0; i < Constants.magnetic_colors.Length; i++)
+            foreach(int layer in polygonLayers)
             {
-                Shapefile sf_bomb = new Shapefile();
-                if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
-                {
-                    MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
-                    MessageBox.Show("initPolygonLayer()");
-                    return;
-                }
-                sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
-                int layer = axMap1.AddLayer(sf_bomb, MyMainMenu2.Instance.rbtnBomb.Checked);
-                axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
-                //axMap1.set_ShapeLayerDrawLine(layer, false);
-                polygonLayers.Add(layer);
-                //axMap1.set_LayerVisible(polygonLayer, MyMainMenu2.Instance.rbtnBomb.Checked);
+                axMap1.RemoveLayer(layer);
             }
+            polygonLayers.Clear();
+            List<DataRow> lst = UtilsDatabase.GetAllDataInTable(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong");
+
+            if (lst.Count > 0)
+            {
+                foreach (DataRow dr in lst)
+                {
+                    int r = int.Parse(dr["red"].ToString());
+                    int g = int.Parse(dr["green"].ToString());
+                    int b = int.Parse(dr["blue"].ToString());
+                    Color color = Color.FromArgb(r, g, b);
+                    Shapefile sf_bomb = new Shapefile();
+                    if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+                    {
+                        MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
+                        MessageBox.Show("initPolygonLayer()");
+                        return;
+                    }
+                    sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(color);
+                    int layer = axMap1.AddLayer(sf_bomb, true);
+                    axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(color));
+                    //axMap1.set_ShapeLayerDrawLine(layer, false);
+                    polygonLayers.Add(layer);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Constants.magnetic_colors.Length; i++)
+                {
+                    Shapefile sf_bomb = new Shapefile();
+                    if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+                    {
+                        MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
+                        MessageBox.Show("initPolygonLayer()");
+                        return;
+                    }
+                    sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
+                    int layer = axMap1.AddLayer(sf_bomb, true);
+                    axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
+                    //axMap1.set_ShapeLayerDrawLine(layer, false);
+                    polygonLayers.Add(layer);
+                }
+            }
+            
             //Shapefile sf_bomb = new Shapefile();
             //if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
             //{
@@ -655,6 +701,10 @@ namespace DieuHanhCongTruong.Command
 
         private static void initPolygonLayerMine()
         {
+            foreach (int layer in polygonLayersMine)
+            {
+                axMap1.RemoveLayer(layer);
+            }
             polygonLayersMine.Clear();
             for (int i = 0; i < Constants.magnetic_colors.Length; i++)
             {
@@ -710,6 +760,7 @@ namespace DieuHanhCongTruong.Command
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
+            sf.Identifiable = true;
             //MessageBox.Show("axMap1.MoveLayerTop(suspectPointLayer): " + axMap1.MoveLayerTop(suspectPointLayer));
             //axMap1.SendMouseDown = true;
             //axMap1.CursorMode = tkCursorMode.cmNone;

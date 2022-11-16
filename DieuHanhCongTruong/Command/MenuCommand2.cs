@@ -191,7 +191,8 @@ namespace DieuHanhCongTruong.Command
                 MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
                 return;
             }
-            foreach(List<CustomFace> triangulation in TINCommand.triangulations)
+            MapMenuCommand.ClearSuspectPoints();
+            foreach (List<CustomFace> triangulation in TINCommand.triangulations)
             {
                 PhanTichCommand cmd = new PhanTichCommand(triangulation);
                 cmd.Execute();
@@ -209,10 +210,26 @@ namespace DieuHanhCongTruong.Command
             MagneticCommand.Execute(MyMainMenu2.idDADH);
         }
 
+        public static void VeMatCatTuTruong(object sender, EventArgs e)
+        {
+            if (MyMainMenu2.idDADH <= 0)
+            {
+                MessageBox.Show("Chưa điều hành dự án");
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                return;
+            }
+            VeMatCatTuTruongCommand.Execute();
+        }
+
         public static void DanhSachBMVN(object sender, EventArgs e)
         {
             DanhSachBMVN form = new DanhSachBMVN();
             form.ShowDialog();
+        }
+
+        public static void KhoangCach(object sender, EventArgs e)
+        {
+            KhoangCachCommand.Execute();
         }
 
         public static void DoiMK(object sender, EventArgs e)
@@ -275,6 +292,12 @@ namespace DieuHanhCongTruong.Command
             {
                 MyMainMenu2.Instance.Close();
             }
+        }
+
+        public static void PhanTichDaiMau(object sender, EventArgs e)
+        {
+            PhanTichDaiMauTuTruong form = new PhanTichDaiMauTuTruong();
+            form.ShowDialog();
         }
     }
 }

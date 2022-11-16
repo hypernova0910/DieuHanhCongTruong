@@ -1,4 +1,5 @@
 ﻿using DieuHanhCongTruong.Common;
+using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
 using DieuHanhCongTruong.Models;
 using MIConvexHull;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DieuHanhCongTruong.Command
 {
@@ -20,12 +22,21 @@ namespace DieuHanhCongTruong.Command
     {
         private List<string> lstMayBom = new List<string>();
         private List<string> lstMayMin = new List<string>();
+        public static bool threadMagneticStopped = true;
+        public static bool threadPointStopped = true;
 
         public static void Execute(long idDA)
         {
             MagneticCommand command = new MagneticCommand();
             Thread thread = new Thread(() =>
             {
+                if (MyMainMenu2.Instance.InvokeRequired)
+                {
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+
+                        MyMainMenu2.Instance.TogglePhanTichMenu(false);
+                    }));
+                }
                 command.ExecutePrivate(idDA);
             });
             thread.IsBackground = true;
@@ -76,6 +87,36 @@ namespace DieuHanhCongTruong.Command
                     TINCommand.BuildDelaunayTriangulation(lstPointBomb, true);
                     //TINCommand.BuildDelaunayTriangulation(lstPointMine, false);
                 }
+                //if (ThreadManager.CheckThread(Thread.CurrentThread))
+                //{
+                //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                //}
+                threadMagneticStopped = true;
+                if (MyMainMenu2.Instance.InvokeRequired)
+                {
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+
+                        MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                    }));
+                }
+                //else
+                //{
+                //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                //}
+                if (threadMagneticStopped && threadPointStopped)
+                {
+                    if (MyMainMenu2.Instance.InvokeRequired)
+                    {
+                        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+
+                            MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                        }));
+                    }
+                    //else
+                    //{
+                    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                    //}
+                }
             });
             Thread threadPoint = new Thread(() =>
             {
@@ -88,9 +129,31 @@ namespace DieuHanhCongTruong.Command
                     MapMenuCommand.LoadPointsHistory(lstPointBomb);
                     MapMenuCommand.LoadPointsHistory(lstPointMine);
                 }
+                //if (ThreadManager.CheckThread(Thread.CurrentThread))
+                //{
+                //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                //}
+                threadPointStopped = true;
+                if (threadMagneticStopped && threadPointStopped)
+                {
+                    if (MyMainMenu2.Instance.InvokeRequired)
+                    {
+                        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                            MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                        }));
+                    }
+                    //else
+                    //{
+                    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                    //}
+                }
             });
             threadMagnetic.IsBackground = true;
             threadPoint.IsBackground = true;
+            //ThreadManager.threadPhanTichOffline.Add(threadMagnetic);
+            //ThreadManager.threadPhanTichOffline.Add(threadPoint);
+            threadMagneticStopped = false;
+            threadPointStopped = false;
             threadMagnetic.Start();
             threadPoint.Start();
         }

@@ -178,18 +178,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\ChiaMatCatCmd.cs" />
+    <Compile Include="Command\KhoangCachCommand.cs" />
     <Compile Include="Command\MapMenuCommand.cs" />
     <Compile Include="Command\MenuCommand.cs" />
     <Compile Include="Command\MenuCommand2.cs" />
     <Compile Include="Command\MagneticCommand.cs" />
     <Compile Include="Command\TINCommand.cs" />
     <Compile Include="Command\PhanTichCommand.cs" />
+    <Compile Include="Command\VeMatCatTuTruongCommand.cs" />
     <Compile Include="Common\AppUtils.cs" />
     <Compile Include="Common\AutoDivide.cs" />
     <Compile Include="Common\ConnectionWithExtraInfo.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Logincmd.cs" />
     <Compile Include="Common\Regexes.cs" />
+    <Compile Include="Common\ThreadManager.cs" />
     <Compile Include="Common\TinhObject.cs" />
     <Compile Include="Common\UtilsDatabase.cs" />
     <Compile Include="CustomControl\CheckBoxComboBox\CheckBoxComboBox.cs">
@@ -405,6 +408,18 @@
     </Compile>
     <Compile Include="Forms\MyMainMenu2.Designer.cs">
       <DependentUpon>MyMainMenu2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\DanhSachBMVN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\DanhSachBMVN.Designer.cs">
+      <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\PhanTichDaiMauTuTruong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\PhanTichDaiMauTuTruong.Designer.cs">
+      <DependentUpon>PhanTichDaiMauTuTruong.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReportKS\CecmReportDailyBMVN.cs" />
     <Compile Include="Forms\ReportKS\CecmReportDailyKQKS.cs" />
@@ -787,12 +802,6 @@
       <DependentUpon>FrmThemmoiRPBM9.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReportRPBM\groundDeliveryRecordsDTO.cs" />
-    <Compile Include="Forms\TienIch\DanhSachBMVN.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TienIch\DanhSachBMVN.Designer.cs">
-      <DependentUpon>DanhSachBMVN.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Boundary.cs" />
     <Compile Include="Models\CecmProgramAreaLineDTO.cs" />
     <Compile Include="Models\CustomTimeout.cs">
@@ -906,6 +915,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MyMainMenu2.resx">
       <DependentUpon>MyMainMenu2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\DanhSachBMVN.resx">
+      <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\PhanTichDaiMauTuTruong.resx">
+      <DependentUpon>PhanTichDaiMauTuTruong.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReportKS\CompressedFile.resx">
       <DependentUpon>CompressedFile.cs</DependentUpon>
@@ -1083,9 +1098,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReportRPBM\FrmThemmoiRPBM9.resx">
       <DependentUpon>FrmThemmoiRPBM9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TienIch\DanhSachBMVN.resx">
-      <DependentUpon>DanhSachBMVN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
