@@ -27,6 +27,9 @@ namespace DieuHanhCongTruong.Forms
         private void CustomizeDesign()
         {
             SetTagForSubMenu();
+            tabCtrlLineChart.Height = 0;
+            pnlChonDiemMatCat.Height = 0;
+            //toolTipMap.SetToolTip(pnlMain, "Chọn rãnh dò");
         }
 
         private delegate void MenuCommandDelegate();
@@ -58,6 +61,7 @@ namespace DieuHanhCongTruong.Forms
             tựĐộngPhânTíchDữLiệuToolStripMenuItem.Click += new EventHandler(MenuCommand2.TuDongPhanTich);
             cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.CapNhatDuLieuTuMayDo);
             vẽMặtCắtTừTrườngToolStripMenuItem.Click += new EventHandler(MenuCommand2.VeMatCatTuTruong);
+            tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Click += new EventHandler(MenuCommand2.TimDiemTuTruongMatCat);
             phânTíchDảiMàuToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
             //Tiện ích
@@ -157,7 +161,7 @@ namespace DieuHanhCongTruong.Forms
         public void TogglePhanTichMenu(bool enable)
         {
             ToggleMagneticMenu(enable);
-            cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Enabled = enable;
+            TogglePointMenu(enable);
         }
 
         //Menu ẩn
@@ -166,6 +170,63 @@ namespace DieuHanhCongTruong.Forms
             tựĐộngPhânTíchDữLiệuToolStripMenuItem.Enabled = enable;
             vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
             phânTíchDảiMàuToolStripMenuItem.Enabled = enable;
+        }
+
+        public void TogglePointMenu(bool enable)
+        {
+            cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Enabled = enable;
+        }
+
+        private void tabCtrlLineChart_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            //e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            //e.Graphics.DrawString(this.tabCtrlLineChart.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
+            //e.DrawFocusRectangle();
+            var tabPage = this.tabCtrlLineChart.TabPages[e.Index];
+            var tabRect = this.tabCtrlLineChart.GetTabRect(e.Index);
+            var closeImage = Properties.Resources.Delete;
+            e.Graphics.DrawImage(closeImage,
+                (tabRect.Right - closeImage.Width),
+                tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
+            TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
+                tabRect, tabPage.ForeColor, TextFormatFlags.Left);
+        }
+
+        private void tabCtrlLineChart_MouseDown(object sender, MouseEventArgs e)
+        {
+            //Looping through the controls.
+            //for (int i = 0; i < this.tabCtrlLineChart.TabPages.Count; i++)
+            //{
+            //    Rectangle r = tabCtrlLineChart.GetTabRect(i);
+            //    //Getting the position of the "x" mark.
+            //    Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
+            //    if (closeButton.Contains(e.Location))
+            //    {
+            //        this.tabCtrlLineChart.TabPages.RemoveAt(i);
+            //        break;
+            //    }
+            //}
+            var closeImage = Properties.Resources.Delete;
+            for (var i = 0; i < this.tabCtrlLineChart.TabPages.Count; i++)
+            {
+                var tabRect = this.tabCtrlLineChart.GetTabRect(i);
+                tabRect.Inflate(-2, -2);
+                
+                var imageRect = new Rectangle(
+                    (tabRect.Right - closeImage.Width),
+                    tabRect.Top + (tabRect.Height - closeImage.Height) / 2,
+                    closeImage.Width,
+                    closeImage.Height);
+                if (imageRect.Contains(e.Location))
+                {
+                    this.tabCtrlLineChart.TabPages.RemoveAt(i);
+                    break;
+                }
+            }
+            if(tabCtrlLineChart.TabPages.Count == 0)
+            {
+                tabCtrlLineChart.Height = 0;
+            }
         }
     }
 }

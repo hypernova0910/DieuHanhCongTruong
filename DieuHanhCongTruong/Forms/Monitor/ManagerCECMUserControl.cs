@@ -138,36 +138,83 @@ namespace VNRaPaBomMin
         private void quảnLýDựÁnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Get fist node
-            TreeNode node = TVDanhSach.SelectedNode;
-            if (node == null)
-                return;
-            while (node.Parent != null)
-            {
-                node = node.Parent;
-            }
+            //TreeNode node = TVDanhSach.SelectedNode;
+            //if (node == null)
+            //    return;
+            //while (node.Parent != null)
+            //{
+            //    node = node.Parent;
+            //}
 
-            if (TVDanhSach.SelectedNode == null || TVDanhSach.SelectedNode.Tag == null)
-                return;
-            int.TryParse(TVDanhSach.SelectedNode.Tag.ToString(), out _IDDuAn);
+            //if (TVDanhSach.SelectedNode == null || TVDanhSach.SelectedNode.Tag == null)
+            //    return;
+            //int.TryParse(TVDanhSach.SelectedNode.Tag.ToString(), out _IDDuAn);
 
-            int programId = int.Parse(TVDanhSach.SelectedNode.Tag.ToString());
+            //int programId = int.Parse(TVDanhSach.SelectedNode.Tag.ToString());
 
-            CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
-            frm.ShowDialog();
+            //CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
+            //frm.ShowDialog();
 
-            DieuHanhDuAn(frm);
+            //DieuHanhDuAn(frm);
+
+
+            isClick = true;
+            _IDDuAn = GetIdDuAnChaByNodeSelected(TVDanhSach.SelectedNode);
+
+            //CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
+            //frm.LoadData();
+            //frm.DieuHanhDuAn();
+            //try
+            //{
+            //    UtilsDatabase._ExtraInfoConnettion.Transaction.Rollback();
+            //}
+            //catch (Exception)
+            //{
+            //}
+
+            //if (frm.DialogResult == DialogResult.OK)
+            //{
+            //    //string strTemplatePath = "acad.dwg";
+
+            //    //var appLocation = AppUtils.GetAppDataPath();
+            //    //string fileLocation = System.IO.Path.Combine(appLocation, strTemplatePath);
+            //    //if (System.IO.File.Exists(fileLocation) == false)
+            //    //{
+            //    //    MessageBox.Show("Không tìm thấy file template .Dwg");
+            //    //    return;
+            //    //}
+            //    //DocumentCollection acDocMgr = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager;
+            //    //acDocMgr.CloseAll();
+            //    //Document acDoc = acDocMgr.Add(fileLocation);
+            //    //acDocMgr.MdiActiveDocument = acDoc;
+
+            //}
+            //using (DocumentLock acLdoc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.LockDocument())
+            //{
+            //    if (frm.DialogResult == DialogResult.OK)
+            //    {
+            //        TaoDiemDoCMD cmd = new TaoDiemDoCMD();
+            //        cmd.Import(true);
+
+            //        ChuanBiBanVeCmd cmdChuanBiBanVeCmd = new ChuanBiBanVeCmd();
+            //        cmdChuanBiBanVeCmd.ExecuteCMD(frm._TenDuAn, frm._IdDuAn);
+            //    }
+            //}
+
+            DieuHanhDuAn();
+            isManaging = true;
         }
 
-        private void DieuHanhDuAn(CapNhatDuAnNew frm)
+        private void DieuHanhDuAn()
         {
-            if (frm.DialogResult == System.Windows.Forms.DialogResult.OK)
-            {
+            //if (frm.DialogResult == System.Windows.Forms.DialogResult.OK)
+            //{
                 //TaoDiemDoCMD cmdDiemDo = new TaoDiemDoCMD();
                 //cmdDiemDo.ExecuteCMD(frm._TenDuAn, frm._IdDuAn, true);
-                MyMainMenu2.idDADH = frm._IdDuAn;
-                MapMenuCommand.LoadDuAn(frm._IdDuAn);
-                MagneticCommand.Execute(frm._IdDuAn);
-            }
+                MyMainMenu2.idDADH = _IDDuAn;
+                MapMenuCommand.LoadDuAn(_IDDuAn);
+                MagneticCommand.Execute(_IDDuAn);
+            //}
             //else if (frm.DialogResult == System.Windows.Forms.DialogResult.Yes)
             //{
             //    if (DBUtils.OpenDWFFile(frm._DWGFile))
@@ -559,52 +606,52 @@ namespace VNRaPaBomMin
 
         private void TVDanhSach_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            isClick = true;
-            _IDDuAn = GetIdDuAnChaByNodeSelected(e.Node);
+            //isClick = true;
+            //_IDDuAn = GetIdDuAnChaByNodeSelected(e.Node);
 
-            CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
-            frm.LoadData();
-            frm.DieuHanhDuAn();
-            try
-            {
-                UtilsDatabase._ExtraInfoConnettion.Transaction.Rollback();
-            }
-            catch (Exception)
-            {
-            }
-
-            if (frm.DialogResult == DialogResult.OK)
-            {
-                //string strTemplatePath = "acad.dwg";
-
-                //var appLocation = AppUtils.GetAppDataPath();
-                //string fileLocation = System.IO.Path.Combine(appLocation, strTemplatePath);
-                //if (System.IO.File.Exists(fileLocation) == false)
-                //{
-                //    MessageBox.Show("Không tìm thấy file template .Dwg");
-                //    return;
-                //}
-                //DocumentCollection acDocMgr = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager;
-                //acDocMgr.CloseAll();
-                //Document acDoc = acDocMgr.Add(fileLocation);
-                //acDocMgr.MdiActiveDocument = acDoc;
-
-            }
-            //using (DocumentLock acLdoc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.LockDocument())
+            //CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
+            //frm.LoadData();
+            //frm.DieuHanhDuAn();
+            //try
             //{
-            //    if (frm.DialogResult == DialogResult.OK)
-            //    {
-            //        TaoDiemDoCMD cmd = new TaoDiemDoCMD();
-            //        cmd.Import(true);
-
-            //        ChuanBiBanVeCmd cmdChuanBiBanVeCmd = new ChuanBiBanVeCmd();
-            //        cmdChuanBiBanVeCmd.ExecuteCMD(frm._TenDuAn, frm._IdDuAn);
-            //    }
+            //    UtilsDatabase._ExtraInfoConnettion.Transaction.Rollback();
+            //}
+            //catch (Exception)
+            //{
             //}
 
-            DieuHanhDuAn(frm);
+            //if (frm.DialogResult == DialogResult.OK)
+            //{
+            //    //string strTemplatePath = "acad.dwg";
+
+            //    //var appLocation = AppUtils.GetAppDataPath();
+            //    //string fileLocation = System.IO.Path.Combine(appLocation, strTemplatePath);
+            //    //if (System.IO.File.Exists(fileLocation) == false)
+            //    //{
+            //    //    MessageBox.Show("Không tìm thấy file template .Dwg");
+            //    //    return;
+            //    //}
+            //    //DocumentCollection acDocMgr = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager;
+            //    //acDocMgr.CloseAll();
+            //    //Document acDoc = acDocMgr.Add(fileLocation);
+            //    //acDocMgr.MdiActiveDocument = acDoc;
+
+            //}
+            ////using (DocumentLock acLdoc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.LockDocument())
+            ////{
+            ////    if (frm.DialogResult == DialogResult.OK)
+            ////    {
+            ////        TaoDiemDoCMD cmd = new TaoDiemDoCMD();
+            ////        cmd.Import(true);
+
+            ////        ChuanBiBanVeCmd cmdChuanBiBanVeCmd = new ChuanBiBanVeCmd();
+            ////        cmdChuanBiBanVeCmd.ExecuteCMD(frm._TenDuAn, frm._IdDuAn);
+            ////    }
+            ////}
+
+            //DieuHanhDuAn(frm);
             
-            isManaging = true;
+            
         }
 
         private void deleteProgramDataItem_Click(object sender, EventArgs e)

@@ -72,7 +72,7 @@ namespace DieuHanhCongTruong.Command
             else
             {
                 List<InfoConnect> polygon_temp = new List<InfoConnect>();
-                //zMin
+                //z0
                 InfoConnect A = TINCommand.GiaoDoanThangMatPhang(cell.Vertices[0], cell.Vertices[1], z0);
                 if (A != null)
                 {

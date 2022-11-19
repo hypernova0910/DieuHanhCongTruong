@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\ChiaMatCatCmd.cs" />
+    <Compile Include="Command\TimDiemMatCatCommand.cs" />
     <Compile Include="Command\KhoangCachCommand.cs" />
     <Compile Include="Command\MapMenuCommand.cs" />
     <Compile Include="Command\MenuCommand.cs" />
@@ -414,6 +415,12 @@
     </Compile>
     <Compile Include="Forms\PhanTich\DanhSachBMVN.Designer.cs">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\MatCatTuTruong.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\MatCatTuTruong.Designer.cs">
+      <DependentUpon>MatCatTuTruong.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PhanTich\PhanTichDaiMauTuTruong.cs">
       <SubType>Form</SubType>
@@ -918,6 +925,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\DanhSachBMVN.resx">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\MatCatTuTruong.resx">
+      <DependentUpon>MatCatTuTruong.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\PhanTichDaiMauTuTruong.resx">
       <DependentUpon>PhanTichDaiMauTuTruong.cs</DependentUpon>

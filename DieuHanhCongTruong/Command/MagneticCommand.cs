@@ -22,8 +22,8 @@ namespace DieuHanhCongTruong.Command
     {
         private List<string> lstMayBom = new List<string>();
         private List<string> lstMayMin = new List<string>();
-        public static bool threadMagneticStopped = true;
-        public static bool threadPointStopped = true;
+        //public static bool threadMagneticStopped = true;
+        //public static bool threadPointStopped = true;
 
         public static void Execute(long idDA)
         {
@@ -84,14 +84,14 @@ namespace DieuHanhCongTruong.Command
                     List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
                     List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
 
-                    TINCommand.BuildDelaunayTriangulation(lstPointBomb, true);
+                    TINCommand.BuildDelaunayTriangulation(lstPointBomb, true, pair_idKV__Points.Key);
                     //TINCommand.BuildDelaunayTriangulation(lstPointMine, false);
                 }
                 //if (ThreadManager.CheckThread(Thread.CurrentThread))
                 //{
                 //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
                 //}
-                threadMagneticStopped = true;
+                //threadMagneticStopped = true;
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {
                     MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
@@ -103,20 +103,20 @@ namespace DieuHanhCongTruong.Command
                 //{
                 //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
                 //}
-                if (threadMagneticStopped && threadPointStopped)
-                {
-                    if (MyMainMenu2.Instance.InvokeRequired)
-                    {
-                        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                //if (threadMagneticStopped && threadPointStopped)
+                //{
+                //    if (MyMainMenu2.Instance.InvokeRequired)
+                //    {
+                //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
 
-                            MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                        }));
-                    }
-                    //else
-                    //{
-                    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                    //}
-                }
+                //            MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                //        }));
+                //    }
+                //    //else
+                //    //{
+                //    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                //    //}
+                //}
             });
             Thread threadPoint = new Thread(() =>
             {
@@ -133,27 +133,27 @@ namespace DieuHanhCongTruong.Command
                 //{
                 //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
                 //}
-                threadPointStopped = true;
-                if (threadMagneticStopped && threadPointStopped)
-                {
+                //threadPointStopped = true;
+                //if (threadMagneticStopped && threadPointStopped)
+                //{
                     if (MyMainMenu2.Instance.InvokeRequired)
                     {
                         MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-                            MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                            MyMainMenu2.Instance.TogglePointMenu(true);
                         }));
                     }
                     //else
                     //{
                     //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
                     //}
-                }
+                //}
             });
             threadMagnetic.IsBackground = true;
             threadPoint.IsBackground = true;
             //ThreadManager.threadPhanTichOffline.Add(threadMagnetic);
             //ThreadManager.threadPhanTichOffline.Add(threadPoint);
-            threadMagneticStopped = false;
-            threadPointStopped = false;
+            //threadMagneticStopped = false;
+            //threadPointStopped = false;
             threadMagnetic.Start();
             threadPoint.Start();
         }

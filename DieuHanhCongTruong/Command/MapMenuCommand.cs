@@ -4,6 +4,7 @@ using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
 using DieuHanhCongTruong.Models;
 using MapWinGIS;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -58,6 +59,7 @@ namespace DieuHanhCongTruong.Command
         private static int highlightLayer = -1;
         private static int highlightCurrentPointLayer = -1;
         private static int highlightCurrentPointModelLayer = -1;
+        public static int ranhDoLayer = -1;
         //private static List<int> polygonLayers = new List<int>();
 
         private static Dictionary<string, Color> machineActive__color = new Dictionary<string, Color>();
@@ -95,34 +97,26 @@ namespace DieuHanhCongTruong.Command
         public static void LoadMap()
         {
             activeMachineColor = Constants.MACHINE_COLORS.Select(color => ColorTranslator.FromHtml(color)).ToArray();
-            //InitImageLayer();
             initPolygonLayer();
             InitPointImageLayer();
             InitLineLayer();
-            //InitPointImageModelLayer();
-            //InitLineModelLayer();
-            //InitPointImageModelHistoryLayer();
-            //InitLineModelHistoryLayer();
-            //InitPointImageRealTimeLayer();
-            //InitLineRealTimeLayer();
-            //InitPointImageRealTimeModelLayer();
-            //InitLineRealTimeModelLayer();
             InitSuspectPointLayer();
-            InitSuspectPointMineLayer();
-            InitFlagLayer();
-            InitFlagRealTimeLayer();
-            InitDeepLayer();
-            InitGreenFlagLayer();
-            InitMachineLayer();
-            InitDistancePointLayer();
-            InitHighlightLayer();
-            InitHighlightCurrentPointLayer();
-            InitHighlightCurrentPointModelLayer();
+            //InitSuspectPointMineLayer();
+            //InitFlagLayer();
+            //InitFlagRealTimeLayer();
+            //InitDeepLayer();
+            //InitGreenFlagLayer();
+            //InitMachineLayer();
+            //InitDistancePointLayer();
+            //InitHighlightLayer();
+            //InitHighlightCurrentPointLayer();
+            //InitHighlightCurrentPointModelLayer();
             lineLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             labelLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             //tooltipLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             //markerDistanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             distanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            InitRanhDoLayer();
         }
 
         public static void LoadImage(string path, double xmax, double xmin, double ymax, double ymin)
@@ -250,6 +244,7 @@ namespace DieuHanhCongTruong.Command
                     MessageBox.Show("InitPointImageLayer()");
                     return;
                 }
+                sf.Identifiable = false;
                 layer = axMap1.AddLayer(sf, true);
                 machinePointLayers.Add(layer);
                 ShapeDrawingOptions options = sf.DefaultDrawingOptions;
@@ -288,6 +283,7 @@ namespace DieuHanhCongTruong.Command
                 //int index = sf.NumShapes;
                 //sf.EditInsertShape(shp, ref index);
                 //var sf = CreateLines();
+                sf.Identifiable = false;
                 int layer = axMap1.AddLayer(sf, true);
                 machineLineLayers.Add(layer);
 
@@ -306,6 +302,34 @@ namespace DieuHanhCongTruong.Command
                 options.LinePattern = pattern;
                 options.UseLinePattern = true;
             }
+        }
+
+        private static void InitRanhDoLayer()
+        {
+            var sf = new Shapefile();
+            sf.CreateNew("", ShpfileType.SHP_POLYLINE);
+            //Shape shp = new Shape();
+            //shp.Create(ShpfileType.SHP_POLYLINE);
+            //int index = sf.NumShapes;
+            //sf.EditInsertShape(shp, ref index);
+            //var sf = CreateLines();
+            sf.Identifiable = true;
+            ranhDoLayer = axMap1.AddLayer(sf, true);
+
+            ShapeDrawingOptions options = sf.DefaultDrawingOptions;
+            options.LineColor = AppUtils.ColorToUint(Color.White);
+            options.LineWidth = 2;
+
+            //MapWinGIS.LinePattern pattern = new MapWinGIS.LinePattern();
+            //pattern.AddLine(AppUtils.ColorToUint(ColorTranslator.FromHtml(color)), 2, tkDashStyle.dsSolid);
+            //LineSegment segm = pattern.AddMarker(tkDefaultPointSymbol.dpsArrowDown);
+            //segm.Color = AppUtils.ColorToUint(Color.Black);
+            //segm.MarkerSize = 15;
+            //segm.MarkerInterval = 32;
+            //segm.MarkerIntervalIsRelative = false;
+            //segm.MarkerOrientation = tkLineLabelOrientation.lorParallel;
+            //options.LinePattern = pattern;
+            //options.UseLinePattern = true;
         }
 
         private static void InitPointImageModelLayer()
@@ -636,6 +660,10 @@ namespace DieuHanhCongTruong.Command
             {
                 axMap1.MoveLayerTop(layer);
             }
+            if(suspectPointLayer > 0)
+            {
+                axMap1.MoveLayerTop(suspectPointLayer);
+            }
         }
 
         private static void initPolygonLayerBomb()
@@ -655,15 +683,16 @@ namespace DieuHanhCongTruong.Command
                     int g = int.Parse(dr["green"].ToString());
                     int b = int.Parse(dr["blue"].ToString());
                     Color color = Color.FromArgb(r, g, b);
-                    Shapefile sf_bomb = new Shapefile();
-                    if (!sf_bomb.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+                    Shapefile sf = new Shapefile();
+                    if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
                     {
-                        MessageBox.Show("Failed to create shapefile: " + sf_bomb.ErrorMsg[sf_bomb.LastErrorCode]);
+                        MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
                         MessageBox.Show("initPolygonLayer()");
                         return;
                     }
-                    sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(color);
-                    int layer = axMap1.AddLayer(sf_bomb, true);
+                    sf.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(color);
+                    sf.Identifiable = false;
+                    int layer = axMap1.AddLayer(sf, true);
                     axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(color));
                     //axMap1.set_ShapeLayerDrawLine(layer, false);
                     polygonLayers.Add(layer);
@@ -760,7 +789,7 @@ namespace DieuHanhCongTruong.Command
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
-            sf.Identifiable = true;
+            sf.Identifiable = false;
             //MessageBox.Show("axMap1.MoveLayerTop(suspectPointLayer): " + axMap1.MoveLayerTop(suspectPointLayer));
             //axMap1.SendMouseDown = true;
             //axMap1.CursorMode = tkCursorMode.cmNone;
@@ -1133,7 +1162,7 @@ namespace DieuHanhCongTruong.Command
             SetBound(xmin, ymin, xmax, ymax);
         }
 
-        public static void LoadKhuVuc(long idKV, long idDA)
+        public static void LoadKhuVuc(long idKV, long idDA, int indexKV)
         {
             SqlDataAdapter sqlAdapter = null;
             DataTable datatable = new DataTable();
@@ -1215,13 +1244,16 @@ namespace DieuHanhCongTruong.Command
                         line.cecmprogram_id = cecmprogram_id;
                         line.cecmprogramareamap_id = cecmprogramareamap_id;
                         line.cecmprogramareasub_id = cecmprogramareasub_id;
-                        line.start_x = lattStart;
-                        line.start_y = longtStart;
-                        line.end_x = lattEnd;
-                        line.end_y = longtEnd;
+                        line.start_y = lattStart;
+                        line.start_x = longtStart;
+                        line.end_y = lattEnd;
+                        line.end_x = longtEnd;
+                        line.code = (index + 1).ToString();
                         //lstRanhDo.Add(line);
                         index++;
-                        axMap1.DrawLineEx(lineLayer, line.start_y, line.start_x, line.end_y, line.end_x, 1, AppUtils.ColorToUint(Color.White));
+                        //axMap1.DrawLineEx(lineLayer, line.start_y, line.start_x, line.end_y, line.end_x, 1, AppUtils.ColorToUint(Color.White));
+                        string json = JsonConvert.SerializeObject(line, Formatting.Indented);
+                        addRanhDo(line.start_x, line.start_y, line.end_x, line.end_y, json);
                         if (index % 2 == 1)
                         {
                             axMap1.DrawLabelEx(lineLayer, index.ToString(), line.start_y, line.start_x, 0);
@@ -1248,6 +1280,8 @@ namespace DieuHanhCongTruong.Command
             }
             imageLayers.Clear();
             axMap1.ClearDrawing(oluoiLayer);
+            Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
+            sf.EditClear();
             SqlDataAdapter sqlAdapter = null;
             DataTable datatable = new DataTable();
             string sql = "SELECT " +
@@ -1255,10 +1289,12 @@ namespace DieuHanhCongTruong.Command
                 "FROM cecm_program_area_map where cecm_program_id = " + idDA;
             sqlAdapter = new SqlDataAdapter(sql, frmLoggin.sqlCon);
             sqlAdapter.Fill(datatable);
+            int indexKV = 0;
             foreach (DataRow dr in datatable.Rows)
             {
                 long.TryParse(dr["id"].ToString(), out long idKV);
-                LoadKhuVuc(idKV, idDA);
+                LoadKhuVuc(idKV, idDA, indexKV);
+                indexKV++;
             }
         }
 
@@ -1440,6 +1476,30 @@ namespace DieuHanhCongTruong.Command
             pnt.y = y;
             int index = shp.numPoints;
             shp.InsertPoint(pnt, ref index);
+            //axMap1.Redraw();
+        }
+
+        private static void addRanhDo(double x_start, double y_start, double x_end, double y_end, string json)
+        {
+            //getLayerLineForMachines(codeMachine);
+            Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POLYLINE);
+            shp.Key = json;
+            int indexShape = sf.NumShapes;
+            sf.EditInsertShape(shp, ref indexShape);
+
+            Point pnt_start = new Point();
+            pnt_start.x = x_start;
+            pnt_start.y = y_start;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt_start, ref index);
+
+            Point pnt_end = new Point();
+            pnt_end.x = x_end;
+            pnt_end.y = y_end;
+            index = shp.numPoints;
+            shp.InsertPoint(pnt_end, ref index);
             //axMap1.Redraw();
         }
 

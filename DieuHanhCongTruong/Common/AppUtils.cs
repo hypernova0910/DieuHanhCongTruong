@@ -1754,6 +1754,12 @@ namespace DieuHanhCongTruong.Common
             return distance;
         }
 
+        public static double DistanceUTM(double latt1, double longt1, double latt2, double longt2)
+        {
+            double distance = Math.Sqrt(Math.Pow(latt1 - latt2, 2) + Math.Pow(longt1 - longt2, 2));
+            return distance;
+        }
+
         public static double CalculateAngle(double x1, double y1, double x2, double y2)
         {
             double deltaX = x2 - x1;

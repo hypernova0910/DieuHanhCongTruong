@@ -192,7 +192,7 @@ namespace DieuHanhCongTruong.Command
                 return;
             }
             MapMenuCommand.ClearSuspectPoints();
-            foreach (List<CustomFace> triangulation in TINCommand.triangulations)
+            foreach (List<CustomFace> triangulation in TINCommand.triangulations.Values)
             {
                 PhanTichCommand cmd = new PhanTichCommand(triangulation);
                 cmd.Execute();
@@ -219,6 +219,17 @@ namespace DieuHanhCongTruong.Command
                 return;
             }
             VeMatCatTuTruongCommand.Execute();
+        }
+
+        public static void TimDiemTuTruongMatCat(object sender, EventArgs e)
+        {
+            if (MyMainMenu2.Instance.tabCtrlLineChart.SelectedIndex == -1)
+            {
+                MessageBox.Show("Chưa vẽ mặt cắt từ trường");
+                return;
+            }
+            TimDiemMatCatCommand cmd = new TimDiemMatCatCommand();
+            cmd.Execute();
         }
 
         public static void DanhSachBMVN(object sender, EventArgs e)

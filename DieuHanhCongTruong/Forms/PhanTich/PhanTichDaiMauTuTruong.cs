@@ -206,7 +206,7 @@ namespace VNRaPaBomMin
                     MyMainMenu2.Instance.TogglePhanTichMenu(false);
                     Thread thread = new Thread(() =>
                     {
-                        foreach (var triangle in TINCommand.triangulations)
+                        foreach (var triangle in TINCommand.triangulations.Values)
                         {
                             for (int i = 0; i < DGVThongTin.Rows.Count; i++)
                             {
@@ -217,7 +217,7 @@ namespace VNRaPaBomMin
                             }
                             MapMenuCommand.Redraw();
                         }
-                        MagneticCommand.threadMagneticStopped = true;
+                        //MagneticCommand.threadMagneticStopped = true;
                         if (MyMainMenu2.Instance.InvokeRequired)
                         {
                             MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
@@ -229,23 +229,23 @@ namespace VNRaPaBomMin
                         //{
                         //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
                         //}
-                        if (MagneticCommand.threadMagneticStopped && MagneticCommand.threadPointStopped)
-                        {
-                            if (MyMainMenu2.Instance.InvokeRequired)
-                            {
-                                MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                        //if (MagneticCommand.threadMagneticStopped && MagneticCommand.threadPointStopped)
+                        //{
+                        //    if (MyMainMenu2.Instance.InvokeRequired)
+                        //    {
+                        //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
 
-                                    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                                }));
-                            }
-                            //else
-                            //{
-                            //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                            //}
-                        }
+                        //            MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                        //        }));
+                        //    }
+                        //    //else
+                        //    //{
+                        //    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                        //    //}
+                        //}
                     });
                     thread.IsBackground = true;
-                    MagneticCommand.threadMagneticStopped = false;
+                    //MagneticCommand.threadMagneticStopped = false;
                     thread.Start();
                 }
             }

@@ -19,7 +19,7 @@ namespace DieuHanhCongTruong.Command
     {
         private const double MAX_TRIANGLE_LENGTH = 10;
 
-        public static List<List<CustomFace>> triangulations = new List<List<CustomFace>>();
+        public static Dictionary<long, List<CustomFace>> triangulations = new Dictionary<long, List<CustomFace>>();
         
 
         public static IList<DefaultVertex2D> BuildConvexHull(List<InfoConnect> lst)
@@ -49,12 +49,13 @@ namespace DieuHanhCongTruong.Command
 
         
 
-        public static void BuildDelaunayTriangulation(List<InfoConnect> lst, bool isBomb)
+        public static void BuildDelaunayTriangulation(List<InfoConnect> lst, bool isBomb, long idKV)
         {
             try
             {
                 if (lst.Count == 0)
                 {
+                    triangulations.Add(idKV, new List<CustomFace>());
                     return;
                 }
                 List<double[]> vertices = new List<double[]>();
@@ -97,7 +98,7 @@ namespace DieuHanhCongTruong.Command
                             //}
                         }
                     }
-                    triangulations.Add(lstCell);
+                    triangulations.Add(idKV, lstCell);
                     //double elevation = (maxZ - minZ) / MapMenuCommand.magnetic_colors.Length;
                     List<DataRow> lstColor = UtilsDatabase.GetAllDataInTable(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong");
 

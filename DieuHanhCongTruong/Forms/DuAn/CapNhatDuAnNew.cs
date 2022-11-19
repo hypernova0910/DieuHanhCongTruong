@@ -1692,25 +1692,26 @@ namespace VNRaPaBomMin
         public void DieuHanhDuAn()
         {
             _TenDuAn = tbParentName.Text;
-            SelectDieuHanhRPBMForm frm = new SelectDieuHanhRPBMForm(_IdDuAn, lblDwg.Text);
-            frm.ShowDialog();
-            if (frm.DialogResult == DialogResult.OK)
-            {
-                if (frm._IsNew)
-                {
-                    _DWGFile = frm._DWGCopy;
-                    this.DialogResult = DialogResult.OK;
-                }
-                else
-                {
-                    _DWGFile = frm._DWGCopy;
-                    _IsUpdate = frm._IsUpdate;
-                    this.DialogResult = DialogResult.Yes;
-                }
-                idDA_DH = _IdDuAn;
-            }
-            else if (frm.DialogResult == DialogResult.Cancel)
-                this.DialogResult = DialogResult.None;
+            //SelectDieuHanhRPBMForm frm = new SelectDieuHanhRPBMForm(_IdDuAn, lblDwg.Text);
+            //frm.ShowDialog();
+            //if (frm.DialogResult == DialogResult.OK)
+            //{
+            //    if (frm._IsNew)
+            //    {
+            //        _DWGFile = frm._DWGCopy;
+            //        this.DialogResult = DialogResult.OK;
+            //    }
+            //    else
+            //    {
+            //        _DWGFile = frm._DWGCopy;
+            //        _IsUpdate = frm._IsUpdate;
+            //        this.DialogResult = DialogResult.Yes;
+            //    }
+            //    idDA_DH = _IdDuAn;
+            //}
+            //else if (frm.DialogResult == DialogResult.Cancel)
+            //    this.DialogResult = DialogResult.None;
+            idDA_DH = _IdDuAn;
         }
 
         //private void btDieuHanh_Click(object sender, EventArgs e)
