@@ -177,7 +177,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\AdjacentTriangles.cs" />
     <Compile Include="Command\ChiaMatCatCmd.cs" />
+    <Compile Include="Command\PhanTichKhoangGiamNghiNgoCommand.cs" />
     <Compile Include="Command\TimDiemMatCatCommand.cs" />
     <Compile Include="Command\KhoangCachCommand.cs" />
     <Compile Include="Command\MapMenuCommand.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Common\AutoDivide.cs" />
     <Compile Include="Common\ConnectionWithExtraInfo.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\GeometryUtils.cs" />
     <Compile Include="Common\Logincmd.cs" />
     <Compile Include="Common\Regexes.cs" />
     <Compile Include="Common\ThreadManager.cs" />
@@ -415,6 +418,12 @@
     </Compile>
     <Compile Include="Forms\PhanTich\DanhSachBMVN.Designer.cs">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\KhoangNghiNgoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\KhoangNghiNgoForm.Designer.cs">
+      <DependentUpon>KhoangNghiNgoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PhanTich\MatCatTuTruong.cs">
       <SubType>UserControl</SubType>
@@ -816,6 +825,7 @@
     </Compile>
     <Compile Include="Models\ImportDuAnCmdNew.cs" />
     <Compile Include="Models\InfoConnect.cs" />
+    <Compile Include="Models\InfoLine.cs" />
     <Compile Include="Models\LastModelTime.cs" />
     <Compile Include="Models\MQTTObject.cs" />
     <Compile Include="Models\CustomFace.cs" />
@@ -925,6 +935,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\DanhSachBMVN.resx">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\KhoangNghiNgoForm.resx">
+      <DependentUpon>KhoangNghiNgoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\MatCatTuTruong.resx">
       <DependentUpon>MatCatTuTruong.cs</DependentUpon>

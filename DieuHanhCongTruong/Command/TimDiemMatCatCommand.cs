@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using VNRaPaBomMin.Models;
 
 namespace DieuHanhCongTruong.Command
 {
@@ -62,7 +63,8 @@ namespace DieuHanhCongTruong.Command
                 double y_point = y0 + b * t_point;
                 double latt = 0, longt = 0;
                 AppUtils.ToLatLon(x_point, y_point, ref latt, ref longt, "48N");
-                MapMenuCommand.addSuspectPoint(longt, latt);
+                CecmReportPollutionAreaBMVN bmvn = new CecmReportPollutionAreaBMVN();
+                MapMenuCommand.addSuspectPoint(longt, latt, bmvn);
             }
             Exit();
         }

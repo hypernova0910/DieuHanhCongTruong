@@ -232,6 +232,16 @@ namespace DieuHanhCongTruong.Command
             cmd.Execute();
         }
 
+        public static void PhanTichKhoangGiamNghiNgo(object sender, EventArgs e)
+        {
+            //if (MyMainMenu2.Instance.tabCtrlLineChart.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show("Chưa vẽ mặt cắt từ trường");
+            //    return;
+            //}
+            PhanTichKhoangGiamNghiNgoCommand.Execute();
+        }
+
         public static void DanhSachBMVN(object sender, EventArgs e)
         {
             DanhSachBMVN form = new DanhSachBMVN();

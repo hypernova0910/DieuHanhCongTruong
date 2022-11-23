@@ -101,22 +101,22 @@ namespace DieuHanhCongTruong.Forms
             this.đổiMậtKhẩuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlChonDiemMatCat = new System.Windows.Forms.Panel();
+            this.buttonSavePoints = new System.Windows.Forms.Button();
+            this.buttonCancelPoints = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabCtrlLineChart = new System.Windows.Forms.TabControl();
             this.axMap1 = new AxMapWinGIS.AxMap();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbtnMine = new System.Windows.Forms.RadioButton();
             this.rbtnBomb = new System.Windows.Forms.RadioButton();
             this.toolTipMap = new System.Windows.Forms.ToolTip(this.components);
             this.managerCECMUserControl1 = new VNRaPaBomMin.ManagerCECMUserControl();
-            this.tabCtrlLineChart = new System.Windows.Forms.TabControl();
-            this.label1 = new System.Windows.Forms.Label();
-            this.buttonCancelPoints = new System.Windows.Forms.Button();
-            this.buttonSavePoints = new System.Windows.Forms.Button();
-            this.pnlChonDiemMatCat = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.pnlMain.SuspendLayout();
+            this.pnlChonDiemMatCat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.pnlChonDiemMatCat.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -693,6 +693,67 @@ namespace DieuHanhCongTruong.Forms
             this.pnlMain.Size = new System.Drawing.Size(1555, 1005);
             this.pnlMain.TabIndex = 4;
             // 
+            // pnlChonDiemMatCat
+            // 
+            this.pnlChonDiemMatCat.Controls.Add(this.buttonSavePoints);
+            this.pnlChonDiemMatCat.Controls.Add(this.buttonCancelPoints);
+            this.pnlChonDiemMatCat.Controls.Add(this.label1);
+            this.pnlChonDiemMatCat.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlChonDiemMatCat.Location = new System.Drawing.Point(0, 551);
+            this.pnlChonDiemMatCat.Name = "pnlChonDiemMatCat";
+            this.pnlChonDiemMatCat.Size = new System.Drawing.Size(1555, 54);
+            this.pnlChonDiemMatCat.TabIndex = 3;
+            // 
+            // buttonSavePoints
+            // 
+            this.buttonSavePoints.AutoSize = true;
+            this.buttonSavePoints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.buttonSavePoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSavePoints.ForeColor = System.Drawing.Color.White;
+            this.buttonSavePoints.Location = new System.Drawing.Point(1447, 7);
+            this.buttonSavePoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonSavePoints.Name = "buttonSavePoints";
+            this.buttonSavePoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.buttonSavePoints.Size = new System.Drawing.Size(96, 40);
+            this.buttonSavePoints.TabIndex = 61;
+            this.buttonSavePoints.Text = "Lưu";
+            this.buttonSavePoints.UseVisualStyleBackColor = false;
+            // 
+            // buttonCancelPoints
+            // 
+            this.buttonCancelPoints.AutoSize = true;
+            this.buttonCancelPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCancelPoints.Location = new System.Drawing.Point(1309, 7);
+            this.buttonCancelPoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonCancelPoints.Name = "buttonCancelPoints";
+            this.buttonCancelPoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.buttonCancelPoints.Size = new System.Drawing.Size(93, 40);
+            this.buttonCancelPoints.TabIndex = 60;
+            this.buttonCancelPoints.Text = "Hủy";
+            this.buttonCancelPoints.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(1032, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(250, 20);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Chọn điểm nghi ngờ trên biểu đò";
+            // 
+            // tabCtrlLineChart
+            // 
+            this.tabCtrlLineChart.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabCtrlLineChart.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabCtrlLineChart.Location = new System.Drawing.Point(0, 605);
+            this.tabCtrlLineChart.Name = "tabCtrlLineChart";
+            this.tabCtrlLineChart.SelectedIndex = 0;
+            this.tabCtrlLineChart.Size = new System.Drawing.Size(1555, 400);
+            this.tabCtrlLineChart.TabIndex = 2;
+            this.tabCtrlLineChart.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabCtrlLineChart_DrawItem);
+            this.tabCtrlLineChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabCtrlLineChart_MouseDown);
+            // 
             // axMap1
             // 
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -748,67 +809,6 @@ namespace DieuHanhCongTruong.Forms
             this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 1005);
             this.managerCECMUserControl1.TabIndex = 1;
             // 
-            // tabCtrlLineChart
-            // 
-            this.tabCtrlLineChart.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabCtrlLineChart.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabCtrlLineChart.Location = new System.Drawing.Point(0, 605);
-            this.tabCtrlLineChart.Name = "tabCtrlLineChart";
-            this.tabCtrlLineChart.SelectedIndex = 0;
-            this.tabCtrlLineChart.Size = new System.Drawing.Size(1555, 400);
-            this.tabCtrlLineChart.TabIndex = 2;
-            this.tabCtrlLineChart.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabCtrlLineChart_DrawItem);
-            this.tabCtrlLineChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabCtrlLineChart_MouseDown);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1032, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Chọn điểm nghi ngờ trên biểu đò";
-            // 
-            // buttonCancelPoints
-            // 
-            this.buttonCancelPoints.AutoSize = true;
-            this.buttonCancelPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancelPoints.Location = new System.Drawing.Point(1309, 7);
-            this.buttonCancelPoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonCancelPoints.Name = "buttonCancelPoints";
-            this.buttonCancelPoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
-            this.buttonCancelPoints.Size = new System.Drawing.Size(93, 40);
-            this.buttonCancelPoints.TabIndex = 60;
-            this.buttonCancelPoints.Text = "Hủy";
-            this.buttonCancelPoints.UseVisualStyleBackColor = true;
-            // 
-            // buttonSavePoints
-            // 
-            this.buttonSavePoints.AutoSize = true;
-            this.buttonSavePoints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
-            this.buttonSavePoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSavePoints.ForeColor = System.Drawing.Color.White;
-            this.buttonSavePoints.Location = new System.Drawing.Point(1447, 7);
-            this.buttonSavePoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonSavePoints.Name = "buttonSavePoints";
-            this.buttonSavePoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
-            this.buttonSavePoints.Size = new System.Drawing.Size(96, 40);
-            this.buttonSavePoints.TabIndex = 61;
-            this.buttonSavePoints.Text = "Lưu";
-            this.buttonSavePoints.UseVisualStyleBackColor = false;
-            // 
-            // pnlChonDiemMatCat
-            // 
-            this.pnlChonDiemMatCat.Controls.Add(this.buttonSavePoints);
-            this.pnlChonDiemMatCat.Controls.Add(this.buttonCancelPoints);
-            this.pnlChonDiemMatCat.Controls.Add(this.label1);
-            this.pnlChonDiemMatCat.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlChonDiemMatCat.Location = new System.Drawing.Point(0, 551);
-            this.pnlChonDiemMatCat.Name = "pnlChonDiemMatCat";
-            this.pnlChonDiemMatCat.Size = new System.Drawing.Size(1555, 54);
-            this.pnlChonDiemMatCat.TabIndex = 3;
-            // 
             // MyMainMenu2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -818,6 +818,7 @@ namespace DieuHanhCongTruong.Forms
             this.Controls.Add(this.managerCECMUserControl1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MyMainMenu2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -828,11 +829,11 @@ namespace DieuHanhCongTruong.Forms
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.pnlMain.ResumeLayout(false);
+            this.pnlChonDiemMatCat.ResumeLayout(false);
+            this.pnlChonDiemMatCat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.pnlChonDiemMatCat.ResumeLayout(false);
-            this.pnlChonDiemMatCat.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

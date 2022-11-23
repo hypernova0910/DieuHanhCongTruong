@@ -73,7 +73,7 @@ namespace DieuHanhCongTruong.Command
                     {
                         if(IsWithinMaxLength(cell))
                         {
-                            cell.id = Guid.NewGuid().ToString();
+                            //cell.id = Guid.NewGuid().ToString();
                             List<CustomFace> faces = cell.Adjacency.ToList();
                             for(int i = 0; i < faces.Count; i++)
                             {

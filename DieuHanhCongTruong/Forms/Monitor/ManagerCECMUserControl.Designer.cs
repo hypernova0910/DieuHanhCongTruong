@@ -49,27 +49,27 @@
             this.xóaToolStripMenuItem,
             this.deleteProgramDataItem});
             this.menuKeHoachTrienKhai.Name = "menuKeHoachTrienKhai";
-            this.menuKeHoachTrienKhai.Size = new System.Drawing.Size(197, 100);
+            this.menuKeHoachTrienKhai.Size = new System.Drawing.Size(211, 128);
             this.menuKeHoachTrienKhai.Opening += new System.ComponentModel.CancelEventHandler(this.menuKeHoachTrienKhai_Opening);
             // 
             // quảnLýDựÁnToolStripMenuItem
             // 
             this.quảnLýDựÁnToolStripMenuItem.Name = "quảnLýDựÁnToolStripMenuItem";
-            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(196, 24);
-            this.quảnLýDựÁnToolStripMenuItem.Text = "Quản lý dự án";
+            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.quảnLýDựÁnToolStripMenuItem.Text = "Điều hành dự án";
             this.quảnLýDựÁnToolStripMenuItem.Click += new System.EventHandler(this.quảnLýDựÁnToolStripMenuItem_Click);
             // 
             // thêmMớiToolStripMenuItem
             // 
             this.thêmMớiToolStripMenuItem.Name = "thêmMớiToolStripMenuItem";
-            this.thêmMớiToolStripMenuItem.Size = new System.Drawing.Size(196, 24);
+            this.thêmMớiToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.thêmMớiToolStripMenuItem.Text = "Thêm mới";
             this.thêmMớiToolStripMenuItem.Click += new System.EventHandler(this.thêmMớiToolStripMenuItem_Click);
             // 
             // xóaToolStripMenuItem
             // 
             this.xóaToolStripMenuItem.Name = "xóaToolStripMenuItem";
-            this.xóaToolStripMenuItem.Size = new System.Drawing.Size(196, 24);
+            this.xóaToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.xóaToolStripMenuItem.Text = "Xóa";
             this.xóaToolStripMenuItem.DropDownOpening += new System.EventHandler(this.xóaToolStripMenuItem_DropDownOpening);
             this.xóaToolStripMenuItem.Click += new System.EventHandler(this.xóaToolStripMenuItem_Click);
@@ -77,7 +77,7 @@
             // deleteProgramDataItem
             // 
             this.deleteProgramDataItem.Name = "deleteProgramDataItem";
-            this.deleteProgramDataItem.Size = new System.Drawing.Size(196, 24);
+            this.deleteProgramDataItem.Size = new System.Drawing.Size(210, 24);
             this.deleteProgramDataItem.Text = "Xóa dữ liệu dự án";
             this.deleteProgramDataItem.Click += new System.EventHandler(this.deleteProgramDataItem_Click);
             // 

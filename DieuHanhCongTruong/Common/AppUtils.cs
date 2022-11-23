@@ -1856,7 +1856,7 @@ namespace DieuHanhCongTruong.Common
                 var latVal = double.Parse(latitude);
                 var longVal = double.Parse(longitude);
 
-                return new Point2d(latVal, longVal);
+                return new Point2d(longVal, latVal);
             }
             catch (Exception ex)
             {

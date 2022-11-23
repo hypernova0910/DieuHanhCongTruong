@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DieuHanhCongTruong.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VNRaPaBomMin.Models
 {
-    class CecmReportPollutionAreaBMVN
+    public class CecmReportPollutionAreaBMVN
     {
         public long id { get; set; }
         public long idRectangle { get; set; }
@@ -16,7 +17,7 @@ namespace VNRaPaBomMin.Models
         public double YPoint { get; set; }
         public double ZPoint { get; set; }
         public double Deep { get; set; }
-        public string Area { get; set; }
+        public double Area { get; set; }
         public string MineType { get; set; }
         public DateTime TimeExecute { get; set; }
         public string Loai { get; set; }
@@ -31,5 +32,7 @@ namespace VNRaPaBomMin.Models
         public double Kichthuoc { get; set; }
 
         public string Ghichu { get; set; }
+
+        public List<InfoConnect> contour { get; set; }
     }
 }

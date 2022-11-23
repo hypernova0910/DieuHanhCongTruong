@@ -1,5 +1,4 @@
-﻿using MIConvexHull;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace DieuHanhCongTruong.Models
 {
-    public class CustomFace : TriangulationCell<InfoConnect, CustomFace>
+    public class InfoLine
     {
-        //public string id { get; set; }
+        public InfoConnect start { get; set; }
+
+        public InfoConnect end { get; set; }
     }
 }

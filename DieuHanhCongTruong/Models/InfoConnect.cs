@@ -1,4 +1,6 @@
 ﻿using MIConvexHull;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.GeoJsonObjectModel;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,16 @@ namespace DieuHanhCongTruong.Models
             long_value = longt;
         }
 
-        public MongoDB.Bson.ObjectId _id { get; set; }
+        public InfoConnect(double lat, double longt, double z)
+        {
+            lat_value = lat;
+            long_value = longt;
+            the_value = z;
+        }
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
         public string code { get; set; }
         public long project_id { get; set; }
         public string machineBomCode { get; set; }

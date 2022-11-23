@@ -17,12 +17,12 @@ namespace DieuHanhCongTruong.Command
     {
         public static void Execute()
         {
-            MapMenuCommand.axMap1.SendMouseDown = true;
+            //MapMenuCommand.axMap1.SendMouseDown = true;
             MapMenuCommand.axMap1.ChooseLayer += AxMap1_ChooseLayer;
             MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
             MapMenuCommand.axMap1.Identifier.HotTracking = true;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmIdentify;
-            MapMenuCommand.axMap1.ShowToolTip("Chọn rãnh dò", 3000);
+            MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", 3000);
 
             MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified;
             //MapMenuCommand.axMap1.ShapeHighlighted += AxMap1_ShapeHighlighted;
@@ -38,9 +38,11 @@ namespace DieuHanhCongTruong.Command
 
         private static void Exit()
         {
+            MapMenuCommand.axMap1.ChooseLayer -= AxMap1_ChooseLayer;
             MapMenuCommand.axMap1.ShapeIdentified -= AxMap1_ShapeIdentified;
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
+            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
             //MapMenuCommand.axMap1.ShowToolTip("", 0);
             //MyMainMenu2.Instance.KeyPreview = false;
         }
@@ -125,17 +127,17 @@ namespace DieuHanhCongTruong.Command
             //Chuyển về ax + by + cz = ax0 + by0 + cz0 = heSoTuDo
             double heSoTuDo = vtpt_x * x1 + vtpt_y * y1 + vtpt_z * 0;
             List<InfoConnect> polygon_temp = new List<InfoConnect>();
-            InfoConnect A = GiaoDoanThangMatPhang(cell.Vertices[0], cell.Vertices[1], vtpt_x, vtpt_y, vtpt_z, heSoTuDo);
+            InfoConnect A = GeometryUtils.GiaoDuongThangMatPhang(cell.Vertices[0], cell.Vertices[1], vtpt_x, vtpt_y, vtpt_z, heSoTuDo, true);
             if (A != null)
             {
                 polygon_temp.Add(A);
             }
-            InfoConnect B = GiaoDoanThangMatPhang(cell.Vertices[1], cell.Vertices[2], vtpt_x, vtpt_y, vtpt_z, heSoTuDo);
+            InfoConnect B = GeometryUtils.GiaoDuongThangMatPhang(cell.Vertices[1], cell.Vertices[2], vtpt_x, vtpt_y, vtpt_z, heSoTuDo, true);
             if (B != null)
             {
                 polygon_temp.Add(B);
             }
-            InfoConnect C = GiaoDoanThangMatPhang(cell.Vertices[2], cell.Vertices[0], vtpt_x, vtpt_y, vtpt_z, heSoTuDo);
+            InfoConnect C = GeometryUtils.GiaoDuongThangMatPhang(cell.Vertices[2], cell.Vertices[0], vtpt_x, vtpt_y, vtpt_z, heSoTuDo, true);
             if (C != null)
             {
                 polygon_temp.Add(C);

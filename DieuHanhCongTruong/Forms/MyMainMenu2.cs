@@ -62,6 +62,7 @@ namespace DieuHanhCongTruong.Forms
             cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.CapNhatDuLieuTuMayDo);
             vẽMặtCắtTừTrườngToolStripMenuItem.Click += new EventHandler(MenuCommand2.VeMatCatTuTruong);
             tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Click += new EventHandler(MenuCommand2.TimDiemTuTruongMatCat);
+            phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichKhoangGiamNghiNgo);
             phânTíchDảiMàuToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
             //Tiện ích
@@ -226,6 +227,7 @@ namespace DieuHanhCongTruong.Forms
             if(tabCtrlLineChart.TabPages.Count == 0)
             {
                 tabCtrlLineChart.Height = 0;
+                pnlChonDiemMatCat.Height = 0;
             }
         }
     }

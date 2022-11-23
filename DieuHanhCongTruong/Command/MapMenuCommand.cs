@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VNRaPaBomMin.Models;
 using Image = MapWinGIS.Image;
 using Point = MapWinGIS.Point;
 
@@ -37,12 +38,12 @@ namespace DieuHanhCongTruong.Command
         private static List<int> machineLineRealTimeLayers = new List<int>();
         private static List<int> machineLineRealTimeModelLayers = new List<int>();
 
-        private static int polygonLayer = -1;
+        public static int polygonLayer = -1;
         private static int polygonLayerMine = -1;
         private static List<int> polygonLayers = new List<int>();
         private static List<int> polygonLayersMine = new List<int>();
         private static int oluoiLayer = -1;
-        private static int suspectPointLayer = -1;
+        public static int suspectPointLayer = -1;
         private static int suspectPointLayerMine = -1;
         private static int flagLayer = -1;
         private static int flagRealTimeLayer = -1;
@@ -97,6 +98,7 @@ namespace DieuHanhCongTruong.Command
         public static void LoadMap()
         {
             activeMachineColor = Constants.MACHINE_COLORS.Select(color => ColorTranslator.FromHtml(color)).ToArray();
+            initPolygonAreaLayer();
             initPolygonLayer();
             InitPointImageLayer();
             InitLineLayer();
@@ -117,6 +119,7 @@ namespace DieuHanhCongTruong.Command
             //markerDistanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             distanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             InitRanhDoLayer();
+            initPolygonTestLayer();
         }
 
         public static void LoadImage(string path, double xmax, double xmin, double ymax, double ymin)
@@ -218,6 +221,84 @@ namespace DieuHanhCongTruong.Command
                 Point pnt = new Point();
                 pnt.x = xPoints[j];
                 pnt.y = yPoints[j];
+                shp.InsertPoint(pnt, ref j);
+            }
+            int index = sf.NumShapes;
+            if (!sf.EditInsertShape(shp, ref index))
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("drawPolygon()");
+                return;
+            }
+        }
+
+        public static void drawPolygonArea(PointF[] polygon, long idKV)
+        {
+            //if (xPoints.Length != yPoints.Length)
+            //{
+            //    MessageBox.Show("Invalid Polygon Coordinates");
+            //    return;
+            //}
+            ////axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //object X = xPoints;
+            //object Y = yPoints;
+            //int size = xPoints.Length;
+            //if (isBomb)
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayer, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            //else
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayerMine, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            Shapefile sf = axMap1.get_Shapefile(polygonLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POLYGON);
+            for (int j = 0; j < polygon.Length; j++)
+            {
+                Point pnt = new Point();
+                pnt.x = polygon[j].X;
+                pnt.y = polygon[j].Y;
+                shp.InsertPoint(pnt, ref j);
+            }
+            shp.Key = idKV.ToString();
+            int index = sf.NumShapes;
+            if (!sf.EditInsertShape(shp, ref index))
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("drawPolygon()");
+                return;
+            }
+        }
+
+        public static void drawPolygonTest(List<InfoConnect> polygon)
+        {
+            //if (xPoints.Length != yPoints.Length)
+            //{
+            //    MessageBox.Show("Invalid Polygon Coordinates");
+            //    return;
+            //}
+            ////axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //object X = xPoints;
+            //object Y = yPoints;
+            //int size = xPoints.Length;
+            //if (isBomb)
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayer, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            //else
+            //{
+            //    axMap1.DrawPolygonEx(polygonLayerMine, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+            //}
+            Shapefile sf = axMap1.get_Shapefile(polygonLayerMine);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POLYGON);
+            for (int j = 0; j < polygon.Count; j++)
+            {
+                Point pnt = new Point();
+                Point2d point2D = AppUtils.ConverUTMToLatLong(polygon[j].lat_value, polygon[j].long_value);
+                pnt.x = point2D.X;
+                pnt.y = point2D.Y;
                 shp.InsertPoint(pnt, ref j);
             }
             int index = sf.NumShapes;
@@ -664,6 +745,46 @@ namespace DieuHanhCongTruong.Command
             {
                 axMap1.MoveLayerTop(suspectPointLayer);
             }
+            if (polygonLayerMine > 0)
+            {
+                axMap1.MoveLayerTop(polygonLayerMine);
+            }
+        }
+
+        private static void initPolygonAreaLayer()
+        {
+            Shapefile sf = new Shapefile();
+            if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+            {
+                MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("initPolygonAreaLayer()");
+                return;
+            }
+            sf.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Color.Red);
+            sf.Identifiable = false;
+            polygonLayer = axMap1.AddLayer(sf, true);
+            axMap1.set_ShapeLayerFillColor(polygonLayer, AppUtils.ColorToUint(Color.FromArgb(168, 50, 147)));
+            axMap1.set_ShapeLayerFillTransparency(polygonLayer, 0.3f);
+            //axMap1.set_ShapeLayerDrawFill(polygonLayer, false);
+            //axMap1.set_ShapeLayerDrawLine(layer, false);
+        }
+
+        private static void initPolygonTestLayer()
+        {
+            Shapefile sf = new Shapefile();
+            if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+            {
+                MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("initPolygonAreaLayer()");
+                return;
+            }
+            //sf.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Color.Red);
+            sf.Identifiable = false;
+            polygonLayerMine = axMap1.AddLayer(sf, true);
+            axMap1.set_ShapeLayerFillColor(polygonLayerMine, AppUtils.ColorToUint(Color.White));
+            axMap1.set_ShapeLayerFillTransparency(polygonLayerMine, 0.5f);
+            //axMap1.set_ShapeLayerDrawFill(polygonLayer, false);
+            //axMap1.set_ShapeLayerDrawLine(layer, false);
         }
 
         private static void initPolygonLayerBomb()
@@ -1169,12 +1290,14 @@ namespace DieuHanhCongTruong.Command
             string sql = "SELECT " +
                 "position_lat, position_long, " +
                 "photo_file, " +
-                "left_long, right_long, bottom_lat, top_lat " +
+                "left_long, right_long, bottom_lat, top_lat, " +
+                "polygongeomst " +
                 "FROM cecm_program_area_map where id = " + idKV;
             sqlAdapter = new SqlDataAdapter(sql, frmLoggin.sqlCon);
             sqlAdapter.Fill(datatable);
             string photoFileName = "unknown.png";
             double xmax = 0, xmin = 0, ymax = 0, ymin = 0;
+            string polygongeomst = "";
             foreach (DataRow dr in datatable.Rows)
             {
                 axMap1.SetLatitudeLongitude(double.Parse(dr["position_lat"].ToString()), double.Parse(dr["position_long"].ToString()));
@@ -1183,8 +1306,15 @@ namespace DieuHanhCongTruong.Command
                 xmax = double.Parse(dr["right_long"].ToString());
                 ymin = double.Parse(dr["bottom_lat"].ToString());
                 ymax = double.Parse(dr["top_lat"].ToString());
+                polygongeomst = dr["polygongeomst"].ToString();
             }
             SetBound(xmin, ymin, xmax, ymax);
+            List<PointF[]> lstPoints = AppUtils.convertMultiPolygon(polygongeomst);
+            if(lstPoints.Count > 0)
+            {
+                PointF[] polygon = lstPoints[0];
+                drawPolygonArea(polygon, idKV);
+            }
             string pathTemp = AppUtils.GetFolderTemp((int)idDA);
             string fullPath = System.IO.Path.Combine(pathTemp, photoFileName);
             if (File.Exists(fullPath))
@@ -1252,7 +1382,7 @@ namespace DieuHanhCongTruong.Command
                         //lstRanhDo.Add(line);
                         index++;
                         //axMap1.DrawLineEx(lineLayer, line.start_y, line.start_x, line.end_y, line.end_x, 1, AppUtils.ColorToUint(Color.White));
-                        string json = JsonConvert.SerializeObject(line, Formatting.Indented);
+                        string json = JsonConvert.SerializeObject(line);
                         addRanhDo(line.start_x, line.start_y, line.end_x, line.end_y, json);
                         if (index % 2 == 1)
                         {
@@ -1611,7 +1741,7 @@ namespace DieuHanhCongTruong.Command
             axMap1.Redraw();
         }
 
-        public static void addSuspectPoint(double x, double y)
+        public static void addSuspectPoint(double x, double y, CecmReportPollutionAreaBMVN point)
         {
             Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
             Shape shp = new Shape();
@@ -1622,6 +1752,8 @@ namespace DieuHanhCongTruong.Command
             pnt.y = y;
             int index = shp.numPoints;
             shp.InsertPoint(pnt, ref index);
+            string json = JsonConvert.SerializeObject(point);
+            shp.Key = json;
             index = sf.NumShapes;
             if (!sf.EditInsertShape(shp, ref index))
             {
