@@ -26,35 +26,35 @@ namespace DieuHanhCongTruong.Command
     {
         public static AxMap axMap1 = MyMainMenu2.Instance.axMap1;
 
-        private static List<int> machinePointLayers = new List<int>();
+        public static List<int> machinePointLayers = new List<int>();
         private static List<int> machinePointModelLayers = new List<int>();
         private static List<int> machinePointModelHistoryLayers = new List<int>();
         private static List<int> machinePointRealTimeLayers = new List<int>();
         private static List<int> machinePointRealTimeModelLayers = new List<int>();
 
-        private static List<int> machineLineLayers = new List<int>();
+        public static List<int> machineLineLayers = new List<int>();
         private static List<int> machineLineModelLayers = new List<int>();
         private static List<int> machineLineModelHistoryLayers = new List<int>();
         private static List<int> machineLineRealTimeLayers = new List<int>();
         private static List<int> machineLineRealTimeModelLayers = new List<int>();
 
-        public static int polygonLayer = -1;
+        public static int polygonAreaLayer = -1;
         private static int polygonLayerMine = -1;
-        private static List<int> polygonLayers = new List<int>();
+        public static List<int> polygonLayers = new List<int>();
         private static List<int> polygonLayersMine = new List<int>();
-        private static int oluoiLayer = -1;
+        public static int oluoiLayer = -1;
         public static int suspectPointLayer = -1;
         private static int suspectPointLayerMine = -1;
         private static int flagLayer = -1;
         private static int flagRealTimeLayer = -1;
-        private static List<int> imageLayers = new List<int>();
+        public static List<int> imageLayers = new List<int>();
         private static int deepLayer = -1;
         private static int pointLayer = -1;
         private static int greenFlagLayer = -1;
         private static int machineLayer = -1;
         private static int bgLayer = -1;
         private static int lineLayer = -1;
-        private static int labelLayer = -1;
+        public static int labelLayer = -1;
         private static int distanceLayer = -1;
         private static int markerDistanceLayer = -1;
         private static int highlightLayer = -1;
@@ -68,6 +68,7 @@ namespace DieuHanhCongTruong.Command
         private static Dictionary<string, Point> machineActive__lastPoint = new Dictionary<string, Point>();
         private static Dictionary<string, int> machineActive__lineLayer = new Dictionary<string, int>();
         private static Dictionary<string, DateTime> machineActive__lastTime = new Dictionary<string, DateTime>();
+        public static Dictionary<long, List<Shape>> idKV__shapeOLuoi = new Dictionary<long, List<Shape>>();
 
         private static int MIN_TIME_NEW_LINE = 90;
         private static double MIN_DISTANCE_NEW_LINE = 7;
@@ -119,7 +120,9 @@ namespace DieuHanhCongTruong.Command
             //markerDistanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             distanceLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             InitRanhDoLayer();
+            InitOLuoiLayer();
             initPolygonTestLayer();
+
         }
 
         public static void LoadImage(string path, double xmax, double xmin, double ymax, double ymin)
@@ -251,7 +254,7 @@ namespace DieuHanhCongTruong.Command
             //{
             //    axMap1.DrawPolygonEx(polygonLayerMine, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
             //}
-            Shapefile sf = axMap1.get_Shapefile(polygonLayer);
+            Shapefile sf = axMap1.get_Shapefile(polygonAreaLayer);
             Shape shp = new Shape();
             shp.Create(ShpfileType.SHP_POLYGON);
             for (int j = 0; j < polygon.Length; j++)
@@ -270,6 +273,36 @@ namespace DieuHanhCongTruong.Command
                 return;
             }
         }
+
+        //public static void AddLabelInfo(string text, double x, double y)
+        //{
+        //    //if (xPoints.Length != yPoints.Length)
+        //    //{
+        //    //    MessageBox.Show("Invalid Polygon Coordinates");
+        //    //    return;
+        //    //}
+        //    ////axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+        //    //object X = xPoints;
+        //    //object Y = yPoints;
+        //    //int size = xPoints.Length;
+        //    //if (isBomb)
+        //    //{
+        //    //    axMap1.DrawPolygonEx(polygonLayer, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+        //    //}
+        //    //else
+        //    //{
+        //    //    axMap1.DrawPolygonEx(polygonLayerMine, ref X, ref Y, size, AppUtils.ColorToUint(magnetic_colors[colorIndex]), true);
+        //    //}
+        //    Shapefile sf = axMap1.get_Shapefile(polygonAreaLayer);
+        //    Labels labels = sf.Labels;
+        //    LabelCategory labelCategory = labels.AddCategory("Transparent");
+        //    labelCategory.FrameVisible = false;
+        //    labelCategory.FontColor = AppUtils.ColorToUint(Color.Red);
+        //    labelCategory.FontSize = 12;
+        //    labels.ApplyCategories();
+        //    labels.AddLabel(text, bottom + margin / 5 * 2, left);
+        //    MapMenuCommand.axMap1.set_DrawingLabels(MapMenuCommand.labelLayer, labels);
+        //}
 
         public static void drawPolygonTest(List<InfoConnect> polygon)
         {
@@ -394,12 +427,14 @@ namespace DieuHanhCongTruong.Command
             //int index = sf.NumShapes;
             //sf.EditInsertShape(shp, ref index);
             //var sf = CreateLines();
-            sf.Identifiable = true;
+            sf.Identifiable = false;
             ranhDoLayer = axMap1.AddLayer(sf, true);
 
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.LineColor = AppUtils.ColorToUint(Color.White);
             options.LineWidth = 2;
+            
+            //labelCategory.FrameTransparency = 0;
 
             //MapWinGIS.LinePattern pattern = new MapWinGIS.LinePattern();
             //pattern.AddLine(AppUtils.ColorToUint(ColorTranslator.FromHtml(color)), 2, tkDashStyle.dsSolid);
@@ -411,6 +446,22 @@ namespace DieuHanhCongTruong.Command
             //segm.MarkerOrientation = tkLineLabelOrientation.lorParallel;
             //options.LinePattern = pattern;
             //options.UseLinePattern = true;
+        }
+
+        private static void InitOLuoiLayer()
+        {
+            Shapefile sf = new Shapefile();
+            if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON))
+            {
+                MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("InitOLuoiLayer()");
+                return;
+            }
+            sf.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Color.White);
+            sf.DefaultDrawingOptions.LineWidth = 5;
+            sf.Identifiable = false;
+            oluoiLayer = axMap1.AddLayer(sf, true);
+            axMap1.set_ShapeLayerDrawFill(oluoiLayer, false);
         }
 
         private static void InitPointImageModelLayer()
@@ -762,9 +813,9 @@ namespace DieuHanhCongTruong.Command
             }
             sf.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Color.Red);
             sf.Identifiable = false;
-            polygonLayer = axMap1.AddLayer(sf, true);
-            axMap1.set_ShapeLayerFillColor(polygonLayer, AppUtils.ColorToUint(Color.FromArgb(168, 50, 147)));
-            axMap1.set_ShapeLayerFillTransparency(polygonLayer, 0.3f);
+            polygonAreaLayer = axMap1.AddLayer(sf, true);
+            axMap1.set_ShapeLayerFillColor(polygonAreaLayer, AppUtils.ColorToUint(Color.FromArgb(168, 50, 147)));
+            axMap1.set_ShapeLayerFillTransparency(polygonAreaLayer, 0.3f);
             //axMap1.set_ShapeLayerDrawFill(polygonLayer, false);
             //axMap1.set_ShapeLayerDrawLine(layer, false);
         }
@@ -911,6 +962,14 @@ namespace DieuHanhCongTruong.Command
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
             sf.Identifiable = false;
+
+            Labels labels = sf.Labels;
+            labels.Visible = true;
+            labels.Alignment = tkLabelAlignment.laBottomRight;
+            labels.OffsetX = 10;
+            labels.OffsetY = 10;
+            labels.VerticalPosition = tkVerticalPosition.vpAboveAllLayers;
+            labels.AvoidCollisions = true;
             //MessageBox.Show("axMap1.MoveLayerTop(suspectPointLayer): " + axMap1.MoveLayerTop(suspectPointLayer));
             //axMap1.SendMouseDown = true;
             //axMap1.CursorMode = tkCursorMode.cmNone;
@@ -1327,37 +1386,166 @@ namespace DieuHanhCongTruong.Command
             //    Image img = axMap1.get_Image(imageLayer);
             //    img.Clear();
             //}
-            SqlCommandBuilder sqlCommand3 = null;
-            SqlDataAdapter sqlAdapter3 = null;
-            System.Data.DataTable datatable3 = new System.Data.DataTable();
-            string sql_oluoi =
-                "SELECT " +
-                "gid, o_id, " +
-                "long_corner1, lat_corner1, " +
-                "long_corner2, lat_corner2, " +
-                "long_corner3, lat_corner3, " +
-                "long_corner4, lat_corner4 " +
-                "FROM OLuoi where cecm_program_areamap_id = " + idKV;
-            sqlAdapter3 = new SqlDataAdapter(sql_oluoi, frmLoggin.sqlCon);
-            sqlCommand3 = new SqlCommandBuilder(sqlAdapter3);
-            sqlAdapter3.Fill(datatable3);
-            //axMap1.ClearDrawing(oluoiLayer);
-            oluoiLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-            //Console.WriteLine("axMap1.MoveLayerBottom(oluoiLayer): " + axMap1.MoveLayerBottom(oluoiLayer));
-            foreach (DataRow dr in datatable3.Rows)
+            //SqlCommandBuilder sqlCommand3 = null;
+            //SqlDataAdapter sqlAdapter3 = null;
+            //System.Data.DataTable datatable3 = new System.Data.DataTable();
+            //string sql_oluoi =
+            //    "SELECT " +
+            //    "gid, o_id, " +
+            //    "long_corner1, lat_corner1, " +
+            //    "long_corner2, lat_corner2, " +
+            //    "long_corner3, lat_corner3, " +
+            //    "long_corner4, lat_corner4 " +
+            //    "FROM OLuoi where cecm_program_areamap_id = " + idKV;
+            //sqlAdapter3 = new SqlDataAdapter(sql_oluoi, frmLoggin.sqlCon);
+            //sqlCommand3 = new SqlCommandBuilder(sqlAdapter3);
+            //sqlAdapter3.Fill(datatable3);
+
+            idKV__shapeOLuoi.Remove(idKV);
+            idKV__shapeOLuoi.Add(idKV, new List<Shape>());
+
+            List<DataRow> drOL = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "OLuoi", "cecm_program_areamap_id", idKV.ToString());
+
+            foreach (DataRow dr in drOL)
             {
-                double long_corner1 = double.Parse(dr["long_corner1"].ToString());
-                double long_corner2 = double.Parse(dr["long_corner2"].ToString());
-                double long_corner3 = double.Parse(dr["long_corner3"].ToString());
-                double long_corner4 = double.Parse(dr["long_corner4"].ToString());
-                double lat_corner1 = double.Parse(dr["lat_corner1"].ToString());
-                double lat_corner2 = double.Parse(dr["lat_corner2"].ToString());
-                double lat_corner3 = double.Parse(dr["lat_corner3"].ToString());
-                double lat_corner4 = double.Parse(dr["lat_corner4"].ToString());
-                drawOluoi(lat_corner1, long_corner1, lat_corner2, long_corner2, lat_corner3, long_corner3, lat_corner4, long_corner4);
+                //double long_corner1 = double.Parse(dr["long_corner1"].ToString());
+                //double long_corner2 = double.Parse(dr["long_corner2"].ToString());
+                //double long_corner3 = double.Parse(dr["long_corner3"].ToString());
+                //double long_corner4 = double.Parse(dr["long_corner4"].ToString());
+                //double lat_corner1 = double.Parse(dr["lat_corner1"].ToString());
+                //double lat_corner2 = double.Parse(dr["lat_corner2"].ToString());
+                //double lat_corner3 = double.Parse(dr["lat_corner3"].ToString());
+                //double lat_corner4 = double.Parse(dr["lat_corner4"].ToString());
+                //long idOL = long.Parse(dr["gid"].ToString());
+                OLuoi oluoi = new OLuoi();
+                //gid
+                string gid = dr["gid"].ToString();
+                oluoi.gid = long.Parse(gid);
+                //o_id
+                string o_id = dr["o_id"].ToString();
+                oluoi.o_id = o_id;
+                //cecm_program_areamap_id
+                string cecm_program_areamap_ID = dr["cecm_program_areamap_id"].ToString();
+                oluoi.cecm_program_areamap_ID = idKV;
+                //autoDivide
+                oluoi.autoDivide = int.TryParse(dr["autoDivide"].ToString(), out int autoDivide) ? autoDivide : 0;
+                //khaosat_deptid
+                long khaosat_deptid = -1;
+                long.TryParse(dr["khaosat_deptid"].ToString(), out khaosat_deptid);
+                oluoi.khaosat_deptId = khaosat_deptid;
+                //rapha_deptid
+                long rapha_deptid = -1;
+                long.TryParse(dr["rapha_deptid"].ToString(), out rapha_deptid);
+                oluoi.raPha_deptId = rapha_deptid;
+                //lat_center
+                double lat_center = -1;
+                double.TryParse(dr["lat_center"].ToString(), out lat_center);
+                oluoi.lat_center = lat_center;
+                //lat_corner1
+                double lat_corner1 = -1;
+                double.TryParse(dr["lat_corner1"].ToString(), out lat_corner1);
+                oluoi.lat_corner1 = lat_corner1;
+                //lat_corner2
+                double lat_corner2 = -1;
+                double.TryParse(dr["lat_corner2"].ToString(), out lat_corner2);
+                oluoi.lat_corner2 = lat_corner2;
+                //lat_corner3
+                double lat_corner3 = -1;
+                double.TryParse(dr["lat_corner3"].ToString(), out lat_corner3);
+                oluoi.lat_corner3 = lat_corner3;
+                //lat_corner4
+                double lat_corner4 = -1;
+                double.TryParse(dr["lat_corner4"].ToString(), out lat_corner4);
+                oluoi.lat_corner4 = lat_corner4;
+                //long_center
+                double long_center = -1;
+                double.TryParse(dr["long_center"].ToString(), out long_center);
+                oluoi.long_center = long_center;
+                //long_corner1
+                double long_corner1 = -1;
+                double.TryParse(dr["long_corner1"].ToString(), out long_corner1);
+                oluoi.long_corner1 = long_corner1;
+                //long_corner2
+                double long_corner2 = -1;
+                double.TryParse(dr["long_corner2"].ToString(), out long_corner2);
+                oluoi.long_corner2 = long_corner2;
+                //long_corner3
+                double long_corner3 = -1;
+                double.TryParse(dr["long_corner3"].ToString(), out long_corner3);
+                oluoi.long_corner3 = long_corner3;
+                //long_corner4
+                double long_corner4 = -1;
+                double.TryParse(dr["long_corner4"].ToString(), out long_corner4);
+                oluoi.long_corner4 = long_corner4;
+                //dividerAllGrid
+                long dividerAllGrid = 0;
+                long.TryParse(dr["dividerAllGrid"].ToString(), out dividerAllGrid);
+                oluoi.dividerAllGrid = dividerAllGrid;
+                //isCustomAllGrid
+                long isCustomAllGrid = 0;
+                long.TryParse(dr["isCustomAllGrid"].ToString(), out isCustomAllGrid);
+                oluoi.isCustomAllGrid = isCustomAllGrid;
+                //distanceAllGrid
+                double distanceAllGrid = 0;
+                double.TryParse(dr["distanceAllGrid"].ToString(), out distanceAllGrid);
+                oluoi.distanceAllGrid = distanceAllGrid;
+                //acutangeAllGrid
+                double acutangeAllGrid = 0;
+                double.TryParse(dr["acutangeAllGrid"].ToString(), out acutangeAllGrid);
+                oluoi.acutangeAllGrid = acutangeAllGrid;
+                //isCustom1
+                long isCustom1 = 0;
+                long.TryParse(dr["isCustom1"].ToString(), out isCustom1);
+                oluoi.isCustom1 = isCustom1;
+                //isCustom2
+                long isCustom2 = 0;
+                long.TryParse(dr["isCustom2"].ToString(), out isCustom2);
+                oluoi.isCustom2 = isCustom2;
+                //isCustom3
+                long isCustom3 = 0;
+                long.TryParse(dr["isCustom3"].ToString(), out isCustom3);
+                oluoi.isCustom3 = isCustom3;
+                //isCustom4
+                long isCustom4 = 0;
+                long.TryParse(dr["isCustom4"].ToString(), out isCustom4);
+                oluoi.isCustom4 = isCustom4;
+                //acuteAngle1
+                double acuteAngle1 = 0;
+                double.TryParse(dr["acuteAngle1"].ToString(), out acuteAngle1);
+                oluoi.acuteAngle1 = acuteAngle1;
+                //acuteAngle2
+                double acuteAngle2 = 0;
+                double.TryParse(dr["acuteAngle2"].ToString(), out acuteAngle2);
+                oluoi.acuteAngle2 = acuteAngle2;
+                //acuteAngle3
+                double acuteAngle3 = 0;
+                double.TryParse(dr["acuteAngle3"].ToString(), out acuteAngle3);
+                oluoi.acuteAngle3 = acuteAngle3;
+                //acuteAngle4
+                double acuteAngle4 = 0;
+                double.TryParse(dr["acuteAngle4"].ToString(), out acuteAngle4);
+                oluoi.acuteAngle4 = acuteAngle4;
+                //distance1
+                double distance1 = 0;
+                double.TryParse(dr["distance1"].ToString(), out distance1);
+                oluoi.distance1 = distance1;
+                //distance2
+                double distance2 = 0;
+                double.TryParse(dr["distance2"].ToString(), out distance2);
+                oluoi.distance2 = distance2;
+                //distance3
+                double distance3 = 0;
+                double.TryParse(dr["distance3"].ToString(), out distance3);
+                oluoi.distance3 = distance3;
+                //distance4
+                double distance4 = 0;
+                double.TryParse(dr["distance4"].ToString(), out distance4);
+                oluoi.distance4 = distance4;
+                
                 List<DataRow> lst = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "cecm_program_area_line", "cecmprogramareasub_id", dr["gid"].ToString());
                 //List<CecmProgramAreaLineDTO> lstRanhDo = new List<CecmProgramAreaLineDTO>();
                 int index = 0;
+                List<CecmProgramAreaLineDTO> lstRanhDo = new List<CecmProgramAreaLineDTO>();
                 foreach (DataRow dataRow in lst)
                 {
                     bool parseSuccess =
@@ -1383,15 +1571,19 @@ namespace DieuHanhCongTruong.Command
                         index++;
                         //axMap1.DrawLineEx(lineLayer, line.start_y, line.start_x, line.end_y, line.end_x, 1, AppUtils.ColorToUint(Color.White));
                         string json = JsonConvert.SerializeObject(line);
-                        addRanhDo(line.start_x, line.start_y, line.end_x, line.end_y, json);
-                        if (index % 2 == 1)
-                        {
-                            axMap1.DrawLabelEx(lineLayer, index.ToString(), line.start_y, line.start_x, 0);
-                        }
-
+                        addRanhDo(line.start_x, line.start_y, line.end_x, line.end_y, index % 2 == 1 ? index.ToString() : "", json, out int indexShape, out int indexLabel);
+                        //if (index % 2 == 1)
+                        //{
+                        //    axMap1.DrawLabelEx(lineLayer, index.ToString(), line.start_y, line.start_x, 0);
+                        //}
+                        line.indexShape = indexShape;
+                        line.indexLabel = indexLabel;
+                        lstRanhDo.Add(line);
                     }
 
                 }
+                oluoi.lstRanhDo = lstRanhDo;
+                drawOluoi(oluoi);
             }
             //DataRow dr2 = datatable3.NewRow();
             //dr2["gid"] = -1;
@@ -1409,8 +1601,15 @@ namespace DieuHanhCongTruong.Command
                 axMap1.RemoveLayer(imageLayer);
             }
             imageLayers.Clear();
-            axMap1.ClearDrawing(oluoiLayer);
+            //axMap1.ClearDrawing(oluoiLayer);
+            //oluoiLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+            //axMap1.ClearDrawing(lineLayer);
+            //lineLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
+            sf.EditClear();
+            sf = axMap1.get_Shapefile(oluoiLayer);
+            sf.EditClear();
+            sf = axMap1.get_Shapefile(polygonAreaLayer);
             sf.EditClear();
             SqlDataAdapter sqlAdapter = null;
             DataTable datatable = new DataTable();
@@ -1428,16 +1627,29 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        private static void drawOluoi(
-            double lat_corner1, double long_corner1,
-            double lat_corner2, double long_corner2,
-            double lat_corner3, double long_corner3,
-            double lat_corner4, double long_corner4)
+        public static void drawOluoi(OLuoi oLuoi)
         {
-            axMap1.DrawLineEx(oluoiLayer, long_corner1, lat_corner1, long_corner2, lat_corner2, 5, AppUtils.ColorToUint(Color.White));
-            axMap1.DrawLineEx(oluoiLayer, long_corner2, lat_corner2, long_corner3, lat_corner3, 5, AppUtils.ColorToUint(Color.White));
-            axMap1.DrawLineEx(oluoiLayer, long_corner3, lat_corner3, long_corner4, lat_corner4, 5, AppUtils.ColorToUint(Color.White));
-            axMap1.DrawLineEx(oluoiLayer, long_corner4, lat_corner4, long_corner1, lat_corner1, 5, AppUtils.ColorToUint(Color.White));
+            //axMap1.DrawLineEx(oluoiLayer, long_corner1, lat_corner1, long_corner2, lat_corner2, 5, AppUtils.ColorToUint(Color.White));
+            //axMap1.DrawLineEx(oluoiLayer, long_corner2, lat_corner2, long_corner3, lat_corner3, 5, AppUtils.ColorToUint(Color.White));
+            //axMap1.DrawLineEx(oluoiLayer, long_corner3, lat_corner3, long_corner4, lat_corner4, 5, AppUtils.ColorToUint(Color.White));
+            //axMap1.DrawLineEx(oluoiLayer, long_corner4, lat_corner4, long_corner1, lat_corner1, 5, AppUtils.ColorToUint(Color.White));
+            Shapefile sf = axMap1.get_Shapefile(oluoiLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POLYGON);
+            shp.AddPoint(oLuoi.long_corner1, oLuoi.lat_corner1);
+            shp.AddPoint(oLuoi.long_corner2, oLuoi.lat_corner2);
+            shp.AddPoint(oLuoi.long_corner3, oLuoi.lat_corner3);
+            shp.AddPoint(oLuoi.long_corner4, oLuoi.lat_corner4);
+            shp.AddPoint(oLuoi.long_corner1, oLuoi.lat_corner1);
+            shp.Key = JsonConvert.SerializeObject(oLuoi);
+            idKV__shapeOLuoi[oLuoi.cecm_program_areamap_ID].Add(shp);
+            int index = sf.NumShapes;
+            if (!sf.EditInsertShape(shp, ref index))
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("drawOluoi()");
+                return;
+            }
         }
 
         public static void LoadPoints(Dictionary<long, Dictionary<string, List<InfoConnect>>> idKV__Points)
@@ -1483,7 +1695,7 @@ namespace DieuHanhCongTruong.Command
             //{
             //    axMap1.SetDrawingLayerVisible(layer, show);
             //}
-            axMap1.SetDrawingLayerVisible(polygonLayer, show);
+            axMap1.SetDrawingLayerVisible(polygonAreaLayer, show);
         }
 
         public static void addMachinePoint(double x, double y, string codeMachine, DateTime timeAction, bool isRedraw = true)
@@ -1609,15 +1821,16 @@ namespace DieuHanhCongTruong.Command
             //axMap1.Redraw();
         }
 
-        private static void addRanhDo(double x_start, double y_start, double x_end, double y_end, string json)
+        public static void addRanhDo(double x_start, double y_start, double x_end, double y_end, string label, string json, out int indexShape, out int indexLabel)
         {
             //getLayerLineForMachines(codeMachine);
             Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
             Shape shp = new Shape();
             shp.Create(ShpfileType.SHP_POLYLINE);
             shp.Key = json;
-            int indexShape = sf.NumShapes;
-            sf.EditInsertShape(shp, ref indexShape);
+            //indexShape = sf.NumShapes;
+            //sf.EditInsertShape(shp, ref indexShape);
+            indexShape = sf.EditAddShape(shp);
 
             Point pnt_start = new Point();
             pnt_start.x = x_start;
@@ -1630,6 +1843,16 @@ namespace DieuHanhCongTruong.Command
             pnt_end.y = y_end;
             index = shp.numPoints;
             shp.InsertPoint(pnt_end, ref index);
+
+            if(label != "")
+            {
+                sf.Labels.AddLabel(label, x_start, y_start);
+                indexLabel = sf.Labels.Count - 1;
+            }
+            else
+            {
+                indexLabel = -1;
+            }
             //axMap1.Redraw();
         }
 
@@ -1752,6 +1975,19 @@ namespace DieuHanhCongTruong.Command
             pnt.y = y;
             int index = shp.numPoints;
             shp.InsertPoint(pnt, ref index);
+            point.indexLabel = sf.Labels.Count;
+            if (idKV__shapeOLuoi.ContainsKey(point.idArea))
+            {
+                foreach (Shape shapeOLuoi in idKV__shapeOLuoi[point.idArea])
+                {
+                    if (shapeOLuoi.PointInThisPoly(pnt))
+                    {
+                        OLuoi oLuoi = JsonConvert.DeserializeObject<OLuoi>(shapeOLuoi.Key);
+                        point.idRectangle = oLuoi.gid;
+                        break;
+                    }
+                }
+            }
             string json = JsonConvert.SerializeObject(point);
             shp.Key = json;
             index = sf.NumShapes;
@@ -1761,6 +1997,7 @@ namespace DieuHanhCongTruong.Command
                 MessageBox.Show("addSuspectPoint()");
                 return;
             }
+            sf.Labels.AddLabel(Math.Round(point.Deep, 3).ToString() + "m", x, y);
             axMap1.Redraw();
         }
 

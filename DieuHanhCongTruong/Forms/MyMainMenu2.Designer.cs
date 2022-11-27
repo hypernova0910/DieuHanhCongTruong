@@ -706,6 +706,8 @@ namespace DieuHanhCongTruong.Forms
             // 
             // buttonSavePoints
             // 
+            this.buttonSavePoints.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSavePoints.AutoSize = true;
             this.buttonSavePoints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.buttonSavePoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -721,6 +723,8 @@ namespace DieuHanhCongTruong.Forms
             // 
             // buttonCancelPoints
             // 
+            this.buttonCancelPoints.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancelPoints.AutoSize = true;
             this.buttonCancelPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCancelPoints.Location = new System.Drawing.Point(1309, 7);
@@ -734,6 +738,8 @@ namespace DieuHanhCongTruong.Forms
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(1032, 17);
@@ -840,8 +846,6 @@ namespace DieuHanhCongTruong.Forms
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem dữLiệuHỗTrợToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quảnLýĐơnVịToolStripMenuItem;
@@ -922,5 +926,6 @@ namespace DieuHanhCongTruong.Forms
         public System.Windows.Forms.Button buttonCancelPoints;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.TabControl tabCtrlLineChart;
+        public System.Windows.Forms.MenuStrip menuStrip1;
     }
 }

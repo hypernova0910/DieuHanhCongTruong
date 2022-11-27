@@ -179,6 +179,7 @@
   <ItemGroup>
     <Compile Include="Command\AdjacentTriangles.cs" />
     <Compile Include="Command\ChiaMatCatCmd.cs" />
+    <Compile Include="Command\ChinhSuaOLuoiCommand.cs" />
     <Compile Include="Command\PhanTichKhoangGiamNghiNgoCommand.cs" />
     <Compile Include="Command\TimDiemMatCatCommand.cs" />
     <Compile Include="Command\KhoangCachCommand.cs" />
@@ -365,6 +366,18 @@
     <Compile Include="Forms\DuAn\ThemMoiTrangThietBiThamGiaNew.Designer.cs">
       <DependentUpon>ThemMoiTrangThietBiThamGiaNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InAn\ChiaManhBanDoOLuoiFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InAn\ChiaManhBanDoOLuoiFrm.Designer.cs">
+      <DependentUpon>ChiaManhBanDoOLuoiFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InAn\ChinhSuaOLuoi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InAn\ChinhSuaOLuoi.Designer.cs">
+      <DependentUpon>ChinhSuaOLuoi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Monitor\FilterDeleteProgramData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -418,6 +431,18 @@
     </Compile>
     <Compile Include="Forms\PhanTich\DanhSachBMVN.Designer.cs">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\GroupLayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\GroupLayerForm.Designer.cs">
+      <DependentUpon>GroupLayerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\KhoangGiamNghiNgoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\KhoangGiamNghiNgoForm.Designer.cs">
+      <DependentUpon>KhoangGiamNghiNgoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PhanTich\KhoangNghiNgoForm.cs">
       <SubType>Form</SubType>
@@ -909,6 +934,12 @@
     <EmbeddedResource Include="Forms\DuAn\ThemMoiTrangThietBiThamGiaNew.resx">
       <DependentUpon>ThemMoiTrangThietBiThamGiaNew.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InAn\ChiaManhBanDoOLuoiFrm.resx">
+      <DependentUpon>ChiaManhBanDoOLuoiFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InAn\ChinhSuaOLuoi.resx">
+      <DependentUpon>ChinhSuaOLuoi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Monitor\FilterDeleteProgramData.resx">
       <DependentUpon>FilterDeleteProgramData.cs</DependentUpon>
     </EmbeddedResource>
@@ -935,6 +966,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\DanhSachBMVN.resx">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\GroupLayerForm.resx">
+      <DependentUpon>GroupLayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\KhoangGiamNghiNgoForm.resx">
+      <DependentUpon>KhoangGiamNghiNgoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\KhoangNghiNgoForm.resx">
       <DependentUpon>KhoangNghiNgoForm.cs</DependentUpon>

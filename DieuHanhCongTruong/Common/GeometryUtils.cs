@@ -95,5 +95,63 @@ namespace DieuHanhCongTruong.Common
             double y = (A1 * C2 - A2 * C1) / delta;
             return new InfoConnect(x, y);
         }
+
+        public static double GetMagneticAtPoint(double x, double y, List<CustomFace> triangles)
+        {
+            InfoConnect start = new InfoConnect(x, y, 0);
+            InfoConnect end = new InfoConnect(x, y, 100);
+            foreach (CustomFace cell in triangles)
+            {
+                //Tìm vector chỉ phương AB, AC
+                double vtcp1_x = cell.Vertices[0].lat_value - cell.Vertices[1].lat_value;
+                double vtcp1_y = cell.Vertices[0].long_value - cell.Vertices[1].long_value;
+                double vtcp1_z = cell.Vertices[0].the_value - cell.Vertices[1].the_value;
+                double vtcp2_x = cell.Vertices[1].lat_value - cell.Vertices[2].lat_value;
+                double vtcp2_y = cell.Vertices[1].long_value - cell.Vertices[2].long_value;
+                double vtcp2_z = cell.Vertices[1].the_value - cell.Vertices[2].the_value;
+                //Tìm vector pháp tuyến
+                double vtpt_x = vtcp1_y * vtcp2_z - vtcp2_y * vtcp1_z;  //a
+                double vtpt_y = vtcp1_z * vtcp2_x - vtcp2_z * vtcp1_x;  //b
+                double vtpt_z = vtcp1_x * vtcp2_y - vtcp2_x * vtcp1_y;  //c
+                //Phương trình mặt phẳng a(x - x0) + b(y - y0) + c(z - z0) = 0
+                //Chuyển về ax + by + cz = ax0 + by0 + cz0 = heSoTuDo
+                double heSoTuDo = vtpt_x * cell.Vertices[0].lat_value + vtpt_y * cell.Vertices[0].long_value + vtpt_z * cell.Vertices[0].the_value;
+
+                //Shape shpPolygon = new Shape();
+                //shpPolygon.Create(ShpfileType.SHP_POLYGON);
+                //MapMenuCommand.drawPolygonTest(cell.Vertices.ToList());
+                //for (int i = 0; i < cell.Vertices.Length; i++)
+                //{
+                //    InfoConnect infoConnect = cell.Vertices[i];
+                //    Point vertexPolygon = new Point();
+                //    Point2d point2D = AppUtils.ConverUTMToLatLong(infoConnect.lat_value, infoConnect.long_value);
+                //    vertexPolygon.x = point2D.X;
+                //    vertexPolygon.y = point2D.Y;
+                //    //pnt.x = infoConnect.lat_value;
+                //    //pnt.y = infoConnect.long_value;
+                //    shpPolygon.InsertPoint(vertexPolygon, ref i);
+                //}
+                //Point2d point_temp = AppUtils.ConverUTMToLatLong(x, y);
+                //Point point = new Point();
+                //point.x = point_temp.X;
+                //point.y = point_temp.Y;
+                //if (shpPolygon.PointInThisPoly(point))
+                if (GeometryUtils.isInside(
+                    cell.Vertices[0].lat_value, cell.Vertices[0].long_value,
+                    cell.Vertices[1].lat_value, cell.Vertices[1].long_value,
+                    cell.Vertices[2].lat_value, cell.Vertices[2].long_value,
+                    x, y))
+                {
+                    InfoConnect pointIntersect = GeometryUtils.GiaoDuongThangMatPhang(start, end, vtpt_x, vtpt_y, vtpt_z, heSoTuDo, false);
+                    if (pointIntersect != null)
+                    {
+                        return pointIntersect.the_value;
+                    }
+                }
+            }
+            //double diff = GeometryUtils.minDiff;
+            //GeometryUtils.minDiff = double.MaxValue;
+            return double.NaN;
+        }
     }
 }

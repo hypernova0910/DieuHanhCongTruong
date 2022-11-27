@@ -322,10 +322,10 @@ namespace VNRaPaBomMin
                 foreach (DataRow dataRow in lst)
                 {
                     bool parseSuccess =
-                    double.TryParse(dataRow["start_x"].ToString(), out double lattStart) &
-                    double.TryParse(dataRow["start_y"].ToString(), out double longtStart) &
-                    double.TryParse(dataRow["end_x"].ToString(), out double lattEnd) &
-                    double.TryParse(dataRow["end_y"].ToString(), out double longtEnd);
+                    double.TryParse(dataRow["start_x"].ToString(), out double longtStart) &
+                    double.TryParse(dataRow["start_y"].ToString(), out double lattStart) &
+                    double.TryParse(dataRow["end_x"].ToString(), out double longtEnd) &
+                    double.TryParse(dataRow["end_y"].ToString(), out double lattEnd);
                     long.TryParse(dataRow["cecmprogramareasub_id"].ToString(), out long cecmprogramareasub_id);
                     long.TryParse(dataRow["cecmprogramareamap_id"].ToString(), out long cecmprogramareamap_id);
                     long.TryParse(dataRow["cecmprogram_id"].ToString(), out long cecmprogram_id);
@@ -335,10 +335,10 @@ namespace VNRaPaBomMin
                         line.cecmprogram_id = cecmprogram_id;
                         line.cecmprogramareamap_id = cecmprogramareamap_id;
                         line.cecmprogramareasub_id = cecmprogramareasub_id;
-                        line.start_x = lattStart;
-                        line.start_y = longtStart;
-                        line.end_x = lattEnd;
-                        line.end_y = longtEnd;
+                        line.start_x = longtStart;
+                        line.start_y = lattStart;
+                        line.end_x = longtEnd;
+                        line.end_y = lattEnd;
                         lstRanhDo.Add(line);
                     }
 

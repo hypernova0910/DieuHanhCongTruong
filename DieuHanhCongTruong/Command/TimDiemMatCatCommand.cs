@@ -64,6 +64,37 @@ namespace DieuHanhCongTruong.Command
                 double latt = 0, longt = 0;
                 AppUtils.ToLatLon(x_point, y_point, ref latt, ref longt, "48N");
                 CecmReportPollutionAreaBMVN bmvn = new CecmReportPollutionAreaBMVN();
+                List<CustomFace> triangles = TINCommand.triangulations[line.cecmprogramareamap_id.Value];
+                bmvn.idArea = line.cecmprogramareamap_id.Value;
+                bmvn.programId = MyMainMenu2.idDADH;
+                bmvn.XPoint = x_point;
+                bmvn.YPoint = y_point;
+                bmvn.ZPoint = GeometryUtils.GetMagneticAtPoint(x_point, y_point, triangles);
+                bmvn.Kinhdo = longt;
+                bmvn.Vido = latt;
+                bmvn.TimeExecute = DateTime.Now;
+                List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
+                double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo);
+                bmvn.Area = area;
+                bmvn.contour = contourGiamNghiNgo;
+                if (contourGiamNghiNgo.Count > 2)
+                {
+                    PhanTichKhoangGiamNghiNgoCommand.FindDeep(bmvn);
+                }
+                else
+                {
+                    bmvn.Deep = 0;
+                }
+                for (int i = 0; i < chartForm.chart1.Series[0].Points.Count - 1; i++)
+                {
+                    DataPoint point_temp_1 = chartForm.chart1.Series[0].Points[i];
+                    DataPoint point_temp_2 = chartForm.chart1.Series[0].Points[i + 1];
+                    if ((point.XValue - point_temp_1.XValue) * (point.XValue - point_temp_2.XValue) <= 0)
+                    {
+                        double ratio = (point.XValue - point_temp_1.XValue) / (point_temp_2.XValue - point_temp_1.XValue);
+                        bmvn.ZPoint = point_temp_1.YValues[0] + ratio * (point_temp_2.YValues[0] - point_temp_1.YValues[0]);
+                    }
+                }
                 MapMenuCommand.addSuspectPoint(longt, latt, bmvn);
             }
             Exit();

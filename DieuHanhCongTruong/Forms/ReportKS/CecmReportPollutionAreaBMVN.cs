@@ -34,5 +34,9 @@ namespace VNRaPaBomMin.Models
         public string Ghichu { get; set; }
 
         public List<InfoConnect> contour { get; set; }
+
+        public int indexLabel { get; set; }
+
+        public bool isSaved { get; set; }
     }
 }

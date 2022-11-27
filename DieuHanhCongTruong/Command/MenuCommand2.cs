@@ -160,6 +160,17 @@ namespace DieuHanhCongTruong.Command
             form.ShowDialog();
         }
 
+        public static void ChinhSuaOLuoi(object sender, EventArgs e)
+        {
+            ChinhSuaOLuoiCommand.Execute();
+        }
+
+        public static void InOLuoi(object sender, EventArgs e)
+        {
+            ChiaManhBanDoOLuoiFrm form = new ChiaManhBanDoOLuoiFrm();
+            form.ShowDialog();
+        }
+
         public static void CaiDatChung(object sender, EventArgs e)
         {
             MenuLoaderManagerFrm form = new MenuLoaderManagerFrm();
@@ -192,9 +203,9 @@ namespace DieuHanhCongTruong.Command
                 return;
             }
             MapMenuCommand.ClearSuspectPoints();
-            foreach (List<CustomFace> triangulation in TINCommand.triangulations.Values)
+            foreach (var triangulation_pair in TINCommand.triangulations)
             {
-                PhanTichCommand cmd = new PhanTichCommand(triangulation);
+                PhanTichCommand cmd = new PhanTichCommand(triangulation_pair.Value, triangulation_pair.Key);
                 cmd.Execute();
             }
         }
@@ -234,12 +245,12 @@ namespace DieuHanhCongTruong.Command
 
         public static void PhanTichKhoangGiamNghiNgo(object sender, EventArgs e)
         {
-            //if (MyMainMenu2.Instance.tabCtrlLineChart.SelectedIndex == -1)
-            //{
-            //    MessageBox.Show("Chưa vẽ mặt cắt từ trường");
-            //    return;
-            //}
             PhanTichKhoangGiamNghiNgoCommand.Execute();
+        }
+
+        public static void PhanTichDoSauKhoangGiamNghiNgo(object sender, EventArgs e)
+        {
+            PhanTichKhoangGiamNghiNgoCommand.ExecuteDoSau();
         }
 
         public static void DanhSachBMVN(object sender, EventArgs e)
@@ -319,6 +330,12 @@ namespace DieuHanhCongTruong.Command
         {
             PhanTichDaiMauTuTruong form = new PhanTichDaiMauTuTruong();
             form.ShowDialog();
+        }
+
+        public static void BatTatDoiTuong(object sender, EventArgs e)
+        {
+            GroupLayerForm form = new GroupLayerForm();
+            form.Show();
         }
     }
 }

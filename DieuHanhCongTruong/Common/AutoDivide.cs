@@ -189,16 +189,16 @@ namespace DieuHanhCongTruong.Common
             foreach (CecmProgramAreaLineDTO line in lines)
             {
                 CecmProgramAreaLineDTO lineDTO = new CecmProgramAreaLineDTO();
-                double start_x = 0;
-                double start_y = 0;
-                AppUtils.ToLatLon(line.start_y, line.start_x, ref start_x, ref start_y, "48N");
-                lineDTO.start_x = start_x;
-                lineDTO.start_y = start_y;
-                double end_x = 0;
-                double end_y = 0;
-                AppUtils.ToLatLon(line.end_y, line.end_x, ref end_x, ref end_y, "48N");
-                lineDTO.end_x = end_x;
-                lineDTO.end_y = end_y;
+                double start_latt = 0;
+                double start_longt = 0;
+                AppUtils.ToLatLon(line.start_y, line.start_x, ref start_latt, ref start_longt, "48N");
+                lineDTO.start_x = start_latt;
+                lineDTO.start_y = start_longt;
+                double end_latt = 0;
+                double end_longt = 0;
+                AppUtils.ToLatLon(line.end_y, line.end_x, ref end_latt, ref end_longt, "48N");
+                lineDTO.end_x = end_latt;
+                lineDTO.end_y = end_longt;
                 lineDTO.cecmprogramareasub_id = item.gid;
                 lineDTO.cecmprogramareamap_id = item.cecm_program_areamap_ID;
                 lineDTO.cecmprogram_id = item.cecm_program_id;

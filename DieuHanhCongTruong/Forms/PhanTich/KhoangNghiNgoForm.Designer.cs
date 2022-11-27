@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.DGVData = new System.Windows.Forms.DataGridView();
-            this.charDisplay = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.Stt = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,7 +44,6 @@
             this.Zoom = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.charDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -65,6 +62,7 @@
             this.DGVData.AllowUserToAddRows = false;
             this.DGVData.AllowUserToDeleteRows = false;
             this.DGVData.AllowUserToResizeRows = false;
+            this.DGVData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVData.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -95,24 +93,13 @@
             this.DGVData.TabIndex = 0;
             this.DGVData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVData_CellClick);
             // 
-            // charDisplay
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.charDisplay.ChartAreas.Add(chartArea1);
-            this.charDisplay.Location = new System.Drawing.Point(16, 284);
-            this.charDisplay.Margin = new System.Windows.Forms.Padding(4);
-            this.charDisplay.Name = "charDisplay";
-            this.charDisplay.Size = new System.Drawing.Size(1163, 192);
-            this.charDisplay.TabIndex = 1;
-            this.charDisplay.Text = "charDisplay";
-            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
             this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(1004, 499);
+            this.btnCancel.Location = new System.Drawing.Point(1004, 294);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
@@ -130,7 +117,7 @@
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOk.Location = new System.Drawing.Point(1113, 499);
+            this.btnOk.Location = new System.Drawing.Point(1113, 294);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
@@ -146,7 +133,6 @@
             this.Stt.MinimumWidth = 6;
             this.Stt.Name = "Stt";
             this.Stt.ReadOnly = true;
-            this.Stt.Width = 40;
             // 
             // X
             // 
@@ -154,7 +140,6 @@
             this.X.MinimumWidth = 6;
             this.X.Name = "X";
             this.X.ReadOnly = true;
-            this.X.Width = 110;
             // 
             // Y
             // 
@@ -162,7 +147,6 @@
             this.Y.MinimumWidth = 6;
             this.Y.Name = "Y";
             this.Y.ReadOnly = true;
-            this.Y.Width = 110;
             // 
             // TuTruong
             // 
@@ -170,7 +154,6 @@
             this.TuTruong.MinimumWidth = 6;
             this.TuTruong.Name = "TuTruong";
             this.TuTruong.ReadOnly = true;
-            this.TuTruong.Width = 120;
             // 
             // DoSau
             // 
@@ -178,7 +161,6 @@
             this.DoSau.MinimumWidth = 6;
             this.DoSau.Name = "DoSau";
             this.DoSau.ReadOnly = true;
-            this.DoSau.Width = 120;
             // 
             // DienTich
             // 
@@ -186,38 +168,36 @@
             this.DienTich.MinimumWidth = 6;
             this.DienTich.Name = "DienTich";
             this.DienTich.ReadOnly = true;
-            this.DienTich.Width = 120;
             // 
             // PhanTich
             // 
+            this.PhanTich.FillWeight = 50F;
             this.PhanTich.HeaderText = "Phân tích/Cắm cờ";
             this.PhanTich.MinimumWidth = 6;
             this.PhanTich.Name = "PhanTich";
             this.PhanTich.ReadOnly = true;
-            this.PhanTich.Width = 110;
             // 
             // QuyetDinh
             // 
+            this.QuyetDinh.FillWeight = 50F;
             this.QuyetDinh.HeaderText = "Khẳng định có BMVN";
             this.QuyetDinh.MinimumWidth = 6;
             this.QuyetDinh.Name = "QuyetDinh";
-            this.QuyetDinh.Width = 80;
             // 
             // Zoom
             // 
+            this.Zoom.FillWeight = 50F;
             this.Zoom.HeaderText = "Zoom";
             this.Zoom.MinimumWidth = 6;
             this.Zoom.Name = "Zoom";
-            this.Zoom.Width = 40;
             // 
             // KhoangNghiNgoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1195, 562);
+            this.ClientSize = new System.Drawing.Size(1195, 357);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.charDisplay);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -230,7 +210,6 @@
             this.Load += new System.EventHandler(this.KhoangNghiNgoForm_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.charDisplay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,7 +219,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView DGVData;
-        private System.Windows.Forms.DataVisualization.Charting.Chart charDisplay;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.DataGridViewTextBoxColumn Stt;

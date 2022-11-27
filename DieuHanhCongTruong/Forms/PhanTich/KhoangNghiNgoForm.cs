@@ -1,6 +1,8 @@
 ﻿using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms;
+using DieuHanhCongTruong.Forms.Account;
 using MapWinGIS;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,9 +19,9 @@ namespace VNRaPaBomMin
         //private List<ObjectId> _oidCollMine = new List<ObjectId>();
         //private KhoangNghiNgoCmd _cls = new KhoangNghiNgoCmd();
         //private ObjectId _OidDuongBao = ObjectId.Null;
-        private List<CecmReportPollutionAreaBMVN> lstBMVN;
+        private List<Shape> lstBMVN;
 
-        public KhoangNghiNgoForm(List<CecmReportPollutionAreaBMVN> lstBMVN)
+        public KhoangNghiNgoForm(List<Shape> lstBMVN)
         {
             //_oidCollMine = oidCollMine;
             //_OidDuongBao = oidDuongBao;
@@ -45,13 +47,11 @@ namespace VNRaPaBomMin
             //    stt++;
             //}
             int stt = 1;
-            foreach(CecmReportPollutionAreaBMVN bmvn in lstBMVN)
+            foreach(Shape shapeBomb in lstBMVN)
             {
-                var latLong = AppUtils.ConverUTMToLatLong(bmvn.XPoint, bmvn.YPoint);
-                bmvn.Vido = latLong.Y;
-                bmvn.Kinhdo = latLong.X;
-                DGVData.Rows.Add(stt, latLong.Y, latLong.X, bmvn.ZPoint, bmvn.Deep, bmvn.Area, true, false);
-                DGVData.Rows[stt - 1].Tag = bmvn;
+                CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                DGVData.Rows.Add(stt, bmvn.Vido, bmvn.Kinhdo, bmvn.ZPoint, bmvn.Deep, bmvn.Area, !bmvn.isSaved, bmvn.isSaved);
+                DGVData.Rows[stt - 1].Tag = shapeBomb;
                 //DGVData.Rows[stt - 1].Tag = mMine.ObjectId;
                 stt++;
             }
@@ -118,42 +118,42 @@ namespace VNRaPaBomMin
             //}
         }
 
-        private void FillChart(Dictionary<double, double> mDataVal)
-        {
-            // clear the chart
-            charDisplay.Series.Clear();
+        //private void FillChart(Dictionary<double, double> mDataVal)
+        //{
+        //    // clear the chart
+        //    charDisplay.Series.Clear();
 
-            // fill the chart
-            var series = charDisplay.Series.Add("My Series");
-            series.ChartType = SeriesChartType.Line;
-            series.XValueType = ChartValueType.Int32;
+        //    // fill the chart
+        //    var series = charDisplay.Series.Add("My Series");
+        //    series.ChartType = SeriesChartType.Line;
+        //    series.XValueType = ChartValueType.Int32;
 
-            foreach (var item in mDataVal)
-            {
-                series.Points.AddXY(item.Key, item.Value);
-            }
-            // Visible legend
-            series.IsVisibleInLegend = false;
+        //    foreach (var item in mDataVal)
+        //    {
+        //        series.Points.AddXY(item.Key, item.Value);
+        //    }
+        //    // Visible legend
+        //    series.IsVisibleInLegend = false;
 
-            var chartArea = charDisplay.ChartAreas[series.ChartArea];
+        //    var chartArea = charDisplay.ChartAreas[series.ChartArea];
 
-            //chartArea.AxisX.Minimum = mDataVal.Min(X => X.Key);
-            //chartArea.AxisX.Maximum = mDataVal.Max(X => X.Key);
+        //    //chartArea.AxisX.Minimum = mDataVal.Min(X => X.Key);
+        //    //chartArea.AxisX.Maximum = mDataVal.Max(X => X.Key);
 
-            //chartArea.AxisY.Minimum = mDataVal.Min(X => X.Value);
-            //chartArea.AxisY.Maximum = mDataVal.Max(X => X.Value);
+        //    //chartArea.AxisY.Minimum = mDataVal.Min(X => X.Value);
+        //    //chartArea.AxisY.Maximum = mDataVal.Max(X => X.Value);
 
-            double minValX = mDataVal.Min(X => X.Key);
-            double maxValX = mDataVal.Max(X => X.Key);
-            double minValY = mDataVal.Min(X => X.Value);
-            double maxValY = mDataVal.Max(X => X.Value);
+        //    double minValX = mDataVal.Min(X => X.Key);
+        //    double maxValX = mDataVal.Max(X => X.Key);
+        //    double minValY = mDataVal.Min(X => X.Value);
+        //    double maxValY = mDataVal.Max(X => X.Value);
 
-            // Interval axisX and axisY
-            //chartArea.AxisX.Interval = Math.Round(Math.Abs((minValX + maxValX) / 5), 0);
+        //    // Interval axisX and axisY
+        //    //chartArea.AxisX.Interval = Math.Round(Math.Abs((minValX + maxValX) / 5), 0);
 
-            chartArea.AxisX.Interval = 0.25;
-            chartArea.AxisY.Interval = Math.Round(Math.Abs((minValY + maxValY) / 10), 0);
-        }
+        //    chartArea.AxisX.Interval = 0.25;
+        //    chartArea.AxisY.Interval = Math.Round(Math.Abs((minValY + maxValY) / 10), 0);
+        //}
 
         private void DGVData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -183,7 +183,8 @@ namespace VNRaPaBomMin
                     //        tr.Commit();
                     //    }
                     //}
-                    CecmReportPollutionAreaBMVN bmvn = senderGrid.Rows[e.RowIndex].Tag as CecmReportPollutionAreaBMVN;
+                    Shape shapeBomb = senderGrid.Rows[e.RowIndex].Tag as Shape;
+                    CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
                     Extents extents = new Extents();
                     extents.SetBounds(bmvn.Kinhdo - 0.00001, bmvn.Vido - 0.00001, 0, bmvn.Kinhdo + 0.00001, bmvn.Vido + 0.00001, 0);
                     MyMainMenu2.Instance.axMap1.Extents = extents;
@@ -263,6 +264,123 @@ namespace VNRaPaBomMin
             //        tr.Commit();
             //    }
             //}
+            int count = 0;
+            int countUpdate = 0;
+            UtilsDatabase._ExtraInfoConnettion.BeginTransaction();
+            foreach (DataGridViewRow row in DGVData.Rows)
+            {
+                //ObjectId oidMine = (ObjectId)row.Tag;
+                //if (oidMine.IsValid == false)
+                //    continue;
+
+                //MgdAcDbVNTerrainMinePoint m_Mine = oidMine.GetObject(OpenMode.ForWrite) as MgdAcDbVNTerrainMinePoint;
+                //if (m_Mine == null)
+                //{
+                //    tr.Abort();
+                //    return;
+                //}
+
+                bool typeQuyetDinh = bool.Parse(row.Cells["QuyetDinh"].Value.ToString());
+                bool phanTich = bool.Parse(row.Cells["PhanTich"].Value.ToString());
+
+                //if (typeQuyetDinh)
+                //    m_Mine.MineType = 2;
+                //else
+                //    m_Mine.MineType = m_Mine.OriginMineType;
+                if (typeQuyetDinh && phanTich)
+                {
+                    count++;
+                    try
+                    {
+                        Shape shapeBomb = row.Tag as Shape;
+                        CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                        SqlCommand cmd1 = new SqlCommand("INSERT INTO Cecm_VNTerrainMinePoint (programId, idArea, idRectangle, XPoint, YPoint, ZPoint, Deep, Area, MineType, TimeExecute, Kinhdo, Vido) VALUES(@programId, @idArea, @idRectangle, @XPoint, @YPoint, @ZPoint, @Deep, @Area, @MineType, @TimeExecute, @Kinhdo, @Vido)", UtilsDatabase._ExtraInfoConnettion.Connection as SqlConnection, UtilsDatabase._ExtraInfoConnettion.Transaction as SqlTransaction);
+
+                        //idArea
+                        SqlParameter idArea = new SqlParameter("@idArea", SqlDbType.BigInt, 255);
+                        idArea.Value = bmvn.idArea;
+                        cmd1.Parameters.Add(idArea);
+                        //ToLatLon(mMine.Position.X, mMine.Position.Y, "48N");
+
+                        //XPoint
+                        SqlParameter XPoint = new SqlParameter("@XPoint", SqlDbType.Float);
+                        XPoint.Value = bmvn.XPoint;
+                        cmd1.Parameters.Add(XPoint);
+
+                        //YPoint
+                        SqlParameter YPoint = new SqlParameter("@YPoint", SqlDbType.Float);
+                        YPoint.Value = bmvn.YPoint;
+                        cmd1.Parameters.Add(YPoint);
+
+                        //ZPoint
+                        SqlParameter ZPoint = new SqlParameter("@ZPoint", SqlDbType.Float);
+                        ZPoint.Value = bmvn.ZPoint;
+                        cmd1.Parameters.Add(ZPoint);
+
+                        //Deep
+                        SqlParameter Deep = new SqlParameter("@Deep", SqlDbType.Float);
+                        Deep.Value = bmvn.Deep;
+                        cmd1.Parameters.Add(Deep);
+
+                        //Area
+                        SqlParameter Area = new SqlParameter("@Area", SqlDbType.Float);
+                        Area.Value = bmvn.Area;
+                        cmd1.Parameters.Add(Area);
+
+                        //Area
+                        SqlParameter MineType = new SqlParameter("@MineType", SqlDbType.NVarChar, 255);
+                        MineType.Value = bmvn.MineType != null ? bmvn.MineType : "";
+                        cmd1.Parameters.Add(MineType);
+
+                        //TimeExecute
+                        SqlParameter TimeExecute = new SqlParameter("@TimeExecute", SqlDbType.DateTime, 255);
+                        TimeExecute.Value = bmvn.TimeExecute;
+                        cmd1.Parameters.Add(TimeExecute);
+                        //XPoint
+                        SqlParameter Kinhdo = new SqlParameter("@Kinhdo", SqlDbType.Float);
+                        Kinhdo.Value = bmvn.Kinhdo;
+                        cmd1.Parameters.Add(Kinhdo);
+
+                        //YPoint
+                        SqlParameter Vido = new SqlParameter("@Vido", SqlDbType.Float);
+                        Vido.Value = bmvn.Vido;
+                        cmd1.Parameters.Add(Vido);
+
+                        //idRectangle
+                        SqlParameter idRectangle = new SqlParameter("@idRectangle", SqlDbType.BigInt, 255);
+                        idRectangle.Value = bmvn.idRectangle;
+                        cmd1.Parameters.Add(idRectangle);
+
+                        //programId
+                        SqlParameter programId = new SqlParameter("@programId", SqlDbType.BigInt, 255);
+                        programId.Value = bmvn.programId;
+                        cmd1.Parameters.Add(programId);
+
+                        countUpdate += cmd1.ExecuteNonQuery();
+                        bmvn.isSaved = true;
+                        shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                    
+
+                }
+            }
+
+            // Save database
+            //CapNhatDatabaseBoMin(_OidDuongBao);
+            if(count == countUpdate)
+            {
+                UtilsDatabase._ExtraInfoConnettion.Transaction.Commit();
+                MessageBox.Show("Cập nhật BMVN thành công");
+            }
+            else
+            {
+                UtilsDatabase._ExtraInfoConnettion.Transaction.Rollback();
+                MessageBox.Show("Cập nhật BMVN không thành công");
+            }
             this.Close();
         }
 

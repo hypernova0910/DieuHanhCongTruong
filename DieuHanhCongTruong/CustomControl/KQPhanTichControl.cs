@@ -236,25 +236,25 @@ namespace DieuHanhCongTruong.CustomControl
                 SqlCommand cmd1 = new SqlCommand(
                     "INSERT INTO Cecm_VNTerrainMinePoint " +
                     "(XPoint, YPoint, ZPoint, Deep, programId, idArea, idRectangle, TimeExecute) " +
-                    "VALUES(@XPoint, @YPoint, @ZPoint, @Deep, @programId, @idArea, @idRectangle, @TimeExecute)", 
+                    "VALUES(@Kinhdo, @Vido, @ZPoint, @Deep, @programId, @idArea, @idRectangle, @TimeExecute)", 
                     frmLoggin.sqlCon);
                 //XPoint
-                SqlParameter XPoint = new SqlParameter("@XPoint", SqlDbType.NVarChar);
+                SqlParameter XPoint = new SqlParameter("@Kinhdo", SqlDbType.Float);
                 XPoint.Value = longt;
                 cmd1.Parameters.Add(XPoint);
 
                 //YPoint                  
-                SqlParameter YPoint = new SqlParameter("@YPoint", SqlDbType.NVarChar);
+                SqlParameter YPoint = new SqlParameter("@Vido", SqlDbType.Float);
                 YPoint.Value = latt;
                 cmd1.Parameters.Add(YPoint);
 
                 //ZPoint                  
-                SqlParameter ZPoint = new SqlParameter("@ZPoint", SqlDbType.NVarChar);
+                SqlParameter ZPoint = new SqlParameter("@ZPoint", SqlDbType.Float);
                 ZPoint.Value = magnetic;
                 cmd1.Parameters.Add(ZPoint);
 
                 //Deep                  
-                SqlParameter Deep = new SqlParameter("@Deep", SqlDbType.NVarChar);
+                SqlParameter Deep = new SqlParameter("@Deep", SqlDbType.Float);
                 Deep.Value = depth;
                 cmd1.Parameters.Add(Deep);
 

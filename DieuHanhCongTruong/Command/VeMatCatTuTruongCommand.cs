@@ -22,13 +22,16 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
             MapMenuCommand.axMap1.Identifier.HotTracking = true;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmIdentify;
-            MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", 3000);
+            MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", Constants.TOOLTIP_MAP_TIME);
 
             MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified;
             //MapMenuCommand.axMap1.ShapeHighlighted += AxMap1_ShapeHighlighted;
 
             //MyMainMenu2.Instance.KeyPreview = true;
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
+            Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.ranhDoLayer);
+            sf.Identifiable = true;
+            MyMainMenu2.Instance.menuStrip1.Enabled = false;
         }
 
         //private static void AxMap1_ShapeHighlighted(object sender, AxMapWinGIS._DMapEvents_ShapeHighlightedEvent e)
@@ -42,9 +45,10 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.ShapeIdentified -= AxMap1_ShapeIdentified;
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
-            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
-            //MapMenuCommand.axMap1.ShowToolTip("", 0);
-            //MyMainMenu2.Instance.KeyPreview = false;
+            Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.ranhDoLayer);
+            sf.Identifiable = false;
+            MyMainMenu2.Instance.menuStrip1.Enabled = true;
+            //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
         }
 
         private static void AxMap1_ChooseLayer(object sender, AxMapWinGIS._DMapEvents_ChooseLayerEvent e)

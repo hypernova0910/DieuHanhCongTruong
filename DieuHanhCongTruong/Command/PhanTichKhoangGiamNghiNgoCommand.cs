@@ -24,7 +24,7 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
             MapMenuCommand.axMap1.Identifier.HotTracking = true;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmIdentify;
-            MapMenuCommand.axMap1.ShowToolTip("Chon đường bao dự án", 3000);
+            MapMenuCommand.axMap1.ShowToolTip("Chọn đường bao dự án", Constants.TOOLTIP_MAP_TIME);
 
             MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified;
             //MapMenuCommand.axMap1.ShapeHighlighted += AxMap1_ShapeHighlighted;
@@ -33,25 +33,35 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
         }
 
-        //private static void AxMap1_ShapeHighlighted(object sender, AxMapWinGIS._DMapEvents_ShapeHighlightedEvent e)
-        //{
-        //    e.
-        //}
+        public static void ExecuteDoSau()
+        {
+            //MapMenuCommand.axMap1.SendMouseDown = true;
+            MapMenuCommand.axMap1.ChooseLayer += AxMap1_ChooseLayer;
+            MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
+            MapMenuCommand.axMap1.Identifier.HotTracking = true;
+            MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmIdentify;
+            MapMenuCommand.axMap1.ShowToolTip("Chọn đường bao dự án", 3000);
+
+            MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified_Deep;
+            //MapMenuCommand.axMap1.ShapeHighlighted += AxMap1_ShapeHighlighted;
+
+            //MyMainMenu2.Instance.KeyPreview = true;
+            MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
+        }
 
         private static void Exit()
         {
             MapMenuCommand.axMap1.ChooseLayer -= AxMap1_ChooseLayer;
             MapMenuCommand.axMap1.ShapeIdentified -= AxMap1_ShapeIdentified;
+            MapMenuCommand.axMap1.ShapeIdentified -= AxMap1_ShapeIdentified_Deep;
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
-            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
-            //MapMenuCommand.axMap1.ShowToolTip("", 0);
-            //MyMainMenu2.Instance.KeyPreview = false;
+            //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
         }
 
         private static void AxMap1_ChooseLayer(object sender, AxMapWinGIS._DMapEvents_ChooseLayerEvent e)
         {
-            e.layerHandle = MapMenuCommand.polygonLayer;
+            e.layerHandle = MapMenuCommand.polygonAreaLayer;
         }
 
         private static void Instance_KeyDown(object sender, KeyEventArgs e)
@@ -64,43 +74,48 @@ namespace DieuHanhCongTruong.Command
 
         private static void AxMap1_ShapeIdentified(object sender, AxMapWinGIS._DMapEvents_ShapeIdentifiedEvent e)
         {
-            if (e.layerHandle == MapMenuCommand.polygonLayer)
+            if (e.layerHandle == MapMenuCommand.polygonAreaLayer)
             {
                 Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(e.layerHandle);
                 Shape shp = sf.Shape[e.shapeIndex];
                 Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayer);
-                long.TryParse(shp.Key, out long idKV);
-                if (TINCommand.triangulations.ContainsKey(idKV))
+                //long.TryParse(shp.Key, out long idKV);
+                //if (TINCommand.triangulations.ContainsKey(idKV))
+                //{
+                //    List<CustomFace> triangle = TINCommand.triangulations[idKV];
+                //    List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
+                //    for (int i = 0; i < sf_bomb.NumShapes; i++)
+                //    {
+                //        Shape shapeBomb = sf_bomb.Shape[i];
+                //        Point pnt = shapeBomb.Point[0];
+                //        if (shp.PointInThisPoly(pnt))
+                //        {
+                //            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+
+
+                //            lstBMVN.Add(bmvn);
+                //        }
+                //    }
+                //    KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBMVN);
+                //    form.Show();
+                //}
+                List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
+                List<Shape> lstBomb = new List<Shape>();
+                for (int i = 0; i < sf_bomb.NumShapes; i++)
                 {
-                    List<CustomFace> triangle = TINCommand.triangulations[idKV];
-                    List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
-                    for (int i = 0; i < sf_bomb.NumShapes; i++)
+                    Shape shapeBomb = sf_bomb.Shape[i];
+                    Point pnt = shapeBomb.Point[0];
+                    if (shp.PointInThisPoly(pnt))
                     {
-                        Shape shapeBomb = sf_bomb.Shape[i];
-                        Point pnt = shapeBomb.Point[0];
-                        if (shp.PointInThisPoly(pnt))
-                        {
-                            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                            bmvn.idArea = idKV;
-                            bmvn.programId = MyMainMenu2.idDADH;
-                            List<InfoConnect> contour = new List<InfoConnect>();
-                            double area = FindArea(bmvn, 50, triangle, ref contour);
-                            bmvn.Area = area;
-                            bmvn.contour = contour;
-                            if(contour.Count > 2)
-                            {
-                                FindDeep(bmvn);
-                            }
-                            else
-                            {
-                                bmvn.Deep = 0;
-                            }
-                            lstBMVN.Add(bmvn);
-                        }
+                        //CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+
+
+                        //lstBMVN.Add(bmvn);
+                        lstBomb.Add(shapeBomb);
                     }
-                    KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBMVN);
-                    form.Show();
                 }
+                KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBomb);
+                form.Show();
 
                 //CecmProgramAreaLineDTO line = JsonConvert.DeserializeObject<CecmProgramAreaLineDTO>(shp.Key);
                 //Point pnt_start = shp.Point[0];
@@ -111,7 +126,63 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        private static double FindArea(CecmReportPollutionAreaBMVN bmvn, double KGNN, List<CustomFace> triangles, ref List<InfoConnect> contourHasMine)
+        private static void AxMap1_ShapeIdentified_Deep(object sender, AxMapWinGIS._DMapEvents_ShapeIdentifiedEvent e)
+        {
+            if (e.layerHandle == MapMenuCommand.polygonAreaLayer)
+            {
+                var selectForm = new KhoangGiamNghiNgoForm();
+
+                selectForm.ShowDialog();
+
+                if (selectForm.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                double KGNN = selectForm.GetKhoangNghiNgo;
+
+                Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(e.layerHandle);
+                Shape shp = sf.Shape[e.shapeIndex];
+                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayer);
+                long.TryParse(shp.Key, out long idKV);
+                if (TINCommand.triangulations.ContainsKey(idKV))
+                {
+                    List<CustomFace> triangle = TINCommand.triangulations[idKV];
+                    //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
+                    for (int i = 0; i < sf_bomb.NumShapes; i++)
+                    {
+                        Shape shapeBomb = sf_bomb.Shape[i];
+                        Point pnt = shapeBomb.Point[0];
+                        if (shp.PointInThisPoly(pnt))
+                        {
+                            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                            //lstBMVN.Add(bmvn);
+                            List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
+                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo);
+                            bmvn.Area = area;
+                            bmvn.contour = contourGiamNghiNgo;
+                            if (contourGiamNghiNgo.Count > 2)
+                            {
+                                FindDeep(bmvn);
+                            }
+                            else
+                            {
+                                bmvn.Deep = 0;
+                            }
+                            MapWinGIS.Label label = sf_bomb.Labels.Label[bmvn.indexLabel, 0];
+                            label.Text = Math.Round(bmvn.Deep, 3).ToString() + "m";
+                            shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
+                        }
+                    }
+                    MyMainMenu2.Instance.axMap1.Redraw();
+                }
+                
+
+                Exit();
+            }
+        }
+
+        public static double FindArea(CecmReportPollutionAreaBMVN bmvn, double KGNN, List<CustomFace> triangles, ref List<InfoConnect> contourHasMine)
         {
             //if (double.IsNaN(item.Position.Z))
             //    continue;
@@ -269,7 +340,7 @@ namespace DieuHanhCongTruong.Command
             return area;
         }
 
-        private static InfoLine FindDeep(CecmReportPollutionAreaBMVN bmvn)
+        public static InfoLine FindDeep(CecmReportPollutionAreaBMVN bmvn)
         {
             List<InfoConnect> contour = bmvn.contour;
             List<InfoConnect> intersections = new List<InfoConnect>();
@@ -294,7 +365,7 @@ namespace DieuHanhCongTruong.Command
             InfoLine line = new InfoLine();
             line.start = intersections.FirstOrDefault();
             line.end = intersections.LastOrDefault();
-            bmvn.Deep = AppUtils.DistanceUTM(line.start.lat_value, line.start.long_value, line.end.lat_value, line.end.long_value);
+            bmvn.Deep = AppUtils.DistanceUTM(line.start.lat_value, line.start.long_value, line.end.lat_value, line.end.long_value) * 1.25;
             return line;
         }
 

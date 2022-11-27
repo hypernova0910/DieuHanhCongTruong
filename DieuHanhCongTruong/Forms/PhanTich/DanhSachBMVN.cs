@@ -281,92 +281,17 @@ namespace VNRaPaBomMin
             pnt.y = vertex.Y;
             int index = shp.numPoints;
             shp.InsertPoint(pnt, ref index);
-            
-            index = sf.NumShapes;
-            if (!sf.EditInsertShape(shp, ref index))
-            {
-                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
-                return -1;
-            }
-            //AxMapWinGIS._DMapEvents_MouseUpEventHandler mouseUpPointHandler = new AxMapWinGIS._DMapEvents_MouseUpEventHandler((sender, e) =>
+
+            //index = sf.NumShapes;
+            //if (!sf.EditInsertShape(shp, ref index))
             //{
-            //    double projX = 0;
-            //    double projY = 0;
-            //    axMap1.PixelToProj(e.x, e.y, ref projX, ref projY);
-            //    if(sf.PointInShape(index, projX, projY))
-            //    {
-            //        MessageBox.Show("1: " + vertex.X + ", " + vertex.Y);
-            //    }
-            //    if (sf.PointInShape(index, e.x, e.y))
-            //    {
-            //        MessageBox.Show("2: " + vertex.X + ", " + vertex.Y);
-            //    }
-            //    MessageBox.Show("sf.Shape[index].Extents: " + sf.Shape[index].Extents.xMax + ", " + sf.Shape[index].Extents.xMin + ", " + sf.Shape[index].Extents.yMax + ", " + sf.Shape[index].Extents.yMin);
-                
-            //    //axMap1.ClearDrawingLabels(labelLayer);
-            //    //axMap1.RemoveLayer(highlightLayer);
-            //    //InitHighlightLayer();
-            //    //addHighlight(vertex.X, vertex.Y);
-            //    //Extents ext = shp.Extents;
-            //    //if (ext != null)
-            //    //{
-            //    //    if (e.x > ext.xMin && e.x < ext.xMax && e.y > ext.yMin && e.y < ext.yMax)
-            //    //    {
-            //    //        MessageBox.Show(vertex.X + ", " + vertex.Y);
-            //    //Labels labels = new Labels();
-            //    ////MapWinGIS.Label label = new MapWinGIS.Label();
-            //    ////label.Text = "";
-            //    ////labels.AddLabel(label);
-            //    //labels.FontSize = 12;
-            //    //string labelText = string.Format(
-            //    //    "Kinh độ: {0}\n" +
-            //    //    "Vĩ độ: {1}\n" +
-            //    //    "Độ sâu: {2}m\n" +
-            //    //    "Cường độ từ trường: {3}",
-            //    //    Math.Round(vertex.X, 6), Math.Round(vertex.Y, 6), Math.Round(vertex.depth, 6), Math.Round(vertex.Z, 6)
-            //    //);
-            //    //double pxX = 0, pxY = 0;
-            //    ////axMap1.ProjToPixel(longt, latt, ref pxX, ref pxY);
-            //    ////axMap1.PixelToProj(pxX + 10, pxY + 10, ref longt, ref latt);
-            //    //labels.AddLabel(labelText, vertex.X, vertex.Y);
-            //    //labels.Visible = true;
-            //    //labels.Alignment = tkLabelAlignment.laBottomRight;
-            //    //labels.OffsetX = 20;
-            //    //labels.OffsetY = 20;
-            //    //labels.VerticalPosition = tkVerticalPosition.vpAboveAllLayers;
-            //    //labels.AvoidCollisions = true;
-
-            //    //axMap1.set_DrawingLabels(labelLayer, labels);
-            //    //if (mouseUpHandler != null)
-            //    //{
-            //    //    axMap1.MouseUpEvent -= mouseUpHandler;
-            //    //}
-
-            //    //mouseUpHandler = new AxMapWinGIS._DMapEvents_MouseUpEventHandler((sender3, e3) =>
-            //    //{
-            //    //    if (labels.get_Label(0, 0) != null)
-            //    //    {
-            //    //        Extents extLabel = labels.get_Label(0, 0).ScreenExtents;
-            //    //        if (extLabel != null)
-            //    //        {
-            //    //            if (e3.x < extLabel.xMin || e3.x > extLabel.xMax || e3.y < extLabel.yMin || e3.y > extLabel.yMax)
-            //    //            {
-            //    //                labels.Visible = false;
-            //    //                axMap1.RemoveLayer(highlightLayer);
-            //    //                InitHighlightLayer();
-            //    //            }
-            //    //        }
-            //    //    }
-
-            //    //});
-            //    //axMap1.MouseUpEvent += mouseUpHandler;
-            //    //}
-            //    //}
-            //});
-            //axMap1.MouseUpEvent += mouseUpPointHandler;
-            //pointHandlers.Add(mouseUpPointHandler);
+            //    MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+            //    return -1;
+            //}
+            int indexShp = sf.EditAddShape(shp);
+            
             axMap1.Redraw();
-            return index;
+            return indexShp;
         }
 
         public void removeSuspectPoint(int shapeIndex)
@@ -554,7 +479,7 @@ namespace VNRaPaBomMin
                 pro.name as programIdST, 
                 CONCAT(area_map.code, ' - ', area_map.address) as idAreaST,
                 ol.o_id as idRectangleST,
-                XPoint, YPoint, ZPoint, Deep,
+                Kinhdo, Vido, ZPoint, Deep,
                 CONCAT(tbl.XPoint, ', ', tbl.YPoint) as position,
                 FORMAT(tbl.TimeExecute, 'HH:mm:ss dd/MM/yyyy') as timeST
                 FROM Cecm_VNTerrainMinePoint tbl
@@ -643,7 +568,7 @@ namespace VNRaPaBomMin
                         //    linhVucHoatDong = FindLinhVuc(action_type);
                         //}
                         //Coordinate coordinate = new Coordinate(double.Parse(dr["YPoint"].ToString()), double.Parse(dr["XPoint"].ToString()));
-                        Vertex vertex = new Vertex(double.Parse(dr["XPoint"].ToString()), double.Parse(dr["YPoint"].ToString()), double.Parse(dr["ZPoint"].ToString()));
+                        Vertex vertex = new Vertex(double.Parse(dr["Kinhdo"].ToString()), double.Parse(dr["Vido"].ToString()), double.Parse(dr["ZPoint"].ToString()));
                         vertex.depth = double.Parse(dr["Deep"].ToString());
                         //dgvBMVN.Rows[i].Tag = dr["id"].ToString();
                         

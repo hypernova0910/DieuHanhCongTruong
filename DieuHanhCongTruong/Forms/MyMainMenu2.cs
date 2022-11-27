@@ -54,6 +54,9 @@ namespace DieuHanhCongTruong.Forms
             quảnLýĐơnVịToolStripMenuItem.Click += new EventHandler(MenuCommand2.QuanLyDonVi);
             //Danh sách dự án
             danhSáchCácDựÁnToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachDuAn);
+            //In ấn bản đồ
+            chỉnhSửaÔLướiToolStripMenuItem.Click += new EventHandler(MenuCommand2.ChinhSuaOLuoi);
+            inMảnhBảnĐồTheoÔLướiToolStripMenuItem.Click += new EventHandler(MenuCommand2.InOLuoi);
             //Điều hành, giám sát
             điềuHànhDựÁnToolStripMenuItem.Click += new EventHandler(MenuCommand2.DieuHanhDuAn);
             nhậnDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.NhanDuLieuMayDo);
@@ -62,8 +65,10 @@ namespace DieuHanhCongTruong.Forms
             cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Click += new EventHandler(MenuCommand2.CapNhatDuLieuTuMayDo);
             vẽMặtCắtTừTrườngToolStripMenuItem.Click += new EventHandler(MenuCommand2.VeMatCatTuTruong);
             tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Click += new EventHandler(MenuCommand2.TimDiemTuTruongMatCat);
+            phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDoSauKhoangGiamNghiNgo);
             phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichKhoangGiamNghiNgo);
             phânTíchDảiMàuToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
+            bậtTắtĐốiTượngToolStripMenuItem.Click += new EventHandler(MenuCommand2.BatTatDoiTuong);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
             //Tiện ích
             khoảngCáchToolStripMenuItem.Click += new EventHandler(MenuCommand2.KhoangCach);
@@ -171,11 +176,20 @@ namespace DieuHanhCongTruong.Forms
             tựĐộngPhânTíchDữLiệuToolStripMenuItem.Enabled = enable;
             vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
             phânTíchDảiMàuToolStripMenuItem.Enabled = enable;
+            vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
+            tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Enabled = enable;
+            phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Enabled = enable;
+            phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Enabled = enable;
         }
 
         public void TogglePointMenu(bool enable)
         {
             cậpNhậtDữLiệuTừMáyDòToolStripMenuItem.Enabled = enable;
+        }
+
+        public void ToggleMapMenu(bool enable)
+        {
+            chỉnhSửaÔLướiToolStripMenuItem.Enabled = enable;
         }
 
         private void tabCtrlLineChart_DrawItem(object sender, DrawItemEventArgs e)
