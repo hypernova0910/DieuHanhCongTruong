@@ -181,6 +181,7 @@
     <Compile Include="Command\ChiaMatCatCmd.cs" />
     <Compile Include="Command\ChinhSuaOLuoiCommand.cs" />
     <Compile Include="Command\PhanTichKhoangGiamNghiNgoCommand.cs" />
+    <Compile Include="Command\TimDiemBeMatCommand.cs" />
     <Compile Include="Command\TimDiemMatCatCommand.cs" />
     <Compile Include="Command\KhoangCachCommand.cs" />
     <Compile Include="Command\MapMenuCommand.cs" />
@@ -432,6 +433,12 @@
     <Compile Include="Forms\PhanTich\DanhSachBMVN.Designer.cs">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PhanTich\DanhSachCacDuAn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\DanhSachCacDuAn.Designer.cs">
+      <DependentUpon>DanhSachCacDuAn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PhanTich\GroupLayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -450,6 +457,7 @@
     <Compile Include="Forms\PhanTich\KhoangNghiNgoForm.Designer.cs">
       <DependentUpon>KhoangNghiNgoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PhanTich\MagnetPoint.cs" />
     <Compile Include="Forms\PhanTich\MatCatTuTruong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -461,6 +469,18 @@
     </Compile>
     <Compile Include="Forms\PhanTich\PhanTichDaiMauTuTruong.Designer.cs">
       <DependentUpon>PhanTichDaiMauTuTruong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\SelectVungDuAn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\SelectVungDuAn.Designer.cs">
+      <DependentUpon>SelectVungDuAn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PhanTich\TuTruongForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PhanTich\TuTruongForm.Designer.cs">
+      <DependentUpon>TuTruongForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReportKS\CecmReportDailyBMVN.cs" />
     <Compile Include="Forms\ReportKS\CecmReportDailyKQKS.cs" />
@@ -967,6 +987,9 @@
     <EmbeddedResource Include="Forms\PhanTich\DanhSachBMVN.resx">
       <DependentUpon>DanhSachBMVN.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\DanhSachCacDuAn.resx">
+      <DependentUpon>DanhSachCacDuAn.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\GroupLayerForm.resx">
       <DependentUpon>GroupLayerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -981,6 +1004,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PhanTich\PhanTichDaiMauTuTruong.resx">
       <DependentUpon>PhanTichDaiMauTuTruong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\SelectVungDuAn.resx">
+      <DependentUpon>SelectVungDuAn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PhanTich\TuTruongForm.resx">
+      <DependentUpon>TuTruongForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReportKS\CompressedFile.resx">
       <DependentUpon>CompressedFile.cs</DependentUpon>

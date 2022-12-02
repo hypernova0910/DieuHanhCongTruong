@@ -188,7 +188,7 @@ namespace DieuHanhCongTruong.Forms.Account
                     // Update Resource
                     Settings.Default["UserName"] = tbUserName.Text;
                     Settings.Default.Save();
-                    MessageBox.Show(string.Format("Xin chào {0} bạn đã đăng nhập thành công", tbUserName.Text));
+                    //MessageBox.Show(string.Format("Xin chào {0} bạn đã đăng nhập thành công", tbUserName.Text));
 
                     // Tim user
                     //QuyenNguoiSuDungCMD cmd = new QuyenNguoiSuDungCMD();

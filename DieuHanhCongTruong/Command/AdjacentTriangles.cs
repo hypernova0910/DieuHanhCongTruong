@@ -41,16 +41,95 @@ namespace DieuHanhCongTruong.Command
                 if (A != null)
                 {
                     polygon_temp.Add(A);
+                    //Check điểm ở rìa lưới tam giác
+                    if (cell.Adjacency.Length < 3)
+                    {
+                        bool isInEdgeTriangles = true;
+                        foreach (CustomFace adjacent in cell.Adjacency)
+                        {
+                            if (adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1] &&
+                               adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1] &&
+                               adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1] &&
+                               adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                        }
+                        A.isInEdgeTriangles = isInEdgeTriangles;
+                    }
                 }
                 InfoConnect B = TINCommand.GiaoDoanThangMatPhang(cell.Vertices[1], cell.Vertices[2], z0);
                 if (B != null)
                 {
                     polygon_temp.Add(B);
+                    if (cell.Adjacency.Length < 3)
+                    {
+                        bool isInEdgeTriangles = true;
+                        foreach (CustomFace adjacent in cell.Adjacency)
+                        {
+                            if (adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2] &&
+                               adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2] &&
+                               adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2] &&
+                               adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                        }
+                        A.isInEdgeTriangles = isInEdgeTriangles;
+                    }
                 }
                 InfoConnect C = TINCommand.GiaoDoanThangMatPhang(cell.Vertices[2], cell.Vertices[0], z0);
                 if (C != null)
                 {
                     polygon_temp.Add(C);
+                    if (cell.Adjacency.Length < 3)
+                    {
+                        bool isInEdgeTriangles = true;
+                        foreach (CustomFace adjacent in cell.Adjacency)
+                        {
+                            if (adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0] &&
+                               adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0] &&
+                               adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                            if (adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0] &&
+                               adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0])
+                            {
+                                isInEdgeTriangles = false;
+                                break;
+                            }
+                        }
+                        A.isInEdgeTriangles = isInEdgeTriangles;
+                    }
                 }
                 //sắp xếp các điểm theo thứ tự
                 if (polygon_temp.Count == 0)
@@ -64,26 +143,26 @@ namespace DieuHanhCongTruong.Command
                 InfoConnect pointEqualInit = null;
                 //if(initPoint != null)
                 //{
+                foreach (InfoConnect point in polygon_temp)
+                {
+                    if (initPoint.lat_value == point.lat_value && initPoint.long_value == point.long_value)
+                    {
+                        pointEqualInit = point;
+                    }
+                }
+                if (pointEqualInit != null)
+                {
                     foreach (InfoConnect point in polygon_temp)
                     {
-                        if (initPoint.lat_value == point.lat_value && initPoint.long_value == point.long_value)
+                        if (pointEqualInit != point)
                         {
-                            pointEqualInit = point;
+                            existPoint = false;
+                            return point;
                         }
                     }
-                    if (pointEqualInit != null)
-                    {
-                        foreach (InfoConnect point in polygon_temp)
-                        {
-                            if (pointEqualInit != point)
-                            {
-                                existPoint = false;
-                                return point;
-                            }
-                        }
-                    }
-                    existPoint = true;
-                    return null;
+                }
+                existPoint = true;
+                return null;
                 //}
                 //else
                 //{
@@ -181,7 +260,7 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        public void GetSuspectPoints(double z)
+        public void GetSuspectPoints(double z, bool ascend)
         {
             cellRead.Clear();
             foreach (var cell in triangles)

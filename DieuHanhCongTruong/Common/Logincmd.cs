@@ -44,9 +44,15 @@ namespace DieuHanhCongTruong.Common
                 //cn = new SqlConnection(String.Format("server={0};", ipAddr) + "Initial Catalog=LOGIN;" + "User id=sa;" + "Password=Vuthelam1608;");
 
                 if (string.IsNullOrEmpty(ipAddr) || ipAddr == "...")
-                    ipAddr = Environment.MachineName;
-
-                cn = new SqlConnection(String.Format("server={0};", ipAddr) + String.Format("Initial Catalog={0};", databaseName) + String.Format("User id={0};", userName) + String.Format("Password={0};", userPasswords) + "MultipleActiveResultSets=true;");
+                    ipAddr = Environment.MachineName + "\\SQLEXPRESS";
+                SqlConnectionStringBuilder DBconnbuilder = new SqlConnectionStringBuilder();
+                DBconnbuilder["server"] = ipAddr;
+                DBconnbuilder["Initial Catalog"] = databaseName;
+                DBconnbuilder["User id"] = userName;
+                DBconnbuilder["Password"] = userPasswords;
+                DBconnbuilder["MultipleActiveResultSets"] = true;
+                cn = new SqlConnection(DBconnbuilder.ConnectionString);
+                //cn = new SqlConnection(String.Format("server={0};", ipAddr) + String.Format("Initial Catalog={0};", databaseName) + String.Format("User id={0};", userName) + String.Format("Password={0};", userPasswords) + "MultipleActiveResultSets=true;");
                 if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();

@@ -185,7 +185,7 @@ namespace DieuHanhCongTruong.Command
 
         public static void DieuHanhDuAn(object sender, EventArgs e)
         {
-            MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+            //MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
         }
 
         public static void NhanDuLieuMayDo(object sender, EventArgs e)
@@ -199,15 +199,39 @@ namespace DieuHanhCongTruong.Command
             if (MyMainMenu2.idDADH <= 0)
             {
                 MessageBox.Show("Chưa điều hành dự án");
-                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView(false);
                 return;
             }
             MapMenuCommand.ClearSuspectPoints();
-            foreach (var triangulation_pair in TINCommand.triangulations)
+            MyMainMenu2.Instance.TogglePhanTichMenu(false);
+            MyMainMenu2.Instance.tsProgressPhanTich.Visible = true;
+            Thread thread = new Thread(() =>
             {
-                PhanTichCommand cmd = new PhanTichCommand(triangulation_pair.Value, triangulation_pair.Key);
-                cmd.Execute();
-            }
+                foreach (var triangulation_pair in TINCommand.triangulations_bomb)
+                {
+                    PhanTichCommand cmd = new PhanTichCommand(triangulation_pair.Value, triangulation_pair.Key, true);
+                    cmd.Execute();
+                }
+                foreach (var triangulation_pair in TINCommand.triangulations_mine)
+                {
+                    PhanTichCommand cmd = new PhanTichCommand(triangulation_pair.Value, triangulation_pair.Key, false);
+                    cmd.Execute();
+                }
+                if (MyMainMenu2.Instance.InvokeRequired)
+                {
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() =>
+                    {
+                        MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                        MyMainMenu2.Instance.tsProgressPhanTich.Visible = false;
+                    }));
+                }
+                //else
+                //{
+                //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                //}
+            });
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         public static void CapNhatDuLieuTuMayDo(object sender, EventArgs e)
@@ -215,7 +239,7 @@ namespace DieuHanhCongTruong.Command
             if(MyMainMenu2.idDADH <= 0)
             {
                 MessageBox.Show("Chưa điều hành dự án");
-                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView(false);
                 return;
             }
             MagneticCommand.Execute(MyMainMenu2.idDADH);
@@ -226,7 +250,7 @@ namespace DieuHanhCongTruong.Command
             if (MyMainMenu2.idDADH <= 0)
             {
                 MessageBox.Show("Chưa điều hành dự án");
-                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView();
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView(false);
                 return;
             }
             VeMatCatTuTruongCommand.Execute();
@@ -243,9 +267,15 @@ namespace DieuHanhCongTruong.Command
             cmd.Execute();
         }
 
+        public static void TimDiemTuTruongBeMat(object sender, EventArgs e)
+        {
+            TimDiemBeMatCommand.Execute();
+        }
+
         public static void PhanTichKhoangGiamNghiNgo(object sender, EventArgs e)
         {
-            PhanTichKhoangGiamNghiNgoCommand.Execute();
+            //PhanTichKhoangGiamNghiNgoCommand.ExecuteViewBMVN();
+            PhanTichKhoangGiamNghiNgoCommand.ExecuteViewBMVNChooseCombobox();
         }
 
         public static void PhanTichDoSauKhoangGiamNghiNgo(object sender, EventArgs e)
@@ -329,6 +359,18 @@ namespace DieuHanhCongTruong.Command
         public static void PhanTichDaiMau(object sender, EventArgs e)
         {
             PhanTichDaiMauTuTruong form = new PhanTichDaiMauTuTruong();
+            form.ShowDialog();
+        }
+
+        public static void BieuDoTuTruong(object sender, EventArgs e)
+        {
+            if (MyMainMenu2.idDADH <= 0)
+            {
+                MessageBox.Show("Chưa điều hành dự án");
+                MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView(false);
+                return;
+            }
+            DanhSachCacDuAn form = new DanhSachCacDuAn(MyMainMenu2.idDADH);
             form.ShowDialog();
         }
 

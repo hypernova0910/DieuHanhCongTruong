@@ -39,7 +39,7 @@ namespace DieuHanhCongTruong.Command
             Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.oluoiLayer);
             sf.Identifiable = false;
             MyMainMenu2.Instance.menuStrip1.Enabled = true;
-            //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
+            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
         }
 
         private static void AxMap1_ChooseLayer(object sender, AxMapWinGIS._DMapEvents_ChooseLayerEvent e)

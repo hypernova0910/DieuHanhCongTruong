@@ -1,4 +1,5 @@
-﻿using DieuHanhCongTruong.Common;
+﻿using DieuHanhCongTruong.Command;
+using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
 using MapWinGIS;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -19,13 +21,15 @@ namespace VNRaPaBomMin
         //private List<ObjectId> _oidCollMine = new List<ObjectId>();
         //private KhoangNghiNgoCmd _cls = new KhoangNghiNgoCmd();
         //private ObjectId _OidDuongBao = ObjectId.Null;
-        private List<Shape> lstBMVN;
+        private List<Shape> lstBomb;
+        private List<Shape> lstMine;
 
-        public KhoangNghiNgoForm(List<Shape> lstBMVN)
+        public KhoangNghiNgoForm(List<Shape> lstBomb, List<Shape> lstMine)
         {
             //_oidCollMine = oidCollMine;
             //_OidDuongBao = oidDuongBao;
-            this.lstBMVN = lstBMVN;
+            this.lstBomb = lstBomb;
+            this.lstMine = lstMine;
             InitializeComponent();
         }
 
@@ -47,11 +51,37 @@ namespace VNRaPaBomMin
             //    stt++;
             //}
             int stt = 1;
-            foreach(Shape shapeBomb in lstBMVN)
+            foreach(Shape shp in lstBomb)
             {
-                CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                DGVData.Rows.Add(stt, bmvn.Vido, bmvn.Kinhdo, bmvn.ZPoint, bmvn.Deep, bmvn.Area, !bmvn.isSaved, bmvn.isSaved);
-                DGVData.Rows[stt - 1].Tag = shapeBomb;
+                if (string.IsNullOrEmpty(shp.Key))
+                {
+                    continue;
+                }
+                CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shp.Key);
+                int index = DGVData.Rows.Add(stt, bmvn.Vido, bmvn.Kinhdo, bmvn.ZPoint, bmvn.Deep, bmvn.Area, "Bom", !bmvn.isSaved, bmvn.isSaved);
+                if (bmvn.UserAdd)
+                {
+                    DGVData.Rows[index].DefaultCellStyle.BackColor = Color.LightSteelBlue;
+                }
+                bmvn.IsBomb = TypeBMVN.BOMB;
+                DGVData.Rows[stt - 1].Tag = shp;
+                //DGVData.Rows[stt - 1].Tag = mMine.ObjectId;
+                stt++;
+            }
+            foreach (Shape shp in lstMine)
+            {
+                if (string.IsNullOrEmpty(shp.Key))
+                {
+                    continue;
+                }
+                CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shp.Key);
+                int index = DGVData.Rows.Add(stt, bmvn.Vido, bmvn.Kinhdo, bmvn.ZPoint, bmvn.Deep, bmvn.Area, "Mìn", !bmvn.isSaved, bmvn.isSaved);
+                if (bmvn.UserAdd)
+                {
+                    DGVData.Rows[index].DefaultCellStyle.BackColor = Color.LightSteelBlue;
+                }
+                bmvn.IsBomb = TypeBMVN.MINE;
+                DGVData.Rows[stt - 1].Tag = shp;
                 //DGVData.Rows[stt - 1].Tag = mMine.ObjectId;
                 stt++;
             }
@@ -161,73 +191,47 @@ namespace VNRaPaBomMin
                 return;
 
             var senderGrid = (DataGridView)sender;
-            var column = senderGrid.Columns[e.ColumnIndex];
-            if (column.Name == "Zoom")
+            senderGrid.Rows[e.RowIndex].Selected = true;
+            //var column = senderGrid.Columns[e.ColumnIndex];
+            //if (e.ColumnIndex == Zoom.Index)
+            //{
+
+            //}
+            if (e.ColumnIndex == cotXoa.Index)
             {
-                if (e.RowIndex >= 0)
+                if (MessageBox.Show("Xác nhận xóa điểm", "Cảnh báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    //using (AutoCADApp.DocumentManager.MdiActiveDocument.LockDocument())
-                    //{
-                    //    using (Transaction tr = AutoCADApp.DocumentManager.MdiActiveDocument.TransactionManager.StartTransaction())
-                    //    {
-                    //        ObjectId oidMine = (ObjectId)DGVData.Rows[e.RowIndex].Tag;
-                    //        if (oidMine.IsValid == false)
-                    //            return;
-
-                    //        MgdAcDbVNTerrainMinePoint mMine = oidMine.GetObject(OpenMode.ForRead) as MgdAcDbVNTerrainMinePoint;
-                    //        if (mMine == null)
-                    //            return;
-
-                    //        DBUtils.ZoomCenterPoint(mMine.Position);
-
-                    //        tr.Commit();
-                    //    }
-                    //}
                     Shape shapeBomb = senderGrid.Rows[e.RowIndex].Tag as Shape;
                     CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                    Extents extents = new Extents();
-                    extents.SetBounds(bmvn.Kinhdo - 0.00001, bmvn.Vido - 0.00001, 0, bmvn.Kinhdo + 0.00001, bmvn.Vido + 0.00001, 0);
-                    MyMainMenu2.Instance.axMap1.Extents = extents;
+                    Shapefile sf;
+                    if (bmvn.IsBomb == TypeBMVN.BOMB)
+                    {
+                        sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
+                    }
+                    else
+                    {
+                        sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerMine);
+                    }
+                    sf.Labels.RemoveLabel(bmvn.indexLabel);
+                    shapeBomb.Clear();
+                    shapeBomb.Key = null;
+                    MapMenuCommand.RemoveHighlight();
+
+                    DGVData.Rows.RemoveAt(e.RowIndex);
+                    MyMainMenu2.Instance.axMap1.Redraw();
                 }
             }
             else
             {
-                //using (AutoCADApp.DocumentManager.MdiActiveDocument.LockDocument())
-                //{
-                //    using (Transaction tr = AutoCADApp.DocumentManager.MdiActiveDocument.TransactionManager.StartTransaction())
-                //    {
-                //        ObjectId oidMine = (ObjectId)DGVData.Rows[e.RowIndex].Tag;
-                //        if (oidMine == null)
-                //        {
-                //            tr.Abort();
-                //            return;
-                //        }
 
-                //        var oidDuAn = DBUtils.GetObjectIdDuAn();
 
-                //        MgdAcDbVNTerrainMinePoint m_Mine = oidMine.GetObject(OpenMode.ForRead) as MgdAcDbVNTerrainMinePoint;
-                //        if (m_Mine == null)
-                //        {
-                //            tr.Abort();
-                //            return;
-                //        }
-
-                //        List<MgdAcDbVNTerrainMinePoint> lMine = new List<MgdAcDbVNTerrainMinePoint> { m_Mine };
-
-                //        var mLine = KhoangGiamNghiNgoCmd.FindDeepMine(lMine, true);
-
-                //        var mElevation = _cls.GetTuTruong(oidDuAn, mLine.FirstOrDefault(), lMine.FirstOrDefault(), _OidDuongBao);
-
-                //        if (mElevation.Count == 0)
-                //        {
-                //            charDisplay.Series.Clear();
-                //            return;
-                //        }
-                //        FillChart(mElevation);
-
-                //        tr.Commit();
-                //    }
-                //}
+                Shape shapeBomb = senderGrid.Rows[e.RowIndex].Tag as Shape;
+                CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                Extents extents = new Extents();
+                extents.SetBounds(bmvn.Kinhdo - 0.00001, bmvn.Vido - 0.00001, 0, bmvn.Kinhdo + 0.00001, bmvn.Vido + 0.00001, 0);
+                MyMainMenu2.Instance.axMap1.Extents = extents;
+                MapMenuCommand.RemoveHighlight();
+                MapMenuCommand.addHighlight(bmvn.Kinhdo, bmvn.Vido);
             }
         }
 
@@ -294,7 +298,10 @@ namespace VNRaPaBomMin
                     {
                         Shape shapeBomb = row.Tag as Shape;
                         CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                        SqlCommand cmd1 = new SqlCommand("INSERT INTO Cecm_VNTerrainMinePoint (programId, idArea, idRectangle, XPoint, YPoint, ZPoint, Deep, Area, MineType, TimeExecute, Kinhdo, Vido) VALUES(@programId, @idArea, @idRectangle, @XPoint, @YPoint, @ZPoint, @Deep, @Area, @MineType, @TimeExecute, @Kinhdo, @Vido)", UtilsDatabase._ExtraInfoConnettion.Connection as SqlConnection, UtilsDatabase._ExtraInfoConnettion.Transaction as SqlTransaction);
+                        SqlCommand cmd1 = new SqlCommand(
+                            "INSERT INTO Cecm_VNTerrainMinePoint (programId, idArea, idRectangle, XPoint, YPoint, ZPoint, Deep, Area, MineType, TimeExecute, Kinhdo, Vido, IsBomb) " +
+                            "VALUES(@programId, @idArea, @idRectangle, @XPoint, @YPoint, @ZPoint, @Deep, @Area, @MineType, @TimeExecute, @Kinhdo, @Vido, @IsBomb)", 
+                            UtilsDatabase._ExtraInfoConnettion.Connection as SqlConnection, UtilsDatabase._ExtraInfoConnettion.Transaction as SqlTransaction);
 
                         //idArea
                         SqlParameter idArea = new SqlParameter("@idArea", SqlDbType.BigInt, 255);
@@ -347,14 +354,19 @@ namespace VNRaPaBomMin
                         cmd1.Parameters.Add(Vido);
 
                         //idRectangle
-                        SqlParameter idRectangle = new SqlParameter("@idRectangle", SqlDbType.BigInt, 255);
+                        SqlParameter idRectangle = new SqlParameter("@idRectangle", SqlDbType.BigInt);
                         idRectangle.Value = bmvn.idRectangle;
                         cmd1.Parameters.Add(idRectangle);
 
                         //programId
-                        SqlParameter programId = new SqlParameter("@programId", SqlDbType.BigInt, 255);
+                        SqlParameter programId = new SqlParameter("@programId", SqlDbType.BigInt);
                         programId.Value = bmvn.programId;
                         cmd1.Parameters.Add(programId);
+
+                        //IsBomb
+                        SqlParameter IsBomb = new SqlParameter("@IsBomb", SqlDbType.Int);
+                        IsBomb.Value = bmvn.IsBomb;
+                        cmd1.Parameters.Add(IsBomb);
 
                         countUpdate += cmd1.ExecuteNonQuery();
                         bmvn.isSaved = true;
@@ -387,6 +399,16 @@ namespace VNRaPaBomMin
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void KhoangNghiNgoForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MapMenuCommand.RemoveHighlight();
+            MapMenuCommand.axMap1.Redraw();
+            if (e.CloseReason == CloseReason.UserClosing && MyMainMenu2.Instance.tabCtrlLineChart.Visible == false)
+            {
+                MyMainMenu2.Instance.tabControlBottom.Visible = false;
+            }
         }
     }
 }

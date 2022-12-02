@@ -100,23 +100,63 @@ namespace DieuHanhCongTruong.Forms
             this.tàiKhoảnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đổiMậtKhẩuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTipMap = new System.Windows.Forms.ToolTip(this.components);
+            this.toolBarContainer = new System.Windows.Forms.Panel();
+            this.pnlFilter = new System.Windows.Forms.Panel();
+            this.gbSurface = new System.Windows.Forms.GroupBox();
+            this.rbMine = new System.Windows.Forms.RadioButton();
+            this.rbBomb = new System.Windows.Forms.RadioButton();
+            this.gbHistory = new System.Windows.Forms.GroupBox();
+            this.rbModel = new System.Windows.Forms.RadioButton();
+            this.rbUnmodel = new System.Windows.Forms.RadioButton();
+            this.pnlToolBar = new System.Windows.Forms.Panel();
+            this.btnKhoangCach = new System.Windows.Forms.Button();
+            this.btnDanhSachBMVN = new System.Windows.Forms.Button();
+            this.btnBatTatDoiTuong = new System.Windows.Forms.Button();
+            this.btnBieuDoTuTruong = new System.Windows.Forms.Button();
+            this.btnPhanTichDaiMau = new System.Windows.Forms.Button();
+            this.btnChiTietBMVNPhanTich = new System.Windows.Forms.Button();
+            this.btnPhanTichDoSau = new System.Windows.Forms.Button();
+            this.btnTuTruongBeMat = new System.Windows.Forms.Button();
+            this.btnTimDiemTuTruongDuaVaoMatCat = new System.Windows.Forms.Button();
+            this.btnVeMatCatTuTruong = new System.Windows.Forms.Button();
+            this.btnTuDongPhanTich = new System.Windows.Forms.Button();
+            this.btnNhanDuLieuMayDo = new System.Windows.Forms.Button();
+            this.btnInManhBanDoOLuoi = new System.Windows.Forms.Button();
+            this.axMap1 = new AxMapWinGIS.AxMap();
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.tabControlBottom = new System.Windows.Forms.TabControl();
+            this.tabPageTimDiemTuTruongMatCat = new System.Windows.Forms.TabPage();
+            this.tabCtrlLineChart = new System.Windows.Forms.TabControl();
             this.pnlChonDiemMatCat = new System.Windows.Forms.Panel();
             this.buttonSavePoints = new System.Windows.Forms.Button();
             this.buttonCancelPoints = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabCtrlLineChart = new System.Windows.Forms.TabControl();
-            this.axMap1 = new AxMapWinGIS.AxMap();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbtnMine = new System.Windows.Forms.RadioButton();
-            this.rbtnBomb = new System.Windows.Forms.RadioButton();
-            this.toolTipMap = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPageBMVN = new System.Windows.Forms.TabPage();
+            this.tsProgressPhanTich = new System.Windows.Forms.ToolStrip();
+            this.toolStripProgressBar2 = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tsProgressHistory = new System.Windows.Forms.ToolStrip();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tsProgressSurface = new System.Windows.Forms.ToolStrip();
+            this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.lbProgressDescription = new System.Windows.Forms.ToolStripLabel();
             this.managerCECMUserControl1 = new VNRaPaBomMin.ManagerCECMUserControl();
             this.menuStrip1.SuspendLayout();
-            this.pnlMain.SuspendLayout();
-            this.pnlChonDiemMatCat.SuspendLayout();
+            this.toolBarContainer.SuspendLayout();
+            this.pnlFilter.SuspendLayout();
+            this.gbSurface.SuspendLayout();
+            this.gbHistory.SuspendLayout();
+            this.pnlToolBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.pnlMain.SuspendLayout();
+            this.tabControlBottom.SuspendLayout();
+            this.tabPageTimDiemTuTruongMatCat.SuspendLayout();
+            this.pnlChonDiemMatCat.SuspendLayout();
+            this.tsProgressPhanTich.SuspendLayout();
+            this.tsProgressHistory.SuspendLayout();
+            this.tsProgressSurface.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -201,6 +241,7 @@ namespace DieuHanhCongTruong.Forms
             this.địnhNghĩaVùngDựÁnToolStripMenuItem.Name = "địnhNghĩaVùngDựÁnToolStripMenuItem";
             this.địnhNghĩaVùngDựÁnToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.địnhNghĩaVùngDựÁnToolStripMenuItem.Text = "Định nghĩa vùng dự án";
+            this.địnhNghĩaVùngDựÁnToolStripMenuItem.Visible = false;
             // 
             // chiaÔLướiToolStripMenuItem
             // 
@@ -208,6 +249,7 @@ namespace DieuHanhCongTruong.Forms
             this.chiaÔLướiToolStripMenuItem.Name = "chiaÔLướiToolStripMenuItem";
             this.chiaÔLướiToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.chiaÔLướiToolStripMenuItem.Text = "Chia ô lưới";
+            this.chiaÔLướiToolStripMenuItem.Visible = false;
             // 
             // chỉnhSửaÔLướiToolStripMenuItem
             // 
@@ -222,6 +264,7 @@ namespace DieuHanhCongTruong.Forms
             this.chiaTrụcMặtCắtTừTrườngToolStripMenuItem.Name = "chiaTrụcMặtCắtTừTrườngToolStripMenuItem";
             this.chiaTrụcMặtCắtTừTrườngToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.chiaTrụcMặtCắtTừTrườngToolStripMenuItem.Text = "Chia trục mặt cắt từ trường";
+            this.chiaTrụcMặtCắtTừTrườngToolStripMenuItem.Visible = false;
             // 
             // chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem
             // 
@@ -229,6 +272,7 @@ namespace DieuHanhCongTruong.Forms
             this.chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Name = "chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem";
             this.chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Text = "Chia trục mặt cắt theo ô lưới";
+            this.chiaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Visible = false;
             // 
             // chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem
             // 
@@ -236,6 +280,7 @@ namespace DieuHanhCongTruong.Forms
             this.chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Name = "chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem";
             this.chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Text = "Chỉnh sửa trục mặt cắt theo ô lưới";
+            this.chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem.Visible = false;
             // 
             // phânMảnhBảnĐồToolStripMenuItem
             // 
@@ -243,6 +288,7 @@ namespace DieuHanhCongTruong.Forms
             this.phânMảnhBảnĐồToolStripMenuItem.Name = "phânMảnhBảnĐồToolStripMenuItem";
             this.phânMảnhBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.phânMảnhBảnĐồToolStripMenuItem.Text = "Phân mảnh bản đồ";
+            this.phânMảnhBảnĐồToolStripMenuItem.Visible = false;
             // 
             // inMảnhBảnĐồToolStripMenuItem
             // 
@@ -250,6 +296,7 @@ namespace DieuHanhCongTruong.Forms
             this.inMảnhBảnĐồToolStripMenuItem.Name = "inMảnhBảnĐồToolStripMenuItem";
             this.inMảnhBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.inMảnhBảnĐồToolStripMenuItem.Text = "In mảnh bản đồ";
+            this.inMảnhBảnĐồToolStripMenuItem.Visible = false;
             // 
             // inMảnhBảnĐồTheoÔLướiToolStripMenuItem
             // 
@@ -257,6 +304,7 @@ namespace DieuHanhCongTruong.Forms
             this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem.Name = "inMảnhBảnĐồTheoÔLướiToolStripMenuItem";
             this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem.Size = new System.Drawing.Size(316, 26);
             this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem.Text = "In mảnh bản đồ theo ô lưới";
+            this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem.Visible = false;
             // 
             // điềuHànhGiámSátToolStripMenuItem
             // 
@@ -267,6 +315,7 @@ namespace DieuHanhCongTruong.Forms
             this.điềuHànhGiámSátToolStripMenuItem.Name = "điềuHànhGiámSátToolStripMenuItem";
             this.điềuHànhGiámSátToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.điềuHànhGiámSátToolStripMenuItem.Text = "Điều hành giám sát";
+            this.điềuHànhGiámSátToolStripMenuItem.Visible = false;
             // 
             // điềuHànhDựÁnToolStripMenuItem
             // 
@@ -274,6 +323,7 @@ namespace DieuHanhCongTruong.Forms
             this.điềuHànhDựÁnToolStripMenuItem.Name = "điềuHànhDựÁnToolStripMenuItem";
             this.điềuHànhDựÁnToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
             this.điềuHànhDựÁnToolStripMenuItem.Text = "Điều hành dự án";
+            this.điềuHànhDựÁnToolStripMenuItem.Visible = false;
             // 
             // nhậnDữLiệuTừMáyDòToolStripMenuItem
             // 
@@ -310,6 +360,7 @@ namespace DieuHanhCongTruong.Forms
             this.tựĐộngPhânTíchDữLiệuToolStripMenuItem.Name = "tựĐộngPhânTíchDữLiệuToolStripMenuItem";
             this.tựĐộngPhânTíchDữLiệuToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.tựĐộngPhânTíchDữLiệuToolStripMenuItem.Text = "Tự động phân tích dữ liệu";
+            this.tựĐộngPhânTíchDữLiệuToolStripMenuItem.Visible = false;
             // 
             // cậpNhậtDữLiệuTừMáyDòToolStripMenuItem
             // 
@@ -324,6 +375,7 @@ namespace DieuHanhCongTruong.Forms
             this.vẽMặtCắtTừTrườngToolStripMenuItem.Name = "vẽMặtCắtTừTrườngToolStripMenuItem";
             this.vẽMặtCắtTừTrườngToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.vẽMặtCắtTừTrườngToolStripMenuItem.Text = "Vẽ mặt cắt từ trường";
+            this.vẽMặtCắtTừTrườngToolStripMenuItem.Visible = false;
             // 
             // chỉnhSửaMặtCắtTừTrườngToolStripMenuItem
             // 
@@ -331,6 +383,7 @@ namespace DieuHanhCongTruong.Forms
             this.chỉnhSửaMặtCắtTừTrườngToolStripMenuItem.Name = "chỉnhSửaMặtCắtTừTrườngToolStripMenuItem";
             this.chỉnhSửaMặtCắtTừTrườngToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.chỉnhSửaMặtCắtTừTrườngToolStripMenuItem.Text = "Chỉnh sửa mặt cắt từ trường";
+            this.chỉnhSửaMặtCắtTừTrườngToolStripMenuItem.Visible = false;
             // 
             // tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem
             // 
@@ -338,6 +391,7 @@ namespace DieuHanhCongTruong.Forms
             this.tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Name = "tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem";
             this.tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Text = "Tìm điểm từ trường dựa vào mặt cắt";
+            this.tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Visible = false;
             // 
             // tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem
             // 
@@ -345,6 +399,7 @@ namespace DieuHanhCongTruong.Forms
             this.tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem.Name = "tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem";
             this.tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem.Text = "Tìm điểm từ trường dựa vào đường chia mặt cắt";
+            this.tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem.Visible = false;
             // 
             // phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem
             // 
@@ -352,13 +407,15 @@ namespace DieuHanhCongTruong.Forms
             this.phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Name = "phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem";
             this.phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Text = "Phân tích độ sâu dựa vào khoảng giảm nghi ngờ";
+            this.phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Visible = false;
             // 
             // phânTíchKhoảngGiảmNghiNgờToolStripMenuItem
             // 
             this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Image")));
             this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Name = "phânTíchKhoảngGiảmNghiNgờToolStripMenuItem";
             this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
-            this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Text = "Phân tích khoảng giảm nghi ngờ";
+            this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Text = "Chi tiết BMVN đã phân tích";
+            this.phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Visible = false;
             // 
             // phânTíchDảiMàuToolStripMenuItem
             // 
@@ -366,6 +423,7 @@ namespace DieuHanhCongTruong.Forms
             this.phânTíchDảiMàuToolStripMenuItem.Name = "phânTíchDảiMàuToolStripMenuItem";
             this.phânTíchDảiMàuToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.phânTíchDảiMàuToolStripMenuItem.Text = "Phân tích dải màu";
+            this.phânTíchDảiMàuToolStripMenuItem.Visible = false;
             // 
             // gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem
             // 
@@ -373,6 +431,7 @@ namespace DieuHanhCongTruong.Forms
             this.gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem.Name = "gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem";
             this.gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem.Text = "Giá trị từ trường đường đồng mức";
+            this.gíaTrịTừTrườngĐườngĐồngMứcToolStripMenuItem.Visible = false;
             // 
             // biểuĐồTừTrườngToolStripMenuItem
             // 
@@ -380,6 +439,7 @@ namespace DieuHanhCongTruong.Forms
             this.biểuĐồTừTrườngToolStripMenuItem.Name = "biểuĐồTừTrườngToolStripMenuItem";
             this.biểuĐồTừTrườngToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.biểuĐồTừTrườngToolStripMenuItem.Text = "Biểu đồ từ trường";
+            this.biểuĐồTừTrườngToolStripMenuItem.Visible = false;
             // 
             // đườngBaoMàuÔToolStripMenuItem
             // 
@@ -387,6 +447,7 @@ namespace DieuHanhCongTruong.Forms
             this.đườngBaoMàuÔToolStripMenuItem.Name = "đườngBaoMàuÔToolStripMenuItem";
             this.đườngBaoMàuÔToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.đườngBaoMàuÔToolStripMenuItem.Text = "Đường bao màu ô";
+            this.đườngBaoMàuÔToolStripMenuItem.Visible = false;
             // 
             // bậtTắtĐốiTượngToolStripMenuItem
             // 
@@ -394,6 +455,7 @@ namespace DieuHanhCongTruong.Forms
             this.bậtTắtĐốiTượngToolStripMenuItem.Name = "bậtTắtĐốiTượngToolStripMenuItem";
             this.bậtTắtĐốiTượngToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.bậtTắtĐốiTượngToolStripMenuItem.Text = "Bật tắt đối tượng";
+            this.bậtTắtĐốiTượngToolStripMenuItem.Visible = false;
             // 
             // danhSáchBMVNToolStripMenuItem
             // 
@@ -401,6 +463,7 @@ namespace DieuHanhCongTruong.Forms
             this.danhSáchBMVNToolStripMenuItem.Name = "danhSáchBMVNToolStripMenuItem";
             this.danhSáchBMVNToolStripMenuItem.Size = new System.Drawing.Size(413, 26);
             this.danhSáchBMVNToolStripMenuItem.Text = "Danh sách BMVN";
+            this.danhSáchBMVNToolStripMenuItem.Visible = false;
             // 
             // tiệnÍchToolStripMenuItem
             // 
@@ -420,6 +483,7 @@ namespace DieuHanhCongTruong.Forms
             this.khoảngCáchToolStripMenuItem.Name = "khoảngCáchToolStripMenuItem";
             this.khoảngCáchToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.khoảngCáchToolStripMenuItem.Text = "Khoảng cách";
+            this.khoảngCáchToolStripMenuItem.Visible = false;
             // 
             // thayĐổiKiểuHiểnThịĐườngĐồngMứcToolStripMenuItem
             // 
@@ -682,27 +746,409 @@ namespace DieuHanhCongTruong.Forms
             this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
+            // toolBarContainer
+            // 
+            this.toolBarContainer.Controls.Add(this.pnlFilter);
+            this.toolBarContainer.Controls.Add(this.pnlToolBar);
+            this.toolBarContainer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolBarContainer.Location = new System.Drawing.Point(0, 28);
+            this.toolBarContainer.Name = "toolBarContainer";
+            this.toolBarContainer.Size = new System.Drawing.Size(1902, 80);
+            this.toolBarContainer.TabIndex = 9;
+            // 
+            // pnlFilter
+            // 
+            this.pnlFilter.AutoSize = true;
+            this.pnlFilter.Controls.Add(this.gbSurface);
+            this.pnlFilter.Controls.Add(this.gbHistory);
+            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlFilter.Location = new System.Drawing.Point(1631, 0);
+            this.pnlFilter.Name = "pnlFilter";
+            this.pnlFilter.Size = new System.Drawing.Size(271, 80);
+            this.pnlFilter.TabIndex = 9;
+            // 
+            // gbSurface
+            // 
+            this.gbSurface.Controls.Add(this.rbMine);
+            this.gbSurface.Controls.Add(this.rbBomb);
+            this.gbSurface.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbSurface.Location = new System.Drawing.Point(0, 0);
+            this.gbSurface.Name = "gbSurface";
+            this.gbSurface.Size = new System.Drawing.Size(137, 80);
+            this.gbSurface.TabIndex = 3;
+            this.gbSurface.TabStop = false;
+            this.gbSurface.Text = "Bề mặt từ trường";
+            // 
+            // rbMine
+            // 
+            this.rbMine.AutoSize = true;
+            this.rbMine.Location = new System.Drawing.Point(6, 48);
+            this.rbMine.Name = "rbMine";
+            this.rbMine.Size = new System.Drawing.Size(51, 21);
+            this.rbMine.TabIndex = 1;
+            this.rbMine.Text = "Mìn";
+            this.rbMine.UseVisualStyleBackColor = true;
+            this.rbMine.CheckedChanged += new System.EventHandler(this.rbMine_CheckedChanged);
+            // 
+            // rbBomb
+            // 
+            this.rbBomb.AutoSize = true;
+            this.rbBomb.Checked = true;
+            this.rbBomb.Location = new System.Drawing.Point(6, 21);
+            this.rbBomb.Name = "rbBomb";
+            this.rbBomb.Size = new System.Drawing.Size(57, 21);
+            this.rbBomb.TabIndex = 0;
+            this.rbBomb.TabStop = true;
+            this.rbBomb.Text = "Bom";
+            this.rbBomb.UseVisualStyleBackColor = true;
+            this.rbBomb.CheckedChanged += new System.EventHandler(this.rbBomb_CheckedChanged);
+            // 
+            // gbHistory
+            // 
+            this.gbHistory.Controls.Add(this.rbModel);
+            this.gbHistory.Controls.Add(this.rbUnmodel);
+            this.gbHistory.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbHistory.Location = new System.Drawing.Point(137, 0);
+            this.gbHistory.Name = "gbHistory";
+            this.gbHistory.Size = new System.Drawing.Size(134, 80);
+            this.gbHistory.TabIndex = 2;
+            this.gbHistory.TabStop = false;
+            this.gbHistory.Text = "Điểm đã thu thập";
+            // 
+            // rbModel
+            // 
+            this.rbModel.AutoSize = true;
+            this.rbModel.Location = new System.Drawing.Point(6, 48);
+            this.rbModel.Name = "rbModel";
+            this.rbModel.Size = new System.Drawing.Size(75, 21);
+            this.rbModel.TabIndex = 1;
+            this.rbModel.Text = "Đã nắn";
+            this.rbModel.UseVisualStyleBackColor = true;
+            // 
+            // rbUnmodel
+            // 
+            this.rbUnmodel.AutoSize = true;
+            this.rbUnmodel.Checked = true;
+            this.rbUnmodel.Location = new System.Drawing.Point(6, 21);
+            this.rbUnmodel.Name = "rbUnmodel";
+            this.rbUnmodel.Size = new System.Drawing.Size(90, 21);
+            this.rbUnmodel.TabIndex = 0;
+            this.rbUnmodel.TabStop = true;
+            this.rbUnmodel.Text = "Chưa nắn";
+            this.rbUnmodel.UseVisualStyleBackColor = true;
+            // 
+            // pnlToolBar
+            // 
+            this.pnlToolBar.AutoSize = true;
+            this.pnlToolBar.Controls.Add(this.btnKhoangCach);
+            this.pnlToolBar.Controls.Add(this.btnDanhSachBMVN);
+            this.pnlToolBar.Controls.Add(this.btnBatTatDoiTuong);
+            this.pnlToolBar.Controls.Add(this.btnBieuDoTuTruong);
+            this.pnlToolBar.Controls.Add(this.btnPhanTichDaiMau);
+            this.pnlToolBar.Controls.Add(this.btnChiTietBMVNPhanTich);
+            this.pnlToolBar.Controls.Add(this.btnPhanTichDoSau);
+            this.pnlToolBar.Controls.Add(this.btnTuTruongBeMat);
+            this.pnlToolBar.Controls.Add(this.btnTimDiemTuTruongDuaVaoMatCat);
+            this.pnlToolBar.Controls.Add(this.btnVeMatCatTuTruong);
+            this.pnlToolBar.Controls.Add(this.btnTuDongPhanTich);
+            this.pnlToolBar.Controls.Add(this.btnNhanDuLieuMayDo);
+            this.pnlToolBar.Controls.Add(this.btnInManhBanDoOLuoi);
+            this.pnlToolBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlToolBar.Location = new System.Drawing.Point(0, 0);
+            this.pnlToolBar.Name = "pnlToolBar";
+            this.pnlToolBar.Size = new System.Drawing.Size(1368, 80);
+            this.pnlToolBar.TabIndex = 8;
+            // 
+            // btnKhoangCach
+            // 
+            this.btnKhoangCach.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnKhoangCach.FlatAppearance.BorderSize = 0;
+            this.btnKhoangCach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnKhoangCach.Image = ((System.Drawing.Image)(resources.GetObject("btnKhoangCach.Image")));
+            this.btnKhoangCach.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnKhoangCach.Location = new System.Drawing.Point(1268, 0);
+            this.btnKhoangCach.Margin = new System.Windows.Forms.Padding(10);
+            this.btnKhoangCach.Name = "btnKhoangCach";
+            this.btnKhoangCach.Padding = new System.Windows.Forms.Padding(7);
+            this.btnKhoangCach.Size = new System.Drawing.Size(100, 80);
+            this.btnKhoangCach.TabIndex = 35;
+            this.btnKhoangCach.Text = "Đo khoảng cách";
+            this.btnKhoangCach.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnKhoangCach.UseVisualStyleBackColor = false;
+            // 
+            // btnDanhSachBMVN
+            // 
+            this.btnDanhSachBMVN.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDanhSachBMVN.FlatAppearance.BorderSize = 0;
+            this.btnDanhSachBMVN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDanhSachBMVN.Image = ((System.Drawing.Image)(resources.GetObject("btnDanhSachBMVN.Image")));
+            this.btnDanhSachBMVN.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnDanhSachBMVN.Location = new System.Drawing.Point(1168, 0);
+            this.btnDanhSachBMVN.Margin = new System.Windows.Forms.Padding(10);
+            this.btnDanhSachBMVN.Name = "btnDanhSachBMVN";
+            this.btnDanhSachBMVN.Padding = new System.Windows.Forms.Padding(7);
+            this.btnDanhSachBMVN.Size = new System.Drawing.Size(100, 80);
+            this.btnDanhSachBMVN.TabIndex = 34;
+            this.btnDanhSachBMVN.Text = "Danh sách BMVN";
+            this.btnDanhSachBMVN.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnDanhSachBMVN.UseVisualStyleBackColor = false;
+            // 
+            // btnBatTatDoiTuong
+            // 
+            this.btnBatTatDoiTuong.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnBatTatDoiTuong.FlatAppearance.BorderSize = 0;
+            this.btnBatTatDoiTuong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBatTatDoiTuong.Image = ((System.Drawing.Image)(resources.GetObject("btnBatTatDoiTuong.Image")));
+            this.btnBatTatDoiTuong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnBatTatDoiTuong.Location = new System.Drawing.Point(1068, 0);
+            this.btnBatTatDoiTuong.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBatTatDoiTuong.Name = "btnBatTatDoiTuong";
+            this.btnBatTatDoiTuong.Padding = new System.Windows.Forms.Padding(7);
+            this.btnBatTatDoiTuong.Size = new System.Drawing.Size(100, 80);
+            this.btnBatTatDoiTuong.TabIndex = 33;
+            this.btnBatTatDoiTuong.Text = "Bật tắt đối tượng";
+            this.btnBatTatDoiTuong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBatTatDoiTuong.UseVisualStyleBackColor = false;
+            // 
+            // btnBieuDoTuTruong
+            // 
+            this.btnBieuDoTuTruong.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnBieuDoTuTruong.FlatAppearance.BorderSize = 0;
+            this.btnBieuDoTuTruong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBieuDoTuTruong.Image = ((System.Drawing.Image)(resources.GetObject("btnBieuDoTuTruong.Image")));
+            this.btnBieuDoTuTruong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnBieuDoTuTruong.Location = new System.Drawing.Point(968, 0);
+            this.btnBieuDoTuTruong.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBieuDoTuTruong.Name = "btnBieuDoTuTruong";
+            this.btnBieuDoTuTruong.Padding = new System.Windows.Forms.Padding(7);
+            this.btnBieuDoTuTruong.Size = new System.Drawing.Size(100, 80);
+            this.btnBieuDoTuTruong.TabIndex = 32;
+            this.btnBieuDoTuTruong.Text = "Biểu đồ từ trường";
+            this.btnBieuDoTuTruong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBieuDoTuTruong.UseVisualStyleBackColor = false;
+            // 
+            // btnPhanTichDaiMau
+            // 
+            this.btnPhanTichDaiMau.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnPhanTichDaiMau.FlatAppearance.BorderSize = 0;
+            this.btnPhanTichDaiMau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPhanTichDaiMau.Image = ((System.Drawing.Image)(resources.GetObject("btnPhanTichDaiMau.Image")));
+            this.btnPhanTichDaiMau.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnPhanTichDaiMau.Location = new System.Drawing.Point(868, 0);
+            this.btnPhanTichDaiMau.Margin = new System.Windows.Forms.Padding(10);
+            this.btnPhanTichDaiMau.Name = "btnPhanTichDaiMau";
+            this.btnPhanTichDaiMau.Padding = new System.Windows.Forms.Padding(7);
+            this.btnPhanTichDaiMau.Size = new System.Drawing.Size(100, 80);
+            this.btnPhanTichDaiMau.TabIndex = 31;
+            this.btnPhanTichDaiMau.Text = "Phân tích dải màu";
+            this.btnPhanTichDaiMau.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPhanTichDaiMau.UseVisualStyleBackColor = false;
+            // 
+            // btnChiTietBMVNPhanTich
+            // 
+            this.btnChiTietBMVNPhanTich.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnChiTietBMVNPhanTich.FlatAppearance.BorderSize = 0;
+            this.btnChiTietBMVNPhanTich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChiTietBMVNPhanTich.Image = ((System.Drawing.Image)(resources.GetObject("btnChiTietBMVNPhanTich.Image")));
+            this.btnChiTietBMVNPhanTich.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnChiTietBMVNPhanTich.Location = new System.Drawing.Point(768, 0);
+            this.btnChiTietBMVNPhanTich.Margin = new System.Windows.Forms.Padding(10);
+            this.btnChiTietBMVNPhanTich.Name = "btnChiTietBMVNPhanTich";
+            this.btnChiTietBMVNPhanTich.Padding = new System.Windows.Forms.Padding(7);
+            this.btnChiTietBMVNPhanTich.Size = new System.Drawing.Size(100, 80);
+            this.btnChiTietBMVNPhanTich.TabIndex = 30;
+            this.btnChiTietBMVNPhanTich.Text = "BMVN đã phân tích";
+            this.btnChiTietBMVNPhanTich.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnChiTietBMVNPhanTich.UseVisualStyleBackColor = false;
+            // 
+            // btnPhanTichDoSau
+            // 
+            this.btnPhanTichDoSau.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnPhanTichDoSau.FlatAppearance.BorderSize = 0;
+            this.btnPhanTichDoSau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPhanTichDoSau.Image = ((System.Drawing.Image)(resources.GetObject("btnPhanTichDoSau.Image")));
+            this.btnPhanTichDoSau.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnPhanTichDoSau.Location = new System.Drawing.Point(668, 0);
+            this.btnPhanTichDoSau.Margin = new System.Windows.Forms.Padding(10);
+            this.btnPhanTichDoSau.Name = "btnPhanTichDoSau";
+            this.btnPhanTichDoSau.Padding = new System.Windows.Forms.Padding(7);
+            this.btnPhanTichDoSau.Size = new System.Drawing.Size(100, 80);
+            this.btnPhanTichDoSau.TabIndex = 29;
+            this.btnPhanTichDoSau.Text = "Phân tích độ sâu";
+            this.btnPhanTichDoSau.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPhanTichDoSau.UseVisualStyleBackColor = false;
+            // 
+            // btnTuTruongBeMat
+            // 
+            this.btnTuTruongBeMat.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnTuTruongBeMat.FlatAppearance.BorderSize = 0;
+            this.btnTuTruongBeMat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTuTruongBeMat.Image = ((System.Drawing.Image)(resources.GetObject("btnTuTruongBeMat.Image")));
+            this.btnTuTruongBeMat.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnTuTruongBeMat.Location = new System.Drawing.Point(534, 0);
+            this.btnTuTruongBeMat.Margin = new System.Windows.Forms.Padding(10);
+            this.btnTuTruongBeMat.Name = "btnTuTruongBeMat";
+            this.btnTuTruongBeMat.Padding = new System.Windows.Forms.Padding(7);
+            this.btnTuTruongBeMat.Size = new System.Drawing.Size(134, 80);
+            this.btnTuTruongBeMat.TabIndex = 28;
+            this.btnTuTruongBeMat.Text = "Điểm từ trường trên bề mặt";
+            this.btnTuTruongBeMat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTuTruongBeMat.UseVisualStyleBackColor = false;
+            // 
+            // btnTimDiemTuTruongDuaVaoMatCat
+            // 
+            this.btnTimDiemTuTruongDuaVaoMatCat.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnTimDiemTuTruongDuaVaoMatCat.FlatAppearance.BorderSize = 0;
+            this.btnTimDiemTuTruongDuaVaoMatCat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTimDiemTuTruongDuaVaoMatCat.Image = ((System.Drawing.Image)(resources.GetObject("btnTimDiemTuTruongDuaVaoMatCat.Image")));
+            this.btnTimDiemTuTruongDuaVaoMatCat.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnTimDiemTuTruongDuaVaoMatCat.Location = new System.Drawing.Point(400, 0);
+            this.btnTimDiemTuTruongDuaVaoMatCat.Margin = new System.Windows.Forms.Padding(10);
+            this.btnTimDiemTuTruongDuaVaoMatCat.Name = "btnTimDiemTuTruongDuaVaoMatCat";
+            this.btnTimDiemTuTruongDuaVaoMatCat.Padding = new System.Windows.Forms.Padding(7);
+            this.btnTimDiemTuTruongDuaVaoMatCat.Size = new System.Drawing.Size(134, 80);
+            this.btnTimDiemTuTruongDuaVaoMatCat.TabIndex = 4;
+            this.btnTimDiemTuTruongDuaVaoMatCat.Text = "Điểm từ trường trên mặt cắt";
+            this.btnTimDiemTuTruongDuaVaoMatCat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTimDiemTuTruongDuaVaoMatCat.UseVisualStyleBackColor = false;
+            // 
+            // btnVeMatCatTuTruong
+            // 
+            this.btnVeMatCatTuTruong.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnVeMatCatTuTruong.FlatAppearance.BorderSize = 0;
+            this.btnVeMatCatTuTruong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVeMatCatTuTruong.Image = ((System.Drawing.Image)(resources.GetObject("btnVeMatCatTuTruong.Image")));
+            this.btnVeMatCatTuTruong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnVeMatCatTuTruong.Location = new System.Drawing.Point(300, 0);
+            this.btnVeMatCatTuTruong.Margin = new System.Windows.Forms.Padding(10);
+            this.btnVeMatCatTuTruong.Name = "btnVeMatCatTuTruong";
+            this.btnVeMatCatTuTruong.Padding = new System.Windows.Forms.Padding(7);
+            this.btnVeMatCatTuTruong.Size = new System.Drawing.Size(100, 80);
+            this.btnVeMatCatTuTruong.TabIndex = 3;
+            this.btnVeMatCatTuTruong.Text = "Vẽ mặt cắt từ trường";
+            this.btnVeMatCatTuTruong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnVeMatCatTuTruong.UseVisualStyleBackColor = false;
+            // 
+            // btnTuDongPhanTich
+            // 
+            this.btnTuDongPhanTich.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnTuDongPhanTich.FlatAppearance.BorderSize = 0;
+            this.btnTuDongPhanTich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTuDongPhanTich.Image = ((System.Drawing.Image)(resources.GetObject("btnTuDongPhanTich.Image")));
+            this.btnTuDongPhanTich.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnTuDongPhanTich.Location = new System.Drawing.Point(200, 0);
+            this.btnTuDongPhanTich.Margin = new System.Windows.Forms.Padding(10);
+            this.btnTuDongPhanTich.Name = "btnTuDongPhanTich";
+            this.btnTuDongPhanTich.Padding = new System.Windows.Forms.Padding(7);
+            this.btnTuDongPhanTich.Size = new System.Drawing.Size(100, 80);
+            this.btnTuDongPhanTich.TabIndex = 2;
+            this.btnTuDongPhanTich.Text = "Tự động phân tích";
+            this.btnTuDongPhanTich.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTuDongPhanTich.UseVisualStyleBackColor = false;
+            // 
+            // btnNhanDuLieuMayDo
+            // 
+            this.btnNhanDuLieuMayDo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNhanDuLieuMayDo.FlatAppearance.BorderSize = 0;
+            this.btnNhanDuLieuMayDo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhanDuLieuMayDo.Image = ((System.Drawing.Image)(resources.GetObject("btnNhanDuLieuMayDo.Image")));
+            this.btnNhanDuLieuMayDo.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnNhanDuLieuMayDo.Location = new System.Drawing.Point(100, 0);
+            this.btnNhanDuLieuMayDo.Margin = new System.Windows.Forms.Padding(10);
+            this.btnNhanDuLieuMayDo.Name = "btnNhanDuLieuMayDo";
+            this.btnNhanDuLieuMayDo.Padding = new System.Windows.Forms.Padding(7);
+            this.btnNhanDuLieuMayDo.Size = new System.Drawing.Size(100, 80);
+            this.btnNhanDuLieuMayDo.TabIndex = 1;
+            this.btnNhanDuLieuMayDo.Text = "Nhận DL máy dò";
+            this.btnNhanDuLieuMayDo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNhanDuLieuMayDo.UseVisualStyleBackColor = false;
+            // 
+            // btnInManhBanDoOLuoi
+            // 
+            this.btnInManhBanDoOLuoi.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnInManhBanDoOLuoi.FlatAppearance.BorderSize = 0;
+            this.btnInManhBanDoOLuoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInManhBanDoOLuoi.Image = ((System.Drawing.Image)(resources.GetObject("btnInManhBanDoOLuoi.Image")));
+            this.btnInManhBanDoOLuoi.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnInManhBanDoOLuoi.Location = new System.Drawing.Point(0, 0);
+            this.btnInManhBanDoOLuoi.Margin = new System.Windows.Forms.Padding(10);
+            this.btnInManhBanDoOLuoi.Name = "btnInManhBanDoOLuoi";
+            this.btnInManhBanDoOLuoi.Padding = new System.Windows.Forms.Padding(7);
+            this.btnInManhBanDoOLuoi.Size = new System.Drawing.Size(100, 80);
+            this.btnInManhBanDoOLuoi.TabIndex = 0;
+            this.btnInManhBanDoOLuoi.Text = "In mảnh bản đồ";
+            this.btnInManhBanDoOLuoi.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnInManhBanDoOLuoi.UseVisualStyleBackColor = false;
+            // 
+            // axMap1
+            // 
+            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axMap1.Enabled = true;
+            this.axMap1.Location = new System.Drawing.Point(0, 0);
+            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
+            this.axMap1.Name = "axMap1";
+            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
+            this.axMap1.Size = new System.Drawing.Size(1555, 925);
+            this.axMap1.TabIndex = 13;
+            // 
             // pnlMain
             // 
-            this.pnlMain.Controls.Add(this.pnlChonDiemMatCat);
-            this.pnlMain.Controls.Add(this.tabCtrlLineChart);
+            this.pnlMain.Controls.Add(this.tabControlBottom);
+            this.pnlMain.Controls.Add(this.tsProgressPhanTich);
+            this.pnlMain.Controls.Add(this.tsProgressHistory);
+            this.pnlMain.Controls.Add(this.tsProgressSurface);
             this.pnlMain.Controls.Add(this.axMap1);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(347, 28);
+            this.pnlMain.Location = new System.Drawing.Point(347, 108);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1555, 1005);
-            this.pnlMain.TabIndex = 4;
+            this.pnlMain.Size = new System.Drawing.Size(1555, 925);
+            this.pnlMain.TabIndex = 11;
+            // 
+            // tabControlBottom
+            // 
+            this.tabControlBottom.Controls.Add(this.tabPageTimDiemTuTruongMatCat);
+            this.tabControlBottom.Controls.Add(this.tabPageBMVN);
+            this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabControlBottom.Location = new System.Drawing.Point(0, 454);
+            this.tabControlBottom.Name = "tabControlBottom";
+            this.tabControlBottom.SelectedIndex = 0;
+            this.tabControlBottom.Size = new System.Drawing.Size(1555, 378);
+            this.tabControlBottom.TabIndex = 19;
+            // 
+            // tabPageTimDiemTuTruongMatCat
+            // 
+            this.tabPageTimDiemTuTruongMatCat.Controls.Add(this.tabCtrlLineChart);
+            this.tabPageTimDiemTuTruongMatCat.Controls.Add(this.pnlChonDiemMatCat);
+            this.tabPageTimDiemTuTruongMatCat.Location = new System.Drawing.Point(4, 25);
+            this.tabPageTimDiemTuTruongMatCat.Name = "tabPageTimDiemTuTruongMatCat";
+            this.tabPageTimDiemTuTruongMatCat.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTimDiemTuTruongMatCat.Size = new System.Drawing.Size(1547, 349);
+            this.tabPageTimDiemTuTruongMatCat.TabIndex = 0;
+            this.tabPageTimDiemTuTruongMatCat.Text = "Mặt cắt từ trường";
+            this.tabPageTimDiemTuTruongMatCat.UseVisualStyleBackColor = true;
+            // 
+            // tabCtrlLineChart
+            // 
+            this.tabCtrlLineChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabCtrlLineChart.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabCtrlLineChart.Location = new System.Drawing.Point(3, 57);
+            this.tabCtrlLineChart.Name = "tabCtrlLineChart";
+            this.tabCtrlLineChart.SelectedIndex = 0;
+            this.tabCtrlLineChart.Size = new System.Drawing.Size(1541, 289);
+            this.tabCtrlLineChart.TabIndex = 7;
+            this.tabCtrlLineChart.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabCtrlLineChart_DrawItem);
+            this.tabCtrlLineChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabCtrlLineChart_MouseDown);
             // 
             // pnlChonDiemMatCat
             // 
             this.pnlChonDiemMatCat.Controls.Add(this.buttonSavePoints);
             this.pnlChonDiemMatCat.Controls.Add(this.buttonCancelPoints);
             this.pnlChonDiemMatCat.Controls.Add(this.label1);
-            this.pnlChonDiemMatCat.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlChonDiemMatCat.Location = new System.Drawing.Point(0, 551);
+            this.pnlChonDiemMatCat.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlChonDiemMatCat.Location = new System.Drawing.Point(3, 3);
             this.pnlChonDiemMatCat.Name = "pnlChonDiemMatCat";
-            this.pnlChonDiemMatCat.Size = new System.Drawing.Size(1555, 54);
-            this.pnlChonDiemMatCat.TabIndex = 3;
+            this.pnlChonDiemMatCat.Size = new System.Drawing.Size(1541, 54);
+            this.pnlChonDiemMatCat.TabIndex = 6;
             // 
             // buttonSavePoints
             // 
@@ -712,7 +1158,7 @@ namespace DieuHanhCongTruong.Forms
             this.buttonSavePoints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.buttonSavePoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSavePoints.ForeColor = System.Drawing.Color.White;
-            this.buttonSavePoints.Location = new System.Drawing.Point(1447, 7);
+            this.buttonSavePoints.Location = new System.Drawing.Point(1440, 7);
             this.buttonSavePoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSavePoints.Name = "buttonSavePoints";
             this.buttonSavePoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
@@ -727,7 +1173,7 @@ namespace DieuHanhCongTruong.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancelPoints.AutoSize = true;
             this.buttonCancelPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancelPoints.Location = new System.Drawing.Point(1309, 7);
+            this.buttonCancelPoints.Location = new System.Drawing.Point(1330, 7);
             this.buttonCancelPoints.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCancelPoints.Name = "buttonCancelPoints";
             this.buttonCancelPoints.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
@@ -742,78 +1188,114 @@ namespace DieuHanhCongTruong.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1032, 17);
+            this.label1.Location = new System.Drawing.Point(1063, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(250, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Chọn điểm nghi ngờ trên biểu đò";
+            this.label1.Text = "Chọn điểm nghi ngờ trên biểu đồ";
             // 
-            // tabCtrlLineChart
+            // tabPageBMVN
             // 
-            this.tabCtrlLineChart.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabCtrlLineChart.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabCtrlLineChart.Location = new System.Drawing.Point(0, 605);
-            this.tabCtrlLineChart.Name = "tabCtrlLineChart";
-            this.tabCtrlLineChart.SelectedIndex = 0;
-            this.tabCtrlLineChart.Size = new System.Drawing.Size(1555, 400);
-            this.tabCtrlLineChart.TabIndex = 2;
-            this.tabCtrlLineChart.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabCtrlLineChart_DrawItem);
-            this.tabCtrlLineChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabCtrlLineChart_MouseDown);
+            this.tabPageBMVN.Location = new System.Drawing.Point(4, 25);
+            this.tabPageBMVN.Name = "tabPageBMVN";
+            this.tabPageBMVN.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBMVN.Size = new System.Drawing.Size(1547, 349);
+            this.tabPageBMVN.TabIndex = 1;
+            this.tabPageBMVN.Text = "Chi tiết BMVN";
+            this.tabPageBMVN.UseVisualStyleBackColor = true;
             // 
-            // axMap1
+            // tsProgressPhanTich
             // 
-            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMap1.Enabled = true;
-            this.axMap1.Location = new System.Drawing.Point(0, 0);
-            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
-            this.axMap1.Name = "axMap1";
-            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(1555, 1005);
-            this.axMap1.TabIndex = 1;
+            this.tsProgressPhanTich.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tsProgressPhanTich.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.tsProgressPhanTich.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar2,
+            this.toolStripLabel2});
+            this.tsProgressPhanTich.Location = new System.Drawing.Point(0, 832);
+            this.tsProgressPhanTich.Name = "tsProgressPhanTich";
+            this.tsProgressPhanTich.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tsProgressPhanTich.Size = new System.Drawing.Size(1555, 31);
+            this.tsProgressPhanTich.TabIndex = 18;
+            this.tsProgressPhanTich.Text = "toolStrip1";
             // 
-            // groupBox1
+            // toolStripProgressBar2
             // 
-            this.groupBox1.Controls.Add(this.rbtnMine);
-            this.groupBox1.Controls.Add(this.rbtnBomb);
-            this.groupBox1.Location = new System.Drawing.Point(371, 45);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(265, 65);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Biểu đồ từ trường";
+            this.toolStripProgressBar2.MarqueeAnimationSpeed = 200;
+            this.toolStripProgressBar2.Name = "toolStripProgressBar2";
+            this.toolStripProgressBar2.Size = new System.Drawing.Size(100, 28);
+            this.toolStripProgressBar2.Step = 20;
+            this.toolStripProgressBar2.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
-            // rbtnMine
+            // toolStripLabel2
             // 
-            this.rbtnMine.AutoSize = true;
-            this.rbtnMine.Location = new System.Drawing.Point(134, 22);
-            this.rbtnMine.Name = "rbtnMine";
-            this.rbtnMine.Size = new System.Drawing.Size(81, 21);
-            this.rbtnMine.TabIndex = 1;
-            this.rbtnMine.TabStop = true;
-            this.rbtnMine.Text = "Máy mìn";
-            this.rbtnMine.UseVisualStyleBackColor = true;
-            this.rbtnMine.CheckedChanged += new System.EventHandler(this.rbtnMine_CheckedChanged);
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(215, 28);
+            this.toolStripLabel2.Text = "Đang tự động phân tích            ";
             // 
-            // rbtnBomb
+            // tsProgressHistory
             // 
-            this.rbtnBomb.AutoSize = true;
-            this.rbtnBomb.Location = new System.Drawing.Point(7, 22);
-            this.rbtnBomb.Name = "rbtnBomb";
-            this.rbtnBomb.Size = new System.Drawing.Size(86, 21);
-            this.rbtnBomb.TabIndex = 0;
-            this.rbtnBomb.TabStop = true;
-            this.rbtnBomb.Text = "Máy bom";
-            this.rbtnBomb.UseVisualStyleBackColor = true;
-            this.rbtnBomb.CheckedChanged += new System.EventHandler(this.rbtnBomb_CheckedChanged);
+            this.tsProgressHistory.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tsProgressHistory.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.tsProgressHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar1,
+            this.toolStripLabel1});
+            this.tsProgressHistory.Location = new System.Drawing.Point(0, 863);
+            this.tsProgressHistory.Name = "tsProgressHistory";
+            this.tsProgressHistory.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tsProgressHistory.Size = new System.Drawing.Size(1555, 31);
+            this.tsProgressHistory.TabIndex = 17;
+            this.tsProgressHistory.Text = "toolStrip1";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.MarqueeAnimationSpeed = 200;
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 28);
+            this.toolStripProgressBar1.Step = 20;
+            this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(216, 28);
+            this.toolStripLabel1.Text = "Đang hiển thị điểm đã thu thập";
+            // 
+            // tsProgressSurface
+            // 
+            this.tsProgressSurface.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tsProgressSurface.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.tsProgressSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pbProgress,
+            this.lbProgressDescription});
+            this.tsProgressSurface.Location = new System.Drawing.Point(0, 894);
+            this.tsProgressSurface.Name = "tsProgressSurface";
+            this.tsProgressSurface.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tsProgressSurface.Size = new System.Drawing.Size(1555, 31);
+            this.tsProgressSurface.TabIndex = 16;
+            this.tsProgressSurface.Text = "toolStrip1";
+            // 
+            // pbProgress
+            // 
+            this.pbProgress.MarqueeAnimationSpeed = 200;
+            this.pbProgress.Name = "pbProgress";
+            this.pbProgress.Size = new System.Drawing.Size(100, 28);
+            this.pbProgress.Step = 20;
+            this.pbProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            // 
+            // lbProgressDescription
+            // 
+            this.lbProgressDescription.Name = "lbProgressDescription";
+            this.lbProgressDescription.Size = new System.Drawing.Size(216, 28);
+            this.lbProgressDescription.Text = "Đang hiển thị bề mặt từ trường";
             // 
             // managerCECMUserControl1
             // 
             this.managerCECMUserControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 28);
+            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 108);
             this.managerCECMUserControl1.Margin = new System.Windows.Forms.Padding(4);
             this.managerCECMUserControl1.Name = "managerCECMUserControl1";
-            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 1005);
-            this.managerCECMUserControl1.TabIndex = 1;
+            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 925);
+            this.managerCECMUserControl1.TabIndex = 10;
             // 
             // MyMainMenu2
             // 
@@ -822,24 +1304,40 @@ namespace DieuHanhCongTruong.Forms
             this.ClientSize = new System.Drawing.Size(1902, 1033);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.managerCECMUserControl1);
+            this.Controls.Add(this.toolBarContainer);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.groupBox1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MyMainMenu2";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MyMainMenu2";
+            this.Text = "PHẦN MỀM ĐIỀU HÀNH CÔNG TRƯỜNG";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MyMainMenu2_FormClosing);
             this.Load += new System.EventHandler(this.MyMainMenu2_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.toolBarContainer.ResumeLayout(false);
+            this.toolBarContainer.PerformLayout();
+            this.pnlFilter.ResumeLayout(false);
+            this.gbSurface.ResumeLayout(false);
+            this.gbSurface.PerformLayout();
+            this.gbHistory.ResumeLayout(false);
+            this.gbHistory.PerformLayout();
+            this.pnlToolBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
+            this.tabControlBottom.ResumeLayout(false);
+            this.tabPageTimDiemTuTruongMatCat.ResumeLayout(false);
             this.pnlChonDiemMatCat.ResumeLayout(false);
             this.pnlChonDiemMatCat.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.tsProgressPhanTich.ResumeLayout(false);
+            this.tsProgressPhanTich.PerformLayout();
+            this.tsProgressHistory.ResumeLayout(false);
+            this.tsProgressHistory.PerformLayout();
+            this.tsProgressSurface.ResumeLayout(false);
+            this.tsProgressSurface.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -863,7 +1361,6 @@ namespace DieuHanhCongTruong.Forms
         private System.Windows.Forms.ToolStripMenuItem điềuHànhGiámSátToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem điềuHànhDựÁnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nhậnDữLiệuTừMáyDòToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem phânTíchDữLiệuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chỉnhSửaMặtCắtTừTrườngToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tìmĐiểmTừTrườngDuaVàoĐườngChiaMặtCắtToolStripMenuItem;
@@ -909,23 +1406,55 @@ namespace DieuHanhCongTruong.Forms
         private System.Windows.Forms.ToolStripMenuItem tàiKhoảnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đổiMậtKhẩuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
-        public VNRaPaBomMin.ManagerCECMUserControl managerCECMUserControl1;
         private System.Windows.Forms.ToolStripMenuItem chỉnhSửaTrụcMặtCắtTheoÔLướiToolStripMenuItem;
-        public AxMapWinGIS.AxMap axMap1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        public System.Windows.Forms.RadioButton rbtnMine;
-        public System.Windows.Forms.RadioButton rbtnBomb;
         private System.Windows.Forms.ToolTip toolTipMap;
-        private System.Windows.Forms.ToolStripMenuItem tựĐộngPhânTíchDữLiệuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cậpNhậtDữLiệuTừMáyDòToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vẽMặtCắtTừTrườngToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem phânTíchDảiMàuToolStripMenuItem;
+        public System.Windows.Forms.MenuStrip menuStrip1;
+        public System.Windows.Forms.ToolStripMenuItem tựĐộngPhânTíchDữLiệuToolStripMenuItem;
+        private System.Windows.Forms.Panel toolBarContainer;
+        private System.Windows.Forms.Panel pnlFilter;
+        private System.Windows.Forms.Button btnTimDiemTuTruongDuaVaoMatCat;
+        private System.Windows.Forms.Button btnVeMatCatTuTruong;
+        private System.Windows.Forms.Button btnTuDongPhanTich;
+        private System.Windows.Forms.Button btnNhanDuLieuMayDo;
+        private System.Windows.Forms.Button btnInManhBanDoOLuoi;
+        public VNRaPaBomMin.ManagerCECMUserControl managerCECMUserControl1;
+        private System.Windows.Forms.GroupBox gbSurface;
+        private System.Windows.Forms.RadioButton rbMine;
+        private System.Windows.Forms.RadioButton rbBomb;
+        private System.Windows.Forms.GroupBox gbHistory;
+        private System.Windows.Forms.RadioButton rbModel;
+        private System.Windows.Forms.RadioButton rbUnmodel;
+        public System.Windows.Forms.Panel pnlToolBar;
+        public System.Windows.Forms.ToolStripMenuItem phânTíchDữLiệuToolStripMenuItem;
+        private System.Windows.Forms.Button btnKhoangCach;
+        private System.Windows.Forms.Button btnDanhSachBMVN;
+        private System.Windows.Forms.Button btnBatTatDoiTuong;
+        private System.Windows.Forms.Button btnBieuDoTuTruong;
+        private System.Windows.Forms.Button btnPhanTichDaiMau;
+        private System.Windows.Forms.Button btnChiTietBMVNPhanTich;
+        private System.Windows.Forms.Button btnPhanTichDoSau;
+        private System.Windows.Forms.Button btnTuTruongBeMat;
+        public AxMapWinGIS.AxMap axMap1;
         public System.Windows.Forms.Panel pnlMain;
+        public System.Windows.Forms.TabControl tabControlBottom;
+        public System.Windows.Forms.TabPage tabPageTimDiemTuTruongMatCat;
+        public System.Windows.Forms.TabControl tabCtrlLineChart;
         public System.Windows.Forms.Panel pnlChonDiemMatCat;
         public System.Windows.Forms.Button buttonSavePoints;
         public System.Windows.Forms.Button buttonCancelPoints;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TabControl tabCtrlLineChart;
-        public System.Windows.Forms.MenuStrip menuStrip1;
+        public System.Windows.Forms.TabPage tabPageBMVN;
+        public System.Windows.Forms.ToolStrip tsProgressPhanTich;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        public System.Windows.Forms.ToolStrip tsProgressHistory;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        public System.Windows.Forms.ToolStrip tsProgressSurface;
+        private System.Windows.Forms.ToolStripProgressBar pbProgress;
+        private System.Windows.Forms.ToolStripLabel lbProgressDescription;
     }
 }

@@ -717,23 +717,34 @@ namespace VNRaPaBomMin
                     double bottom = lat_center - margin_y;
 
                     Labels labels = new Labels();
-                    LabelCategory labelCategory = labels.AddCategory("Transparent");
-                    labelCategory.FrameVisible = false;
-                    labelCategory.FontColor = AppUtils.ColorToUint(Color.Red);
-                    labelCategory.FontSize = 14;
-                    labelCategory.Alignment = tkLabelAlignment.laCenterRight;
-                    labels.ApplyCategories();
+                    //LabelCategory labelCategory = labels.AddCategory("Transparent");
+                    //labelCategory.FrameVisible = false;
+                    //labelCategory.FontColor = AppUtils.ColorToUint(Color.Red);
+                    //labelCategory.FontSize = 14;
+                    //labelCategory.Alignment = tkLabelAlignment.laCenterRight;
+                    //labels.ApplyCategories();
+
+                    labels.Alignment = tkLabelAlignment.laCenterRight;
+                    labels.FontSize = 14;
 
                     var lstDatarow = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "cecm_programData", "id", MyMainMenu2.idDADH.ToString());
+                    string tenDuAn = "";
                     foreach (DataRow dr in lstDatarow)
                     {
-                        labels.AddLabel("Dự án: " + dr["name"].ToString(), left + margin_x / 2, bottom + margin_y * 0.3, 0, 0);
+                        tenDuAn = dr["name"].ToString();
+                        //labels.AddLabel("Dự án: " + dr["name"].ToString(), left + margin_x / 2, bottom + margin_y * 0.3, 0, 0);
                     }
-                    labels.AddLabel("Khu vực: " + TenVungDA, left + margin_x / 2, bottom + margin_y * 0.2, 0, 0);
-                    if(MaO != "")
+                    //labels.AddLabel("Khu vực: " + TenVungDA, left + margin_x / 2, bottom + margin_y * 0.2, 0, 0);
+                    string info =
+                        "Dự án: " + tenDuAn + "\n" +
+                        "Khu vực: " + TenVungDA;
+                    if (MaO != "")
                     {
-                        labels.AddLabel("Mã ô: " + MaO, left + margin_x / 2, bottom + margin_y * 0.1, 0, 0);
+                        //labels.AddLabel("Mã ô: " + MaO, left + margin_x / 2, bottom + margin_y * 0.1, 0, 0);
+                        info += "\nMã ô: " + MaO;
                     }
+
+                    labels.AddLabel(info, left + margin_x / 2, bottom + margin_y * 0.3);
                     MapMenuCommand.axMap1.set_DrawingLabels(MapMenuCommand.labelLayer, labels);
                     img = MapMenuCommand.axMap1.SnapShot3(left, right, top, bottom, 1080);
                     MapMenuCommand.axMap1.ClearDrawingLabels(MapMenuCommand.labelLayer);

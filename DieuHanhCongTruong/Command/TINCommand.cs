@@ -19,8 +19,8 @@ namespace DieuHanhCongTruong.Command
     {
         private const double MAX_TRIANGLE_LENGTH = 10;
 
-        public static Dictionary<long, List<CustomFace>> triangulations = new Dictionary<long, List<CustomFace>>();
-        
+        public static Dictionary<long, List<CustomFace>> triangulations_bomb = new Dictionary<long, List<CustomFace>>();
+        public static Dictionary<long, List<CustomFace>> triangulations_mine = new Dictionary<long, List<CustomFace>>();
 
         public static IList<DefaultVertex2D> BuildConvexHull(List<InfoConnect> lst)
         {
@@ -55,7 +55,15 @@ namespace DieuHanhCongTruong.Command
             {
                 if (lst.Count == 0)
                 {
-                    triangulations.Add(idKV, new List<CustomFace>());
+                    if (isBomb)
+                    {
+                        triangulations_bomb.Add(idKV, new List<CustomFace>());
+                    }
+                    else
+                    {
+                        triangulations_mine.Add(idKV, new List<CustomFace>());
+                    }
+                    
                     return;
                 }
                 List<double[]> vertices = new List<double[]>();
@@ -98,9 +106,16 @@ namespace DieuHanhCongTruong.Command
                             //}
                         }
                     }
-                    triangulations.Add(idKV, lstCell);
+                    if (isBomb)
+                    {
+                        triangulations_bomb.Add(idKV, lstCell);
+                    }
+                    else
+                    {
+                        triangulations_mine.Add(idKV, lstCell);
+                    }
                     //double elevation = (maxZ - minZ) / MapMenuCommand.magnetic_colors.Length;
-                    List<DataRow> lstColor = UtilsDatabase.GetAllDataInTable(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong");
+                    List<DataRow> lstColor = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong", "IsBomb", isBomb ? "1" : "2");
 
                     if (lstColor.Count > 0)
                     {
@@ -112,15 +127,25 @@ namespace DieuHanhCongTruong.Command
                             DataRow dr = lstColor[i];
                             double min = double.Parse(dr["min"].ToString());
                             double max = double.Parse(dr["max"].ToString());
-                            BuildOneColorSurface(lstCell, min, max, i);
+                            BuildOneColorSurface(lstCell, min, max, i, isBomb);
                         }
                         MapMenuCommand.Redraw();
                     }
                     else
                     {
-                        double minZ = Constants.MIN_Z_BOMB;
-                        double maxZ = Constants.MAX_Z_BOMB;
-                        BuildSurface(lstCell, minZ, maxZ, Constants.magnetic_colors.Length);
+                        double minZ;
+                        double maxZ;
+                        if (isBomb)
+                        {
+                            minZ = Constants.MIN_Z_BOMB;
+                            maxZ = Constants.MAX_Z_BOMB;
+                        }
+                        else
+                        {
+                            minZ = Constants.MIN_Z_MINE;
+                            maxZ = Constants.MAX_Z_MINE;
+                        }
+                        BuildSurface(lstCell, minZ, maxZ, Constants.magnetic_colors.Length, isBomb);
                     }
 
 
@@ -299,7 +324,7 @@ namespace DieuHanhCongTruong.Command
             return infoConnect;
         }
 
-        public static void BuildSurface(List<CustomFace> lstCell, double minZ, double maxZ, int colorCount)
+        public static void BuildSurface(List<CustomFace> lstCell, double minZ, double maxZ, int colorCount, bool isBomb)
         {
             double elevation = (maxZ - minZ) / colorCount;
             if (elevation != 0)
@@ -309,13 +334,13 @@ namespace DieuHanhCongTruong.Command
                     double minElevation = minZ + i * elevation;
                     double maxElevation = minZ + (i + 1) * elevation;
 
-                    BuildOneColorSurface(lstCell, minElevation, maxElevation, i);
+                    BuildOneColorSurface(lstCell, minElevation, maxElevation, i, isBomb);
                 }
                 MapMenuCommand.Redraw();
             }
         }
 
-        public static void BuildOneColorSurface(List<CustomFace> lstCell, double minElevation, double maxElevation, int colorIndex)
+        public static void BuildOneColorSurface(List<CustomFace> lstCell, double minElevation, double maxElevation, int colorIndex, bool isBomb)
         {
             foreach (var cell in lstCell)
             {
@@ -331,7 +356,7 @@ namespace DieuHanhCongTruong.Command
                         xPoints_triangle.Add(longt);
                         yPoints_triangle.Add(latt);
                     }
-                    MapMenuCommand.drawPolygon(colorIndex, xPoints_triangle.ToArray(), yPoints_triangle.ToArray(), true);
+                    MapMenuCommand.drawPolygon(colorIndex, xPoints_triangle.ToArray(), yPoints_triangle.ToArray(), isBomb);
                 }
             }
         }

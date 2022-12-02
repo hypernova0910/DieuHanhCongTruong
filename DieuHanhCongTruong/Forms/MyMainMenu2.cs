@@ -1,4 +1,5 @@
 ﻿using DieuHanhCongTruong.Command;
+using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms.Account;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,27 @@ namespace DieuHanhCongTruong.Forms
     {
         public static MyMainMenu2 Instance;
         public static long idDADH = -1;
+        public static string tenDADH = "";
+        private bool init = false;
 
         public MyMainMenu2()
         {
             InitializeComponent();
             CustomizeDesign();
             Instance = this;
+            init = true;
         }
 
         private void CustomizeDesign()
         {
             SetTagForSubMenu();
-            tabCtrlLineChart.Height = 0;
-            pnlChonDiemMatCat.Height = 0;
+            SetEventForToolStrip();
+            tabCtrlLineChart.Visible = false;
+            pnlChonDiemMatCat.Visible = false;
+            tsProgressSurface.Visible = false;
+            tsProgressHistory.Visible = false;
+            tsProgressPhanTich.Visible = false;
+            tabControlBottom.Visible = false;
             //toolTipMap.SetToolTip(pnlMain, "Chọn rãnh dò");
         }
 
@@ -68,6 +77,7 @@ namespace DieuHanhCongTruong.Forms
             phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDoSauKhoangGiamNghiNgo);
             phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichKhoangGiamNghiNgo);
             phânTíchDảiMàuToolStripMenuItem.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
+            biểuĐồTừTrườngToolStripMenuItem.Click += new EventHandler(MenuCommand2.BieuDoTuTruong);
             bậtTắtĐốiTượngToolStripMenuItem.Click += new EventHandler(MenuCommand2.BatTatDoiTuong);
             danhSáchBMVNToolStripMenuItem.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
             //Tiện ích
@@ -104,6 +114,27 @@ namespace DieuHanhCongTruong.Forms
             đăngXuấtToolStripMenuItem.Click += new EventHandler(MenuCommand2.DangXuat);
         }
 
+        private void SetEventForToolStrip()
+        {
+            //In ấn bản đồ
+            btnInManhBanDoOLuoi.Click += new EventHandler(MenuCommand2.InOLuoi);
+            //Điều hành, giám sát
+            btnNhanDuLieuMayDo.Click += new EventHandler(MenuCommand2.NhanDuLieuMayDo);
+            //Phân tích dữ liệu
+            btnTuDongPhanTich.Click += new EventHandler(MenuCommand2.TuDongPhanTich);
+            btnVeMatCatTuTruong.Click += new EventHandler(MenuCommand2.VeMatCatTuTruong);
+            btnTimDiemTuTruongDuaVaoMatCat.Click += new EventHandler(MenuCommand2.TimDiemTuTruongMatCat);
+            btnTuTruongBeMat.Click += new EventHandler(MenuCommand2.TimDiemTuTruongBeMat);
+            btnPhanTichDoSau.Click += new EventHandler(MenuCommand2.PhanTichDoSauKhoangGiamNghiNgo);
+            btnChiTietBMVNPhanTich.Click += new EventHandler(MenuCommand2.PhanTichKhoangGiamNghiNgo);
+            btnPhanTichDaiMau.Click += new EventHandler(MenuCommand2.PhanTichDaiMau);
+            btnBieuDoTuTruong.Click += new EventHandler(MenuCommand2.BieuDoTuTruong);
+            btnBatTatDoiTuong.Click += new EventHandler(MenuCommand2.BatTatDoiTuong);
+            btnDanhSachBMVN.Click += new EventHandler(MenuCommand2.DanhSachBMVN);
+            //Tiện ích
+            btnKhoangCach.Click += new EventHandler(MenuCommand2.KhoangCach);
+        }
+
         private void MyMainMenu2_Load(object sender, EventArgs e)
         {
             if (frmLoggin.sqlCon == null)
@@ -114,7 +145,7 @@ namespace DieuHanhCongTruong.Forms
                 {
                     this.Show();
                     MapMenuCommand.LoadMap();
-                    rbtnBomb.Checked = true;
+                    managerCECMUserControl1.LoadTreeView(true);
                 }
                 else
                 {
@@ -148,16 +179,6 @@ namespace DieuHanhCongTruong.Forms
         //    }
         //}
 
-        private void rbtnBomb_CheckedChanged(object sender, EventArgs e)
-        {
-            MapMenuCommand.togglePolygonBomb(rbtnBomb.Checked);
-        }
-
-        private void rbtnMine_CheckedChanged(object sender, EventArgs e)
-        {
-            MapMenuCommand.togglePolygonMine(rbtnMine.Checked);
-        }
-
         private void MyMainMenu2_FormClosing(object sender, FormClosingEventArgs e)
         {
             Environment.Exit(Environment.ExitCode);
@@ -176,10 +197,17 @@ namespace DieuHanhCongTruong.Forms
             tựĐộngPhânTíchDữLiệuToolStripMenuItem.Enabled = enable;
             vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
             phânTíchDảiMàuToolStripMenuItem.Enabled = enable;
-            vẽMặtCắtTừTrườngToolStripMenuItem.Enabled = enable;
             tìmĐiểmTừTrườngDựaVàoMặtCắtToolStripMenuItem.Enabled = enable;
             phânTíchĐộSâuDựaVàoKhoảngGiảmNghiNgờToolStripMenuItem.Enabled = enable;
             phânTíchKhoảngGiảmNghiNgờToolStripMenuItem.Enabled = enable;
+
+            btnTuDongPhanTich.Visible = enable;
+            btnVeMatCatTuTruong.Visible = enable;
+            btnPhanTichDaiMau.Visible = enable;
+            btnTimDiemTuTruongDuaVaoMatCat.Visible = enable;
+            btnChiTietBMVNPhanTich.Visible = enable;
+            btnPhanTichDoSau.Visible = enable;
+            btnTuTruongBeMat.Visible = enable;
         }
 
         public void TogglePointMenu(bool enable)
@@ -200,11 +228,30 @@ namespace DieuHanhCongTruong.Forms
             var tabPage = this.tabCtrlLineChart.TabPages[e.Index];
             var tabRect = this.tabCtrlLineChart.GetTabRect(e.Index);
             var closeImage = Properties.Resources.Delete;
-            e.Graphics.DrawImage(closeImage,
+            
+            //if(e.Index == tabCtrlLineChart.SelectedIndex)
+            //{
+            //    using (SolidBrush brush =
+            //       new SolidBrush(Constants.MENU_BACKGROUND_COLOR))
+            //    using (SolidBrush textBrush =
+            //           new SolidBrush(Constants.SELECTED_COLOR))
+            //    {
+            //        e.Graphics.FillRectangle(brush, e.Bounds);
+            //        e.Graphics.DrawString(tabPage.Text, e.Font, textBrush, e.Bounds.X + 3, e.Bounds.Y + 4);
+            //        e.Graphics.DrawImage(closeImage,
+            //        (tabRect.Right - closeImage.Width),
+            //        tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
+            //    }
+            //}
+            //else
+            //{
+                e.Graphics.DrawImage(closeImage,
                 (tabRect.Right - closeImage.Width),
                 tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
-            TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
-                tabRect, tabPage.ForeColor, TextFormatFlags.Left);
+                TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
+                    tabRect, e.Index == tabCtrlLineChart.SelectedIndex ? Constants.SELECTED_COLOR : tabPage.ForeColor, TextFormatFlags.Left);
+            //}
+            
         }
 
         private void tabCtrlLineChart_MouseDown(object sender, MouseEventArgs e)
@@ -240,9 +287,23 @@ namespace DieuHanhCongTruong.Forms
             }
             if(tabCtrlLineChart.TabPages.Count == 0)
             {
-                tabCtrlLineChart.Height = 0;
-                pnlChonDiemMatCat.Height = 0;
+                tabCtrlLineChart.Visible = false;
+                pnlChonDiemMatCat.Visible = false;
+                if(tabPageBMVN.Controls.Count == 0)
+                {
+                    tabControlBottom.Visible = false;
+                }
             }
+        }
+
+        private void rbBomb_CheckedChanged(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygonBomb(rbBomb.Checked);
+        }
+
+        private void rbMine_CheckedChanged(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygonMine(rbMine.Checked);
         }
     }
 }

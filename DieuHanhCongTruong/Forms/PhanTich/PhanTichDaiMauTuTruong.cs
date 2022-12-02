@@ -16,6 +16,9 @@ namespace VNRaPaBomMin
         private ConnectionWithExtraInfo _connectionWithExtraInfo;
         private bool loaded = false;
 
+        private bool threadMagneticBombStopped = true;
+        private bool threadMagneticMineStopped = true;
+
         public PhanTichDaiMauTuTruong()
         {
             InitializeComponent();
@@ -24,19 +27,19 @@ namespace VNRaPaBomMin
 
         private void PhanTichDaiMauTuTruong_Load(object sender, EventArgs e)
         {
-            //DGVThongTin.Columns[0].HeaderText = "Min";
-            //DGVThongTin.Columns[1].HeaderText = "Max";
-            //DGVThongTin.Columns[2].HeaderText = "Màu";
+            //DGVThongTinBomb.Columns[0].HeaderText = "Min";
+            //DGVThongTinBomb.Columns[1].HeaderText = "Max";
+            //DGVThongTinBomb.Columns[2].HeaderText = "Màu";
 
-            //for (int i = 0; i < DGVThongTin.ColumnCount; i++)
+            //for (int i = 0; i < DGVThongTinBomb.ColumnCount; i++)
             //{
-            //    DGVThongTin.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //    DGVThongTin.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //    DGVThongTinBomb.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //    DGVThongTinBomb.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             //}
-            //DGVThongTin.AllowUserToAddRows = false;
-            //DGVThongTin.BackgroundColor = System.Drawing.Color.White;
-            //DGVThongTin.RowHeadersVisible = false;
-            //DGVThongTin.AllowUserToResizeRows = false;
+            //DGVThongTinBomb.AllowUserToAddRows = false;
+            //DGVThongTinBomb.BackgroundColor = System.Drawing.Color.White;
+            //DGVThongTinBomb.RowHeadersVisible = false;
+            //DGVThongTinBomb.AllowUserToResizeRows = false;
 
             //Autodesk.Civil.DatabaseServices.SurfaceAnalysisElevationData[] data = cmd.ListAllSurfaceAnalysis();
 
@@ -46,16 +49,17 @@ namespace VNRaPaBomMin
             //    return;
             //}
 
-            List<DataRow> lst = UtilsDatabase.GetAllDataInTable(_connectionWithExtraInfo, "DaiMauTuTruong");
+            List<DataRow> lstColorBomb = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong", "IsBomb", "1");
 
-            if(lst.Count > 0)
+            if (lstColorBomb.Count > 0)
             {
-                numDaiMau.Value = lst.Count;
-                foreach (DataRow dr in lst)
+                numDaiMau_Bomb.Value = lstColorBomb.Count;
+                foreach (DataRow dr in lstColorBomb)
                 {
-                    DGVThongTin.Rows.Add(dr["min"].ToString(), dr["max"].ToString());
+                    DataGridViewButtonCell buttonCell;
+                    DGVThongTinBomb.Rows.Add(dr["min"].ToString(), dr["max"].ToString());
 
-                    DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[cotColor.Index];
+                    buttonCell = (DataGridViewButtonCell)DGVThongTinBomb.Rows[DGVThongTinBomb.Rows.Count - 1].Cells[cotColor_Bomb.Index];
                     int r = int.Parse(dr["red"].ToString());
                     int g = int.Parse(dr["green"].ToString());
                     int b = int.Parse(dr["blue"].ToString());
@@ -66,13 +70,37 @@ namespace VNRaPaBomMin
             }
             else
             {
-                SetDefault();
+                SetDefaultBomb();
+            }
+
+            List<DataRow> lstColorMine = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong", "IsBomb", "2");
+
+            if (lstColorMine.Count > 0)
+            {
+                numDaiMau_Mine.Value = lstColorMine.Count;
+                foreach (DataRow dr in lstColorMine)
+                {
+                    DataGridViewButtonCell buttonCell;
+                    DGVThongTinMine.Rows.Add(dr["min"].ToString(), dr["max"].ToString());
+
+                    buttonCell = (DataGridViewButtonCell)DGVThongTinMine.Rows[DGVThongTinMine.Rows.Count - 1].Cells[cotColor_Mine.Index];
+                    int r = int.Parse(dr["red"].ToString());
+                    int g = int.Parse(dr["green"].ToString());
+                    int b = int.Parse(dr["blue"].ToString());
+                    Color color = Color.FromArgb(r, g, b);
+                    buttonCell.Style.BackColor = color;
+                    buttonCell.Style.SelectionBackColor = color;
+                }
+            }
+            else
+            {
+                SetDefaultMine();
             }
             loaded = true;
 
-            //numDaiMau.Value = data.Length;
+            //numDaiMau_Bomb.Value = data.Length;
             //Microsoft.VisualBasic.Interaction.SaveSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //        this.Name, numDaiMau.Name, numDaiMau.Value.ToString());
+            //        this.Name, numDaiMau_Bomb.Name, numDaiMau_Bomb.Value.ToString());
         }
 
         private int selectedRow = -1;
@@ -80,16 +108,16 @@ namespace VNRaPaBomMin
         private void DGVThongTin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //selectedRow = e.RowIndex;
-            if (e.ColumnIndex != cotColor.Index || e.RowIndex == -1 || e.ColumnIndex == -1)
+            if (e.ColumnIndex != cotColor_Bomb.Index || e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
-            DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[e.RowIndex].Cells[cotColor.Index];
+            DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinBomb.Rows[e.RowIndex].Cells[cotColor_Bomb.Index];
             //this.Hide();
             colorDialog1.Color = buttonCell.Style.BackColor;
             if(colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 buttonCell.Style.BackColor = colorDialog1.Color;
 
-                DGVThongTin.ClearSelection();
+                DGVThongTinBomb.ClearSelection();
             }
             //Autodesk.AutoCAD.Colors.Color mColor = cmd.getColor();
             //this.Show();
@@ -106,10 +134,10 @@ namespace VNRaPaBomMin
             //using (Autodesk.AutoCAD.DatabaseServices.Transaction ts =
             //    Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database.TransactionManager.StartTransaction())
             //{
-            //    _SAnalysisData = new SurfaceAnalysisElevationData[DGVThongTin.Rows.Count];
+            //    _SAnalysisData = new SurfaceAnalysisElevationData[DGVThongTinBomb.Rows.Count];
 
             //    int i = 0;
-            //    foreach (DataGridViewRow row in DGVThongTin.Rows)
+            //    foreach (DataGridViewRow row in DGVThongTinBomb.Rows)
             //    {
             //        if (row.Cells[0].Value == null || row.Cells[1].Value == null ||
             //            !AppUtils.IsNumber(row.Cells[0].Value.ToString()) || !AppUtils.IsNumber(row.Cells[1].Value.ToString()))
@@ -131,7 +159,7 @@ namespace VNRaPaBomMin
             //    ts.Abort();
             //}
             //Microsoft.VisualBasic.Interaction.SaveSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //        this.Name, numDaiMau.Name, numDaiMau.Value.ToString());
+            //        this.Name, numDaiMau_Bomb.Name, numDaiMau_Bomb.Value.ToString());
 
             //ObjectItem objItem = cbVungDuAn.SelectedItem as ObjectItem;
             //if (objItem == null)
@@ -146,9 +174,27 @@ namespace VNRaPaBomMin
                 string sqlDelete = "DELETE FROM DaiMauTuTruong";
                 SqlCommand cmdDelete = new SqlCommand(sqlDelete, _connectionWithExtraInfo.Connection as SqlConnection, tran);
                 cmdDelete.ExecuteNonQuery();
+                bool bombVisible;
+                bool mineVisible;
+                if (MapMenuCommand.polygonLayers.Count > 0)
+                {
+                    bombVisible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]);
+                }
+                else
+                {
+                    bombVisible = true;
+                }
+                if (MapMenuCommand.polygonLayersMine.Count > 0)
+                {
+                    mineVisible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayersMine[0]);
+                }
+                else
+                {
+                    mineVisible = false;
+                }
 
                 int temp = 0;
-                foreach (DataGridViewRow row in DGVThongTin.Rows)
+                foreach (DataGridViewRow row in DGVThongTinBomb.Rows)
                 {
                     if (row.Cells[0].Value == null || row.Cells[1].Value == null ||
                         !AppUtils.IsNumber(row.Cells[0].Value.ToString()) || !AppUtils.IsNumber(row.Cells[1].Value.ToString()))
@@ -156,14 +202,14 @@ namespace VNRaPaBomMin
                         MessageBox.Show("Dữ liệu nhập không đúng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
-                    double min = double.Parse(row.Cells[cotMin.Index].Value.ToString());
-                    double max = double.Parse(row.Cells[cotMax.Index].Value.ToString());
-                    Color color = row.Cells[cotColor.Index].Style.BackColor;
+                    double min = double.Parse(row.Cells[cotMin_Bomb.Index].Value.ToString());
+                    double max = double.Parse(row.Cells[cotMax_Bomb.Index].Value.ToString());
+                    Color color = row.Cells[cotColor_Bomb.Index].Style.BackColor;
                     int r = color.R;
                     int g = color.G;
                     int b = color.B;
-                    string sqlInsert = "INSERT INTO DaiMauTuTruong(min, max, red, green, blue) " +
-                        "VALUES(@min, @max, @red, @green, @blue)";
+                    string sqlInsert = "INSERT INTO DaiMauTuTruong(min, max, red, green, blue, IsBomb) " +
+                        "VALUES(@min, @max, @red, @green, @blue, @IsBomb)";
                     SqlCommand cmdInsert = new SqlCommand(sqlInsert, _connectionWithExtraInfo.Connection as SqlConnection, tran);
                     cmdInsert.Parameters.Add(new SqlParameter
                     {
@@ -195,58 +241,134 @@ namespace VNRaPaBomMin
                         SqlDbType = SqlDbType.Int,
                         Value = b
                     });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@IsBomb",
+                        SqlDbType = SqlDbType.Int,
+                        Value = 1
+                    });
                     temp += cmdInsert.ExecuteNonQuery();
                 }
-                if (temp == DGVThongTin.Rows.Count)
+                foreach (DataGridViewRow row in DGVThongTinMine.Rows)
+                {
+                    if (row.Cells[0].Value == null || row.Cells[1].Value == null ||
+                        !AppUtils.IsNumber(row.Cells[0].Value.ToString()) || !AppUtils.IsNumber(row.Cells[1].Value.ToString()))
+                    {
+                        MessageBox.Show("Dữ liệu nhập không đúng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                    double min = double.Parse(row.Cells[cotMin_Mine.Index].Value.ToString());
+                    double max = double.Parse(row.Cells[cotMax_Mine.Index].Value.ToString());
+                    Color color = row.Cells[cotColor_Mine.Index].Style.BackColor;
+                    int r = color.R;
+                    int g = color.G;
+                    int b = color.B;
+                    string sqlInsert = "INSERT INTO DaiMauTuTruong(min, max, red, green, blue, IsBomb) " +
+                        "VALUES(@min, @max, @red, @green, @blue, @IsBomb)";
+                    SqlCommand cmdInsert = new SqlCommand(sqlInsert, _connectionWithExtraInfo.Connection as SqlConnection, tran);
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@min",
+                        SqlDbType = SqlDbType.Float,
+                        Value = min
+                    });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@max",
+                        SqlDbType = SqlDbType.Float,
+                        Value = max
+                    });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@red",
+                        SqlDbType = SqlDbType.Int,
+                        Value = r
+                    });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@green",
+                        SqlDbType = SqlDbType.Int,
+                        Value = g
+                    });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@blue",
+                        SqlDbType = SqlDbType.Int,
+                        Value = b
+                    });
+                    cmdInsert.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@IsBomb",
+                        SqlDbType = SqlDbType.Int,
+                        Value = 2
+                    });
+                    temp += cmdInsert.ExecuteNonQuery();
+                }
+                if (temp == DGVThongTinBomb.Rows.Count + DGVThongTinMine.Rows.Count)
                 {
                     tran.Commit();
                     MessageBox.Show("Cập nhật dải màu thành công");
                     DialogResult = DialogResult.OK;
-                    MapMenuCommand.initPolygonLayer();
-                    MyMainMenu2.Instance.TogglePhanTichMenu(false);
-                    Thread thread = new Thread(() =>
+                    MapMenuCommand.initPolygonLayer(bombVisible, mineVisible);
+                    MyMainMenu2.Instance.ToggleMagneticMenu(false);
+                    Thread threadMagneticBomb = new Thread(() =>
                     {
-                        foreach (var triangle in TINCommand.triangulations.Values)
+                        threadMagneticBombStopped = false;
+                        foreach (var triangle in TINCommand.triangulations_bomb.Values)
                         {
-                            for (int i = 0; i < DGVThongTin.Rows.Count; i++)
+                            for (int i = 0; i < DGVThongTinBomb.Rows.Count; i++)
                             {
-                                DataGridViewRow row = DGVThongTin.Rows[i];
-                                double min = double.Parse(row.Cells[cotMin.Index].Value.ToString());
-                                double max = double.Parse(row.Cells[cotMax.Index].Value.ToString());
-                                TINCommand.BuildOneColorSurface(triangle, min, max, i);
+                                DataGridViewRow row = DGVThongTinBomb.Rows[i];
+                                double min = double.Parse(row.Cells[cotMin_Bomb.Index].Value.ToString());
+                                double max = double.Parse(row.Cells[cotMax_Bomb.Index].Value.ToString());
+                                TINCommand.BuildOneColorSurface(triangle, min, max, i, true);
                             }
                             MapMenuCommand.Redraw();
                         }
-                        //MagneticCommand.threadMagneticStopped = true;
-                        if (MyMainMenu2.Instance.InvokeRequired)
+                        threadMagneticBombStopped = true;
+                        if (threadMagneticMineStopped)
                         {
-                            MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                            if (MyMainMenu2.Instance.InvokeRequired)
+                            {
+                                MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
 
-                                MyMainMenu2.Instance.ToggleMagneticMenu(true);
-                            }));
+                                    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                                }));
+                            }
                         }
-                        //else
-                        //{
-                        //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
-                        //}
-                        //if (MagneticCommand.threadMagneticStopped && MagneticCommand.threadPointStopped)
-                        //{
-                        //    if (MyMainMenu2.Instance.InvokeRequired)
-                        //    {
-                        //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-
-                        //            MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                        //        }));
-                        //    }
-                        //    //else
-                        //    //{
-                        //    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                        //    //}
-                        //}
                     });
-                    thread.IsBackground = true;
-                    //MagneticCommand.threadMagneticStopped = false;
-                    thread.Start();
+                    Thread threadMagneticMine = new Thread(() =>
+                    {
+                        threadMagneticMineStopped = false;
+                        foreach (var triangle in TINCommand.triangulations_mine.Values)
+                        {
+                            for (int i = 0; i < DGVThongTinMine.Rows.Count; i++)
+                            {
+                                DataGridViewRow row = DGVThongTinMine.Rows[i];
+                                double min = double.Parse(row.Cells[cotMin_Mine.Index].Value.ToString());
+                                double max = double.Parse(row.Cells[cotMax_Mine.Index].Value.ToString());
+                                TINCommand.BuildOneColorSurface(triangle, min, max, i, false);
+                            }
+                            MapMenuCommand.Redraw();
+                        }
+                        threadMagneticMineStopped = true;
+                        if (threadMagneticBombStopped)
+                        {
+                            if (MyMainMenu2.Instance.InvokeRequired)
+                            {
+                                MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+
+                                    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                                }));
+                            }
+                        }
+                    });
+
+                    threadMagneticBomb.IsBackground = true;
+                    threadMagneticMine.IsBackground = true;
+
+                    threadMagneticBomb.Start();
+                    threadMagneticMine.Start();
                 }
             }
             catch(Exception ex)
@@ -257,50 +379,50 @@ namespace VNRaPaBomMin
             
         }
 
-        private void numDaiMau_ValueChanged(object sender, EventArgs e)
+        private void numDaiMau_Bomb_ValueChanged(object sender, EventArgs e)
         {
             if (!loaded)
             {
                 return;
             }
-            if (numDaiMau.Value == DGVThongTin.Rows.Count || numDaiMau.Value < 3)
+            if (numDaiMau_Bomb.Value == DGVThongTinBomb.Rows.Count || numDaiMau_Bomb.Value < 3)
                 return;
-            double minElevation = double.Parse(DGVThongTin.Rows[0].Cells[0].Value.ToString());
-            double maxElevation = double.Parse(DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[1].Value.ToString());
+            double minElevation = double.Parse(DGVThongTinBomb.Rows[0].Cells[0].Value.ToString());
+            double maxElevation = double.Parse(DGVThongTinBomb.Rows[DGVThongTinBomb.Rows.Count - 1].Cells[1].Value.ToString());
 
             //string prevValueStr = Microsoft.VisualBasic.Interaction.GetSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //        this.Name, numDaiMau.Name, "3");
+            //        this.Name, numDaiMau_Bomb.Name, "3");
 
             //decimal prevValue = 3;
             //decimal.TryParse(prevValueStr, out prevValue);
 
-            if (numDaiMau.Value < DGVThongTin.Rows.Count)
+            if (numDaiMau_Bomb.Value < DGVThongTinBomb.Rows.Count)
             {
-                while(DGVThongTin.Rows.Count > numDaiMau.Value)
+                while(DGVThongTinBomb.Rows.Count > numDaiMau_Bomb.Value)
                 {
-                    DGVThongTin.Rows.RemoveAt(DGVThongTin.Rows.Count - 1);
+                    DGVThongTinBomb.Rows.RemoveAt(DGVThongTinBomb.Rows.Count - 1);
                 }
             }
-            else if (numDaiMau.Value > DGVThongTin.Rows.Count)
+            else if (numDaiMau_Bomb.Value > DGVThongTinBomb.Rows.Count)
             {
-                while (DGVThongTin.Rows.Count < numDaiMau.Value)
+                while (DGVThongTinBomb.Rows.Count < numDaiMau_Bomb.Value)
                 {
-                    DGVThongTin.Rows.Add("0", "0", "");
-                    DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[2];
+                    DGVThongTinBomb.Rows.Add("0", "0", "");
+                    DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinBomb.Rows[DGVThongTinBomb.Rows.Count - 1].Cells[2];
                     buttonCell.Style.BackColor = Color.White;
                 }
             }
 
-            double increment = (maxElevation - minElevation) / (double)numDaiMau.Value;
-            for (int i = 0; i < numDaiMau.Value; i++)
+            double increment = (maxElevation - minElevation) / (double)numDaiMau_Bomb.Value;
+            for (int i = 0; i < numDaiMau_Bomb.Value; i++)
             {
-                DGVThongTin.Rows[i].Cells[0].Value = minElevation + (increment * i);
-                DGVThongTin.Rows[i].Cells[1].Value = minElevation + (increment * (i + 1));
+                DGVThongTinBomb.Rows[i].Cells[0].Value = minElevation + (increment * i);
+                DGVThongTinBomb.Rows[i].Cells[1].Value = minElevation + (increment * (i + 1));
             }
 
-            //prevValue = numDaiMau.Value;
+            //prevValue = numDaiMau_Bomb.Value;
             //Microsoft.VisualBasic.Interaction.SaveSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //        this.Name, numDaiMau.Name, prevValue.ToString());
+            //        this.Name, numDaiMau_Bomb.Name, prevValue.ToString());
         }
 
         private void btCancel_Click(object sender, EventArgs e)
@@ -318,32 +440,32 @@ namespace VNRaPaBomMin
 
             //if (data != null)
             //{
-            //    DGVThongTin.Rows.Clear();
+            //    DGVThongTinBomb.Rows.Clear();
             //    for (int i = 0; i < data.Length; i++)
             //    {
-            //        DGVThongTin.Rows.Add(data[i].MinimumElevation, data[i].MaximumElevation, "");
+            //        DGVThongTinBomb.Rows.Add(data[i].MinimumElevation, data[i].MaximumElevation, "");
 
-            //        DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[i].Cells[2];
+            //        DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinBomb.Rows[i].Cells[2];
             //        buttonCell.FlatStyle = FlatStyle.Popup;
             //        buttonCell.Style.BackColor = data[i].Scheme.ColorValue;
             //    }
 
-            //    numDaiMau.Value = data.Length;
+            //    numDaiMau_Bomb.Value = data.Length;
             //    Microsoft.VisualBasic.Interaction.SaveSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //            this.Name, numDaiMau.Name, numDaiMau.Value.ToString());
+            //            this.Name, numDaiMau_Bomb.Name, numDaiMau_Bomb.Value.ToString());
             //}
         }
 
         private void btnDefault_Click(object sender, EventArgs e)
         {
-            SetDefault();
+            SetDefaultBomb();
         }
 
-        private void SetDefault()
+        private void SetDefaultBomb()
         {
             loaded = false;
-            DGVThongTin.Rows.Clear();
-            numDaiMau.Value = Constants.magnetic_colors.Length;
+            DGVThongTinBomb.Rows.Clear();
+            numDaiMau_Bomb.Value = Constants.magnetic_colors.Length;
             double minZ = Constants.MIN_Z_BOMB;
             double maxZ = Constants.MAX_Z_BOMB;
             double elevation = (maxZ - minZ) / Constants.magnetic_colors.Length;
@@ -351,14 +473,83 @@ namespace VNRaPaBomMin
             {
                 double minElevation = minZ + i * elevation;
                 double maxElevation = minZ + (i + 1) * elevation;
-                DGVThongTin.Rows.Add(minElevation, maxElevation);
+                DGVThongTinBomb.Rows.Add(minElevation, maxElevation);
 
-                DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTin.Rows[DGVThongTin.Rows.Count - 1].Cells[cotColor.Index];
+                DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinBomb.Rows[DGVThongTinBomb.Rows.Count - 1].Cells[cotColor_Bomb.Index];
                 Color color = Constants.magnetic_colors[i];
                 buttonCell.Style.BackColor = color;
                 buttonCell.Style.SelectionBackColor = color;
             }
             loaded = true;
+        }
+
+        private void SetDefaultMine()
+        {
+            loaded = false;
+            DGVThongTinMine.Rows.Clear();
+            numDaiMau_Mine.Value = Constants.magnetic_colors.Length;
+            double minZ = Constants.MIN_Z_MINE;
+            double maxZ = Constants.MAX_Z_MINE;
+            double elevation = (maxZ - minZ) / Constants.magnetic_colors.Length;
+            for (int i = 0; i < Constants.magnetic_colors.Length; i++)
+            {
+                double minElevation = minZ + i * elevation;
+                double maxElevation = minZ + (i + 1) * elevation;
+                DGVThongTinMine.Rows.Add(minElevation, maxElevation);
+
+                DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinMine.Rows[DGVThongTinMine.Rows.Count - 1].Cells[cotColor_Mine.Index];
+                Color color = Constants.magnetic_colors[i];
+                buttonCell.Style.BackColor = color;
+                buttonCell.Style.SelectionBackColor = color;
+            }
+            loaded = true;
+        }
+
+        private void numDaiMau_Mine_ValueChanged(object sender, EventArgs e)
+        {
+            if (!loaded)
+            {
+                return;
+            }
+            if (numDaiMau_Mine.Value == DGVThongTinMine.Rows.Count || numDaiMau_Mine.Value < 3)
+                return;
+            double minElevation = double.Parse(DGVThongTinMine.Rows[0].Cells[0].Value.ToString());
+            double maxElevation = double.Parse(DGVThongTinMine.Rows[DGVThongTinMine.Rows.Count - 1].Cells[1].Value.ToString());
+
+            //string prevValueStr = Microsoft.VisualBasic.Interaction.GetSetting(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+            //        this.Name, numDaiMau_Mine.Name, "3");
+
+            //decimal prevValue = 3;
+            //decimal.TryParse(prevValueStr, out prevValue);
+
+            if (numDaiMau_Mine.Value < DGVThongTinMine.Rows.Count)
+            {
+                while (DGVThongTinMine.Rows.Count > numDaiMau_Mine.Value)
+                {
+                    DGVThongTinMine.Rows.RemoveAt(DGVThongTinMine.Rows.Count - 1);
+                }
+            }
+            else if (numDaiMau_Mine.Value > DGVThongTinMine.Rows.Count)
+            {
+                while (DGVThongTinMine.Rows.Count < numDaiMau_Mine.Value)
+                {
+                    DGVThongTinMine.Rows.Add("0", "0", "");
+                    DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinMine.Rows[DGVThongTinMine.Rows.Count - 1].Cells[2];
+                    buttonCell.Style.BackColor = Color.White;
+                }
+            }
+
+            double increment = (maxElevation - minElevation) / (double)numDaiMau_Mine.Value;
+            for (int i = 0; i < numDaiMau_Mine.Value; i++)
+            {
+                DGVThongTinMine.Rows[i].Cells[0].Value = minElevation + (increment * i);
+                DGVThongTinMine.Rows[i].Cells[1].Value = minElevation + (increment * (i + 1));
+            }
+        }
+
+        private void btnDefault_Mine_Click(object sender, EventArgs e)
+        {
+            SetDefaultMine();
         }
     }
 }

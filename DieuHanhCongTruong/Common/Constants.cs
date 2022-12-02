@@ -64,8 +64,17 @@ namespace DieuHanhCongTruong.Common
         public static double MAX_Z_BOMB = 14083.0212603552;
         public static double MIN_Z_BOMB = -18359.2485593716;
 
+        public static double MAX_Z_MINE = 39345.26229508192;
+        public static double MIN_Z_MINE = 0;
+
         public static int TOOLTIP_MAP_TIME = 5000;
 
         public static double PAPER_RATIO = 8.27 / 11.69;
+    }
+
+    public enum TypeBMVN
+    {
+        BOMB = 1,
+        MINE = 2
     }
 }

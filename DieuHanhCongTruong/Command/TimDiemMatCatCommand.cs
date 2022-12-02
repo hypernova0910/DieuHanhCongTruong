@@ -28,7 +28,7 @@ namespace DieuHanhCongTruong.Command
             //chartForm.PreviewKeyDown += ChartForm_PreviewKeyDown;
             MyMainMenu2.Instance.buttonCancelPoints.Click += ButtonCancelPoints_Click;
             MyMainMenu2.Instance.buttonSavePoints.Click += ButtonSavePoints_Click;
-            MyMainMenu2.Instance.pnlChonDiemMatCat.Height = 54;
+            MyMainMenu2.Instance.pnlChonDiemMatCat.Visible = true;
         }
 
         private void ButtonSavePoints_Click(object sender, EventArgs e)
@@ -41,10 +41,10 @@ namespace DieuHanhCongTruong.Command
                 //Phương trình đường thẳng
                 //x = x0 + at
                 //y = y0 + bt
-                double[] utm0 = AppUtils.ConverLatLongToUTM(line.start_y, line.start_x);
+                double[] utm0 = AppUtils.ConverLatLongToUTM(line.start_x, line.start_y);
                 double x0 = utm0[0];
                 double y0 = utm0[1];
-                double[] utm1 = AppUtils.ConverLatLongToUTM(line.end_y, line.end_x);
+                double[] utm1 = AppUtils.ConverLatLongToUTM(line.end_x, line.end_y);
                 double x1 = utm1[0];
                 double y1 = utm1[1];
                 double a = x1 - x0;
@@ -52,19 +52,29 @@ namespace DieuHanhCongTruong.Command
                 double t;
                 if (a != 0)
                 {
-                    t = (x1 - x0) / a;
+                    t = Math.Abs(x1 - x0) / a;
                 }
                 else
                 {
                     t = (y1 - y0) / b;
                 }
                 double t_point = t * distance_ratio;
-                double x_point = x0 + a * t_point;
-                double y_point = y0 + b * t_point;
+                double x_point;
+                double y_point;
+                if(x0 < x1)
+                {
+                    x_point = x0 + a * t_point;
+                    y_point = y0 + b * t_point;
+                }
+                else
+                {
+                    x_point = x1 + a * t_point;
+                    y_point = y1 + b * t_point;
+                }
                 double latt = 0, longt = 0;
                 AppUtils.ToLatLon(x_point, y_point, ref latt, ref longt, "48N");
                 CecmReportPollutionAreaBMVN bmvn = new CecmReportPollutionAreaBMVN();
-                List<CustomFace> triangles = TINCommand.triangulations[line.cecmprogramareamap_id.Value];
+                List<CustomFace> triangles = TINCommand.triangulations_bomb[line.cecmprogramareamap_id.Value];
                 bmvn.idArea = line.cecmprogramareamap_id.Value;
                 bmvn.programId = MyMainMenu2.idDADH;
                 bmvn.XPoint = x_point;
@@ -74,7 +84,7 @@ namespace DieuHanhCongTruong.Command
                 bmvn.Vido = latt;
                 bmvn.TimeExecute = DateTime.Now;
                 List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-                double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo);
+                double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo, true);
                 bmvn.Area = area;
                 bmvn.contour = contourGiamNghiNgo;
                 if (contourGiamNghiNgo.Count > 2)
@@ -95,7 +105,9 @@ namespace DieuHanhCongTruong.Command
                         bmvn.ZPoint = point_temp_1.YValues[0] + ratio * (point_temp_2.YValues[0] - point_temp_1.YValues[0]);
                     }
                 }
-                MapMenuCommand.addSuspectPoint(longt, latt, bmvn);
+                bool isBomb = (bool)activeTab.Tag;
+                bmvn.UserAdd = true;
+                MapMenuCommand.addSuspectPoint(longt, latt, bmvn, isBomb, true);
             }
             Exit();
         }
@@ -117,7 +129,7 @@ namespace DieuHanhCongTruong.Command
             chartForm.chart1.MouseClick -= chart1_MouseClick;
             MyMainMenu2.Instance.buttonSavePoints.Click -= ButtonSavePoints_Click;
             MyMainMenu2.Instance.buttonCancelPoints.Click -= ButtonCancelPoints_Click;
-            MyMainMenu2.Instance.pnlChonDiemMatCat.Height = 0;
+            MyMainMenu2.Instance.pnlChonDiemMatCat.Visible = false;
             chartForm.chart1.Series[1].Points.Clear();
             //chartForm.chart1.KeyDown -= chart1_KeyDown;
         }

@@ -19,13 +19,14 @@ namespace VNRaPaBomMin
         public int _IDDuAn = int.MinValue;
         public static bool isManaging = false;
         private bool isClick = false;
+        private TreeNode managingdNode = null;
 
         public ManagerCECMUserControl()
         {
             InitializeComponent();
         }
 
-        public void LoadTreeView()
+        public void LoadTreeView(bool isManage)
         {
             try
             {
@@ -33,18 +34,26 @@ namespace VNRaPaBomMin
                 SqlCommandBuilder sqlCommand = null;
                 SqlDataAdapter sqlAdapter = null;
                 System.Data.DataTable datatable = new System.Data.DataTable();
-                sqlAdapter = new SqlDataAdapter(string.Format("SELECT id,name FROM cecm_programData"), frmLoggin.sqlCon);
+                sqlAdapter = new SqlDataAdapter(string.Format("SELECT id,name,isManaging FROM cecm_programData ORDER BY isManaging DESC"), frmLoggin.sqlCon);
                 sqlCommand = new SqlCommandBuilder(sqlAdapter);
                 sqlAdapter.Fill(datatable);
+                managingdNode = null;
                 if (datatable.Rows.Count != 0)
                 {
                     foreach (DataRow dr in datatable.Rows)
                     {
                         var idDuAn = dr["id"].ToString();
                         var tenDuAn = dr["name"].ToString();
+                        var isManaging = dr["isManaging"].ToString();
 
                         var nodeAdded = TVDanhSach.Nodes.Add(tenDuAn);
                         nodeAdded.Tag = idDuAn;
+                        //if(int.Parse(idDuAn) == _IDDuAn)
+                        //{
+                        //    nodeAdded.NodeFont = new Font(TVDanhSach.Font, FontStyle.Bold);
+                        //    managingdNode = nodeAdded;
+                        //}
+                        
 
                         SqlDataAdapter sqlAdapterProvince = new SqlDataAdapter(string.Format("SELECT * FROM cecm_program_area_map WHERE cecm_program_area_map.cecm_program_id = '{0}'", idDuAn), frmLoggin.sqlCon);
                         sqlCommand = new SqlCommandBuilder(sqlAdapterProvince);
@@ -56,9 +65,22 @@ namespace VNRaPaBomMin
                             var idVungDuAn = dr1["id"].ToString();
                             nodeVung.Tag = idVungDuAn;
                         }
+
+                        if (isManaging == "1")
+                        {
+                            nodeAdded.NodeFont = new Font(TVDanhSach.Font, FontStyle.Bold);
+                            MyMainMenu2.idDADH = (long.Parse(idDuAn));
+                            MyMainMenu2.tenDADH = tenDuAn;
+                            if (isManage)
+                            {
+                                MapMenuCommand.LoadDuAn(long.Parse(idDuAn));
+                                MagneticCommand.Execute(long.Parse(idDuAn));
+                            }
+                            nodeAdded.Expand();
+                        }
                     }
                 }
-                TVDanhSach.ExpandAll();
+                //TVDanhSach.ExpandAll();
             }
             catch (System.Exception ex)
             {
@@ -70,7 +92,7 @@ namespace VNRaPaBomMin
         {
             //_Cn = frmLoggin.sqlCon;
             TVDanhSach.ContextMenuStrip = menuKeHoachTrienKhai;
-            LoadTreeView();
+            //LoadTreeView();
         }
 
         private void ClearSelectedNode(TreeNode treeNode)
@@ -160,6 +182,21 @@ namespace VNRaPaBomMin
 
             isClick = true;
             _IDDuAn = GetIdDuAnChaByNodeSelected(TVDanhSach.SelectedNode);
+            DieuHanhDuAn();
+            
+            //if (managingdNode != null)
+            //{
+            //    managingdNode.NodeFont = new Font(TVDanhSach.Font, FontStyle.Regular);
+            //    managingdNode.Collapse();
+            //}
+            //TVDanhSach.SelectedNode.NodeFont = new Font(TVDanhSach.Font, FontStyle.Bold);
+            //managingdNode = TVDanhSach.SelectedNode;
+            //managingdNode.Expand();
+
+            //TVDanhSach.BeginUpdate();
+            //TVDanhSach.SelectedNode.Parent.Nodes.Insert(0, managingdNode);
+            //TVDanhSach.SelectedNode.Parent.Nodes.RemoveAt(e. + 1);
+            //TVDanhSach.EndUpdate();
 
             //CapNhatDuAnNew frm = new CapNhatDuAnNew(_IDDuAn);
             //frm.LoadData();
@@ -201,50 +238,41 @@ namespace VNRaPaBomMin
             //    }
             //}
 
-            DieuHanhDuAn();
+            
             isManaging = true;
         }
 
         private void DieuHanhDuAn()
         {
-            //if (frm.DialogResult == System.Windows.Forms.DialogResult.OK)
-            //{
-                //TaoDiemDoCMD cmdDiemDo = new TaoDiemDoCMD();
-                //cmdDiemDo.ExecuteCMD(frm._TenDuAn, frm._IdDuAn, true);
-                MyMainMenu2.idDADH = _IDDuAn;
-                MapMenuCommand.LoadDuAn(_IDDuAn);
-                MagneticCommand.Execute(_IDDuAn);
-            //}
-            //else if (frm.DialogResult == System.Windows.Forms.DialogResult.Yes)
-            //{
-            //    if (DBUtils.OpenDWFFile(frm._DWGFile))
-            //        MyLogger.Log("Mở tệp thành công");
+            
+            ConnectionWithExtraInfo cn = UtilsDatabase._ExtraInfoConnettion;
+            SqlTransaction tran = cn.BeginTransaction() as SqlTransaction;
+            try
+            {
+                string sqlReset = "UPDATE cecm_programData SET isManaging = 0";
+                SqlCommand cmdReset = new SqlCommand(sqlReset, cn.Connection as SqlConnection, tran);
+                cmdReset.ExecuteNonQuery();
 
-            //    if (frm._IsUpdate)
-            //    {
-            //        TaoDiemDoCMD cmdDiemDo = new TaoDiemDoCMD();
-            //        cmdDiemDo.ExecuteCMD(frm._TenDuAn, frm._IdDuAn, false);
-            //    }
-            //}
-            //else if (frm.DialogResult == System.Windows.Forms.DialogResult.No)
-            //{
-            //    ChuanBiBanVeCmd cmdChuanBiBanVeCmd = new ChuanBiBanVeCmd();
-            //    cmdChuanBiBanVeCmd.ExecuteCMD(frm._TenDuAn, frm._IdDuAn);
-            //}
+                string sqlUpdate = "UPDATE cecm_programData SET isManaging = 1 WHERE id = " + _IDDuAn;
+                SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, cn.Connection as SqlConnection, tran);
+                int count = cmdUpdate.ExecuteNonQuery();
+                if(count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy dự án");
+                    tran.Rollback();
+                }
+                else
+                {
+                    tran.Commit();
+                }
+                //MyMainMenu2.idDADH = _IDDuAn;
+                LoadTreeView(true);
+            }
+            catch(Exception ex)
+            {
 
-            LoadTreeView();
-
-            //CommandEventData cmdEventData = new CommandEventData();
-            //var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            //cmdEventData.SubscribeToDoc(doc);
-        }
-
-        private void btThemTabDo_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btXoaTabMayDo_Click(object sender, EventArgs e)
-        {
+            }
+            
         }
 
         private void thêmMớiToolStripMenuItem_Click(object sender, EventArgs e)
@@ -258,11 +286,7 @@ namespace VNRaPaBomMin
             //    cmdChuanBiBanVeCmd.ExecuteCMD(frm._TenDuAn, frm._IdDuAn);
             //}
 
-            LoadTreeView();
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
+            LoadTreeView(false);
         }
 
         private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,7 +313,7 @@ namespace VNRaPaBomMin
                 MessageBox.Show(string.Format("Không thể xóa"));
             }
 
-            LoadTreeView();
+            LoadTreeView(false);
         }
 
         public int XoaDuAn(int idDuAn, SqlConnection cn)
@@ -546,7 +570,24 @@ namespace VNRaPaBomMin
             }
             else
             {
-                quảnLýDựÁnToolStripMenuItem.Enabled = true;
+                bool childEnable = true;
+                foreach (ToolStripItem item in MyMainMenu2.Instance.phânTíchDữLiệuToolStripMenuItem.DropDownItems)
+                {
+                    if (!item.Enabled)
+                    {
+                        childEnable = false;
+                        break;
+                    }
+                }
+                foreach (Control item in MyMainMenu2.Instance.pnlToolBar.Controls)
+                {
+                    if (!item.Visible)
+                    {
+                        childEnable = false;
+                        break;
+                    }
+                }
+                quảnLýDựÁnToolStripMenuItem.Enabled = childEnable;
                 xóaToolStripMenuItem.Enabled = true;
             }
         }

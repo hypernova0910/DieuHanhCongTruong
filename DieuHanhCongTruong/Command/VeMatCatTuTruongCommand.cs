@@ -17,7 +17,6 @@ namespace DieuHanhCongTruong.Command
     {
         public static void Execute()
         {
-            //MapMenuCommand.axMap1.SendMouseDown = true;
             MapMenuCommand.axMap1.ChooseLayer += AxMap1_ChooseLayer;
             MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
             MapMenuCommand.axMap1.Identifier.HotTracking = true;
@@ -25,19 +24,13 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", Constants.TOOLTIP_MAP_TIME);
 
             MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified;
-            //MapMenuCommand.axMap1.ShapeHighlighted += AxMap1_ShapeHighlighted;
 
-            //MyMainMenu2.Instance.KeyPreview = true;
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
             Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.ranhDoLayer);
             sf.Identifiable = true;
             MyMainMenu2.Instance.menuStrip1.Enabled = false;
+            MyMainMenu2.Instance.pnlToolBar.Enabled = false;
         }
-
-        //private static void AxMap1_ShapeHighlighted(object sender, AxMapWinGIS._DMapEvents_ShapeHighlightedEvent e)
-        //{
-        //    e.
-        //}
 
         private static void Exit()
         {
@@ -48,6 +41,7 @@ namespace DieuHanhCongTruong.Command
             Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.ranhDoLayer);
             sf.Identifiable = false;
             MyMainMenu2.Instance.menuStrip1.Enabled = true;
+            MyMainMenu2.Instance.pnlToolBar.Enabled = true;
             //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
         }
 
@@ -73,26 +67,48 @@ namespace DieuHanhCongTruong.Command
                 CecmProgramAreaLineDTO line = JsonConvert.DeserializeObject<CecmProgramAreaLineDTO>(shp.Key);
                 Point pnt_start = shp.Point[0];
                 Point pnt_end = shp.Point[1];
-                Draw(pnt_start.x, pnt_start.y, pnt_end.x, pnt_end.y, line);
+                Draw(pnt_start.y, pnt_start.x, pnt_end.y, pnt_end.x, line);
                 
                 Exit();
             }
         }
 
-        private static void Draw(double x1, double y1, double x2, double y2, CecmProgramAreaLineDTO line)
+        private static void Draw(double latt1, double longt1, double latt2, double longt2, CecmProgramAreaLineDTO line)
         {
-            double[] utm1 = AppUtils.ConverLatLongToUTM(y1, x1);
-            double[] utm2 = AppUtils.ConverLatLongToUTM(y2, x2);
+            double[] utm1 = AppUtils.ConverLatLongToUTM(latt1, longt1);
+            double[] utm2 = AppUtils.ConverLatLongToUTM(latt2, longt2);
 
             List<Point2d> points = new List<Point2d>();
-            foreach(CustomFace face in TINCommand.triangulations[line.cecmprogramareamap_id.Value])
+            Dictionary<long, List<CustomFace>> idKV__triangulations;
+            TabPage tabPage = new TabPage();
+            if (MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]))
+            {
+                tabPage.Text = "CĐTT bom rãnh " + line.code + "     ";
+                tabPage.Tag = true;
+                idKV__triangulations = TINCommand.triangulations_bomb;
+            }
+            else
+            {
+                tabPage.Text = "CĐTT mìn rãnh " + line.code + "     ";
+                tabPage.Tag = false;
+                idKV__triangulations = TINCommand.triangulations_mine;
+            }
+            foreach (CustomFace face in idKV__triangulations[line.cecmprogramareamap_id.Value])
             {
                 List<InfoConnect> giaoDiems = GetGiaoTamGiacMatPhang(face, utm1[0], utm1[1], utm2[0], utm2[1]);
                 foreach(InfoConnect giaoDiem in giaoDiems)
                 {
                     Point2d point = new Point2d();
                     point.Y = giaoDiem.the_value;
-                    double distance_giao = AppUtils.DistanceUTM(giaoDiem.lat_value, giaoDiem.long_value, utm1[0], utm1[1]);
+                    double distance_giao;
+                    if(utm1[0] < utm2[0])
+                    {
+                        distance_giao = AppUtils.DistanceUTM(giaoDiem.lat_value, giaoDiem.long_value, utm1[0], utm1[1]);
+                    }
+                    else
+                    {
+                        distance_giao = AppUtils.DistanceUTM(giaoDiem.lat_value, giaoDiem.long_value, utm2[0], utm2[1]);
+                    }
                     double distance_ranh = AppUtils.DistanceUTM(utm2[0], utm2[1], utm1[0], utm1[1]);
                     point.X = distance_giao / distance_ranh * 100;
                     points.Add(point);
@@ -102,13 +118,14 @@ namespace DieuHanhCongTruong.Command
             MatCatTuTruong form = new MatCatTuTruong(line);
             form.DrawLine(points);
             //form.DrawLineTest();
-            TabPage tabPage = new TabPage();
-            tabPage.Text = "Rãnh " + line.code + "    ";
+            
             tabPage.Controls.Add(form);
             if(MyMainMenu2.Instance.tabCtrlLineChart.TabPages.Count == 0)
             {
-                MyMainMenu2.Instance.tabCtrlLineChart.Height = 400;
+                MyMainMenu2.Instance.tabCtrlLineChart.Visible = true;
+                MyMainMenu2.Instance.tabControlBottom.Visible = true;
             }
+            MyMainMenu2.Instance.tabControlBottom.SelectedTab = MyMainMenu2.Instance.tabPageTimDiemTuTruongMatCat;
             MyMainMenu2.Instance.tabCtrlLineChart.TabPages.Add(tabPage);
             MyMainMenu2.Instance.tabCtrlLineChart.SelectedIndex = MyMainMenu2.Instance.tabCtrlLineChart.TabPages.IndexOf(tabPage);
         }

@@ -29,39 +29,63 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.DGVData = new System.Windows.Forms.DataGridView();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
+            this.DGVData = new System.Windows.Forms.DataGridView();
             this.Stt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TuTruong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DoSau = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DienTich = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhanTich = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.QuyetDinh = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Zoom = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.groupBox1.SuspendLayout();
+            this.cotXoa = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGVData)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // btnCancel
             // 
-            this.groupBox1.Controls.Add(this.DGVData);
-            this.groupBox1.Location = new System.Drawing.Point(9, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1181, 262);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.Location = new System.Drawing.Point(1356, 286);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.btnCancel.Size = new System.Drawing.Size(76, 39);
+            this.btnCancel.TabIndex = 30;
+            this.btnCancel.Text = "Đóng";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.AutoSize = true;
+            this.btnOk.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.btnOk.ForeColor = System.Drawing.Color.White;
+            this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOk.Location = new System.Drawing.Point(1465, 286);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.btnOk.Size = new System.Drawing.Size(66, 39);
+            this.btnOk.TabIndex = 31;
+            this.btnOk.Text = "Lưu";
+            this.btnOk.UseVisualStyleBackColor = false;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // DGVData
             // 
             this.DGVData.AllowUserToAddRows = false;
             this.DGVData.AllowUserToDeleteRows = false;
             this.DGVData.AllowUserToResizeRows = false;
+            this.DGVData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVData.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -80,55 +104,23 @@
             this.TuTruong,
             this.DoSau,
             this.DienTich,
+            this.cotLoai,
             this.PhanTich,
             this.QuyetDinh,
-            this.Zoom});
-            this.DGVData.Location = new System.Drawing.Point(7, 23);
+            this.cotXoa});
+            this.DGVData.Location = new System.Drawing.Point(13, 13);
             this.DGVData.Margin = new System.Windows.Forms.Padding(4);
             this.DGVData.MultiSelect = false;
             this.DGVData.Name = "DGVData";
             this.DGVData.RowHeadersVisible = false;
             this.DGVData.RowHeadersWidth = 51;
-            this.DGVData.Size = new System.Drawing.Size(1163, 230);
-            this.DGVData.TabIndex = 0;
+            this.DGVData.Size = new System.Drawing.Size(1518, 250);
+            this.DGVData.TabIndex = 32;
             this.DGVData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVData_CellClick);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.AutoSize = true;
-            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(1004, 294);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
-            this.btnCancel.Size = new System.Drawing.Size(76, 39);
-            this.btnCancel.TabIndex = 30;
-            this.btnCancel.Text = "Đóng";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnOk
-            // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.AutoSize = true;
-            this.btnOk.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
-            this.btnOk.ForeColor = System.Drawing.Color.White;
-            this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOk.Location = new System.Drawing.Point(1113, 294);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
-            this.btnOk.Size = new System.Drawing.Size(66, 39);
-            this.btnOk.TabIndex = 31;
-            this.btnOk.Text = "Lưu";
-            this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // Stt
             // 
+            this.Stt.FillWeight = 20F;
             this.Stt.HeaderText = "STT";
             this.Stt.MinimumWidth = 6;
             this.Stt.Name = "Stt";
@@ -169,10 +161,17 @@
             this.DienTich.Name = "DienTich";
             this.DienTich.ReadOnly = true;
             // 
+            // cotLoai
+            // 
+            this.cotLoai.FillWeight = 30F;
+            this.cotLoai.HeaderText = "Loại";
+            this.cotLoai.MinimumWidth = 6;
+            this.cotLoai.Name = "cotLoai";
+            // 
             // PhanTich
             // 
             this.PhanTich.FillWeight = 50F;
-            this.PhanTich.HeaderText = "Phân tích/Cắm cờ";
+            this.PhanTich.HeaderText = "Phân tích / Cắm cờ";
             this.PhanTich.MinimumWidth = 6;
             this.PhanTich.Name = "PhanTich";
             this.PhanTich.ReadOnly = true;
@@ -184,31 +183,35 @@
             this.QuyetDinh.MinimumWidth = 6;
             this.QuyetDinh.Name = "QuyetDinh";
             // 
-            // Zoom
+            // cotXoa
             // 
-            this.Zoom.FillWeight = 50F;
-            this.Zoom.HeaderText = "Zoom";
-            this.Zoom.MinimumWidth = 6;
-            this.Zoom.Name = "Zoom";
+            this.cotXoa.FillWeight = 30F;
+            this.cotXoa.HeaderText = "Xóa";
+            this.cotXoa.Image = global::DieuHanhCongTruong.Properties.Resources.DeleteRed;
+            this.cotXoa.MinimumWidth = 6;
+            this.cotXoa.Name = "cotXoa";
+            this.cotXoa.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cotXoa.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // KhoangNghiNgoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1195, 357);
+            this.ClientSize = new System.Drawing.Size(1547, 349);
+            this.Controls.Add(this.DGVData);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "KhoangNghiNgoForm";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Khoảng nghi ngờ";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.KhoangNghiNgoForm_FormClosed);
             this.Load += new System.EventHandler(this.KhoangNghiNgoForm_Load);
-            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -216,19 +219,18 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView DGVData;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.DataGridView DGVData;
         private System.Windows.Forms.DataGridViewTextBoxColumn Stt;
         private System.Windows.Forms.DataGridViewTextBoxColumn X;
         private System.Windows.Forms.DataGridViewTextBoxColumn Y;
         private System.Windows.Forms.DataGridViewTextBoxColumn TuTruong;
         private System.Windows.Forms.DataGridViewTextBoxColumn DoSau;
         private System.Windows.Forms.DataGridViewTextBoxColumn DienTich;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotLoai;
         private System.Windows.Forms.DataGridViewCheckBoxColumn PhanTich;
         private System.Windows.Forms.DataGridViewCheckBoxColumn QuyetDinh;
-        private System.Windows.Forms.DataGridViewButtonColumn Zoom;
+        private System.Windows.Forms.DataGridViewImageColumn cotXoa;
     }
 }

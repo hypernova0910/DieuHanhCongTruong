@@ -1,4 +1,5 @@
-﻿using DieuHanhCongTruong.Models;
+﻿using DieuHanhCongTruong.Common;
+using DieuHanhCongTruong.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,5 +39,9 @@ namespace VNRaPaBomMin.Models
         public int indexLabel { get; set; }
 
         public bool isSaved { get; set; }
+
+        public TypeBMVN IsBomb { get; set; }
+
+        public bool UserAdd { get; set; }
     }
 }

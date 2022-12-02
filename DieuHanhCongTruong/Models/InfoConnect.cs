@@ -50,6 +50,9 @@ namespace DieuHanhCongTruong.Models
 
         public double satelliteCount { get; set; }
 
+        //Điểm có thuộc rìa lưới tam giác không
+        public bool isInEdgeTriangles { get; set; }
+
         public double[] Position
         {
             get

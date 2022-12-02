@@ -1,5 +1,6 @@
 ﻿using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms;
+using DieuHanhCongTruong.Forms.PhanTich;
 using DieuHanhCongTruong.Models;
 using MapWinGIS;
 using MIConvexHull;
@@ -17,7 +18,7 @@ namespace DieuHanhCongTruong.Command
 {
     class PhanTichKhoangGiamNghiNgoCommand
     {
-        public static void Execute()
+        public static void ExecuteViewBMVN()
         {
             //MapMenuCommand.axMap1.SendMouseDown = true;
             MapMenuCommand.axMap1.ChooseLayer += AxMap1_ChooseLayer;
@@ -31,6 +32,36 @@ namespace DieuHanhCongTruong.Command
 
             //MyMainMenu2.Instance.KeyPreview = true;
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
+        }
+
+        public static void ExecuteViewBMVNChooseCombobox()
+        {
+            SelectVungDuAn selectVungDuAnForm = new SelectVungDuAn(MyMainMenu2.idDADH);
+            if(selectVungDuAnForm.ShowDialog() == DialogResult.OK)
+            {
+                int shapeIndex = MapMenuCommand.idKV__shapeIndex[selectVungDuAnForm.idKV];
+                List<Shape> lstBomb = new List<Shape>();
+                lstBomb.AddRange(PointInShape(MapMenuCommand.polygonAreaLayer, shapeIndex, MapMenuCommand.suspectPointLayerBomb));
+                lstBomb.AddRange(PointInShape(MapMenuCommand.polygonAreaLayer, shapeIndex, MapMenuCommand.userSuspectPointLayerBomb));
+                List<Shape> lstMine = new List<Shape>();
+                lstMine.AddRange(PointInShape(MapMenuCommand.polygonAreaLayer, shapeIndex, MapMenuCommand.suspectPointLayerMine));
+                lstMine.AddRange(PointInShape(MapMenuCommand.polygonAreaLayer, shapeIndex, MapMenuCommand.userSuspectPointLayerMine));
+                KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBomb, lstMine);
+                if (MyMainMenu2.Instance.tabPageBMVN.Controls.Count > 0)
+                {
+                    Form prevForm = MyMainMenu2.Instance.tabPageBMVN.Controls[0] as Form;
+                    prevForm.Close();
+                }
+                MyMainMenu2.Instance.tabPageBMVN.Controls.Clear();
+                form.TopLevel = false;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                MyMainMenu2.Instance.tabPageBMVN.Controls.Add(form);
+                form.BringToFront();
+                form.Show();
+                MyMainMenu2.Instance.tabControlBottom.Visible = true;
+                MyMainMenu2.Instance.tabControlBottom.SelectedTab = MyMainMenu2.Instance.tabPageBMVN;
+            }
         }
 
         public static void ExecuteDoSau()
@@ -56,7 +87,7 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.ShapeIdentified -= AxMap1_ShapeIdentified_Deep;
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
-            //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
+            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
         }
 
         private static void AxMap1_ChooseLayer(object sender, AxMapWinGIS._DMapEvents_ChooseLayerEvent e)
@@ -76,54 +107,48 @@ namespace DieuHanhCongTruong.Command
         {
             if (e.layerHandle == MapMenuCommand.polygonAreaLayer)
             {
-                Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(e.layerHandle);
-                Shape shp = sf.Shape[e.shapeIndex];
-                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayer);
-                //long.TryParse(shp.Key, out long idKV);
-                //if (TINCommand.triangulations.ContainsKey(idKV))
-                //{
-                //    List<CustomFace> triangle = TINCommand.triangulations[idKV];
-                //    List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
-                //    for (int i = 0; i < sf_bomb.NumShapes; i++)
-                //    {
-                //        Shape shapeBomb = sf_bomb.Shape[i];
-                //        Point pnt = shapeBomb.Point[0];
-                //        if (shp.PointInThisPoly(pnt))
-                //        {
-                //            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-
-
-                //            lstBMVN.Add(bmvn);
-                //        }
-                //    }
-                //    KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBMVN);
-                //    form.Show();
-                //}
-                List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
                 List<Shape> lstBomb = new List<Shape>();
-                for (int i = 0; i < sf_bomb.NumShapes; i++)
+                lstBomb.AddRange(PointInShape(e.layerHandle, e.shapeIndex, MapMenuCommand.suspectPointLayerBomb));
+                lstBomb.AddRange(PointInShape(e.layerHandle, e.shapeIndex, MapMenuCommand.userSuspectPointLayerBomb));
+                List<Shape> lstMine = new List<Shape>();
+                lstMine.AddRange(PointInShape(e.layerHandle, e.shapeIndex, MapMenuCommand.suspectPointLayerMine));
+                lstMine.AddRange(PointInShape(e.layerHandle, e.shapeIndex, MapMenuCommand.userSuspectPointLayerMine));
+                KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBomb, lstMine);
+                if(MyMainMenu2.Instance.tabPageBMVN.Controls.Count > 0)
                 {
-                    Shape shapeBomb = sf_bomb.Shape[i];
-                    Point pnt = shapeBomb.Point[0];
-                    if (shp.PointInThisPoly(pnt))
-                    {
-                        //CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-
-
-                        //lstBMVN.Add(bmvn);
-                        lstBomb.Add(shapeBomb);
-                    }
+                    Form prevForm = MyMainMenu2.Instance.tabPageBMVN.Controls[0] as Form;
+                    prevForm.Close();
                 }
-                KhoangNghiNgoForm form = new KhoangNghiNgoForm(lstBomb);
+                MyMainMenu2.Instance.tabPageBMVN.Controls.Clear();
+                form.TopLevel = false;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                MyMainMenu2.Instance.tabPageBMVN.Controls.Add(form);
+                form.BringToFront();
                 form.Show();
-
-                //CecmProgramAreaLineDTO line = JsonConvert.DeserializeObject<CecmProgramAreaLineDTO>(shp.Key);
-                //Point pnt_start = shp.Point[0];
-                //Point pnt_end = shp.Point[1];
-                //Draw(pnt_start.x, pnt_start.y, pnt_end.x, pnt_end.y, line);
+                MyMainMenu2.Instance.tabControlBottom.Visible = true;
+                MyMainMenu2.Instance.tabControlBottom.SelectedTab = MyMainMenu2.Instance.tabPageBMVN;
 
                 Exit();
             }
+        }
+
+        private static List<Shape> PointInShape(int polyLayer, int polyShapeIndex, int layer)
+        {
+            Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(polyLayer);
+            Shape shp = sf.Shape[polyShapeIndex];
+            Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(layer);
+            List<Shape> lstBomb = new List<Shape>();
+            for (int i = 0; i < sf_bomb.NumShapes; i++)
+            {
+                Shape shapeBomb = sf_bomb.Shape[i];
+                Point pnt = shapeBomb.Point[0];
+                if (shp.PointInThisPoly(pnt))
+                {
+                    lstBomb.Add(shapeBomb);
+                }
+            }
+            return lstBomb;
         }
 
         private static void AxMap1_ShapeIdentified_Deep(object sender, AxMapWinGIS._DMapEvents_ShapeIdentifiedEvent e)
@@ -143,11 +168,11 @@ namespace DieuHanhCongTruong.Command
 
                 Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(e.layerHandle);
                 Shape shp = sf.Shape[e.shapeIndex];
-                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayer);
+                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
                 long.TryParse(shp.Key, out long idKV);
-                if (TINCommand.triangulations.ContainsKey(idKV))
+                if (TINCommand.triangulations_bomb.ContainsKey(idKV))
                 {
-                    List<CustomFace> triangle = TINCommand.triangulations[idKV];
+                    List<CustomFace> triangle = TINCommand.triangulations_bomb[idKV];
                     //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
                     for (int i = 0; i < sf_bomb.NumShapes; i++)
                     {
@@ -158,7 +183,7 @@ namespace DieuHanhCongTruong.Command
                             CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
                             //lstBMVN.Add(bmvn);
                             List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo);
+                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo, true);
                             bmvn.Area = area;
                             bmvn.contour = contourGiamNghiNgo;
                             if (contourGiamNghiNgo.Count > 2)
@@ -182,7 +207,7 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        public static double FindArea(CecmReportPollutionAreaBMVN bmvn, double KGNN, List<CustomFace> triangles, ref List<InfoConnect> contourHasMine)
+        public static double FindArea(CecmReportPollutionAreaBMVN bmvn, double KGNN, List<CustomFace> triangles, ref List<InfoConnect> contourHasMine, bool ascend, bool drawTest = false)
         {
             //if (double.IsNaN(item.Position.Z))
             //    continue;
@@ -204,7 +229,7 @@ namespace DieuHanhCongTruong.Command
                 return 0;
             }
             AdjacentTriangles cmd = new AdjacentTriangles(triangles);
-            cmd.GetSuspectPoints(z - z * KGNN / 100);
+            cmd.GetSuspectPoints(z - z * KGNN / 100, ascend);
             double areaPline = 0;
 
             foreach (List<InfoConnect> contour in cmd.lstContour)
@@ -290,7 +315,11 @@ namespace DieuHanhCongTruong.Command
                 //    shp.Create(ShpfileType.SHP_POLYGON);
 
                 //}
-                //MapMenuCommand.drawPolygonTest(contour);
+                if (drawTest)
+                {
+                    MapMenuCommand.drawPolygonTest(contour);
+                }
+                
                 Shape shpPolygon = new Shape();
                 shpPolygon.Create(ShpfileType.SHP_POLYGON);
                 for (int i = 0; i < contour.Count; i++)

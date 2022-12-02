@@ -734,7 +734,7 @@ namespace DieuHanhCongTruong.Forms.InAn
             }
             foreach (CecmProgramAreaLineDTO line in lstRanhDo)
             {
-                axMap1.DrawLineEx(lineLayer, line.start_x, line.start_y, line.end_x, line.end_y, 1, AppUtils.ColorToUint(Color.White));
+                axMap1.DrawLineEx(lineLayer, line.start_y, line.start_x, line.end_y, line.end_x, 1, AppUtils.ColorToUint(Color.White));
             }
             loaded = true;
         }

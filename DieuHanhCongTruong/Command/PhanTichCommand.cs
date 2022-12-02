@@ -20,13 +20,15 @@ namespace DieuHanhCongTruong.Command
         public List<List<InfoConnect>> lstContour;
         private List<CustomFace> triangles;
         private long idKV;
+        private bool isBomb;
 
-        public PhanTichCommand(List<CustomFace> triangles, long idKV)
+        public PhanTichCommand(List<CustomFace> triangles, long idKV, bool isBomb)
         {
             this.triangles = triangles;
             this.idKV = idKV;
             lstContour = new List<List<InfoConnect>>();
             cellRead = new List<CustomFace>();
+            this.isBomb = isBomb;
         }
 
         public void Execute()
@@ -36,8 +38,8 @@ namespace DieuHanhCongTruong.Command
                 return;
             }
             double elevation = 0, contourMinElevation = double.MaxValue, contourMaxElevation = double.MinValue;
-            
-            List<DataRow> lst = UtilsDatabase.GetAllDataInTable(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong");
+
+            List<DataRow> lst = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong", "IsBomb", isBomb ? "1" : "2");
 
             if (lst.Count > 0)
             {
@@ -78,64 +80,79 @@ namespace DieuHanhCongTruong.Command
             //GetSuspectPoints(contourMaxElevation);
             //GetSuspectPoints(contourMinElevation);
             AdjacentTriangles cmd = new AdjacentTriangles(triangles);
-            cmd.GetSuspectPoints(contourMaxElevation);
+            cmd.GetSuspectPoints(contourMaxElevation, true);
             lstContour.AddRange(cmd.lstContour);
-            cmd = new AdjacentTriangles(triangles);
-            cmd.GetSuspectPoints(contourMinElevation);
-            lstContour.AddRange(cmd.lstContour);
-
-            foreach (List<InfoConnect> contour in lstContour)
+            List<List<InfoConnect>> lstContourMax = cmd.lstContour;
+            List<List<InfoConnect>> lstContourMin = new List<List<InfoConnect>>();
+            if (isBomb)
             {
-                //Shape shp = new Shape();
-                //shp.Create(ShpfileType.SHP_POLYGON);
-                double sumX = 0, sumY = 0, sumZ = 0; ;
-                foreach (InfoConnect point in contour)
-                {
-                    
-                    
-                    //Point pnt = new Point();
-                    //pnt.x = longt;
-                    //pnt.y = latt;
-                    //shp.AddPoint(longt, latt);
-                    //MapMenuCommand.addSuspectPoint(longt, latt);
-                    sumX += point.lat_value;
-                    sumY += point.long_value;
-                    sumZ += point.the_value;
-                }
-                double x = sumX / contour.Count;
-                double y = sumY / contour.Count;
-                double z = sumZ / contour.Count;
-                double latt = 0, longt = 0;
-                AppUtils.ToLatLon(x, y, ref latt, ref longt, "48N");
-                CecmReportPollutionAreaBMVN bmvn = new CecmReportPollutionAreaBMVN();
-                bmvn.idArea = idKV;
-                bmvn.programId = MyMainMenu2.idDADH;
-                bmvn.XPoint = x;
-                bmvn.YPoint = y;
-                var latLong = AppUtils.ConverUTMToLatLong(bmvn.XPoint, bmvn.YPoint);
-                bmvn.Vido = latLong.Y;
-                bmvn.Kinhdo = latLong.X;
-                bmvn.TimeExecute = DateTime.Now;
-                //bmvn.ZPoint = z;
-                bmvn.ZPoint = GeometryUtils.GetMagneticAtPoint(x, y, triangles);
-                List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-                double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo);
-                bmvn.Area = area;
-                bmvn.contour = contourGiamNghiNgo;
-                if (contourGiamNghiNgo.Count > 2)
-                {
-                    PhanTichKhoangGiamNghiNgoCommand.FindDeep(bmvn);
-                }
-                else
-                {
-                    bmvn.Deep = 0;
-                }
-                MapMenuCommand.addSuspectPoint(longt, latt, bmvn);
-                //double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(x, y, z, 50, triangles);
-                //Point centroid = shp.Centroid;
-                //MapMenuCommand.addSuspectPoint(centroid.x, centroid.y);
+                cmd = new AdjacentTriangles(triangles);
+                cmd.GetSuspectPoints(contourMinElevation, false);
+                lstContour.AddRange(cmd.lstContour);
+                lstContourMin = cmd.lstContour;
             }
-            
+
+            foreach (List<InfoConnect> contour in lstContourMax)
+            {
+                AddPoint(contour, true);
+            }
+            foreach (List<InfoConnect> contour in lstContourMin)
+            {
+                AddPoint(contour, false);
+            }
+        }
+
+        private void AddPoint(List<InfoConnect> contour, bool ascend)
+        {
+            //Shape shp = new Shape();
+            //shp.Create(ShpfileType.SHP_POLYGON);
+            double sumX = 0, sumY = 0, sumZ = 0; ;
+            foreach (InfoConnect point in contour)
+            {
+
+
+                //Point pnt = new Point();
+                //pnt.x = longt;
+                //pnt.y = latt;
+                //shp.AddPoint(longt, latt);
+                //MapMenuCommand.addSuspectPoint(longt, latt);
+                sumX += point.lat_value;
+                sumY += point.long_value;
+                sumZ += point.the_value;
+            }
+            double x = sumX / contour.Count;
+            double y = sumY / contour.Count;
+            double z = sumZ / contour.Count;
+            double latt = 0, longt = 0;
+            AppUtils.ToLatLon(x, y, ref latt, ref longt, "48N");
+            CecmReportPollutionAreaBMVN bmvn = new CecmReportPollutionAreaBMVN();
+            bmvn.idArea = idKV;
+            bmvn.programId = MyMainMenu2.idDADH;
+            bmvn.XPoint = x;
+            bmvn.YPoint = y;
+            var latLong = AppUtils.ConverUTMToLatLong(bmvn.XPoint, bmvn.YPoint);
+            bmvn.Vido = latLong.Y;
+            bmvn.Kinhdo = latLong.X;
+            bmvn.TimeExecute = DateTime.Now;
+            //bmvn.ZPoint = z;
+            bmvn.ZPoint = GeometryUtils.GetMagneticAtPoint(x, y, triangles);
+            List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
+            double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo, ascend, false);
+            bmvn.Area = area;
+            bmvn.contour = contourGiamNghiNgo;
+            if (contourGiamNghiNgo.Count > 2)
+            {
+                PhanTichKhoangGiamNghiNgoCommand.FindDeep(bmvn);
+            }
+            else
+            {
+                bmvn.Deep = 0;
+            }
+            bmvn.UserAdd = false;
+            MapMenuCommand.addSuspectPoint(longt, latt, bmvn, isBomb, false);
+            //double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(x, y, z, 50, triangles);
+            //Point centroid = shp.Centroid;
+            //MapMenuCommand.addSuspectPoint(centroid.x, centroid.y);
         }
 
         //private List<InfoConnect> GetGiaoTamGiacMatPhang(CustomFace cell, double z0)
@@ -247,8 +264,8 @@ namespace DieuHanhCongTruong.Command
         //    }
         //}
 
-        
 
-        
+
+
     }
 }

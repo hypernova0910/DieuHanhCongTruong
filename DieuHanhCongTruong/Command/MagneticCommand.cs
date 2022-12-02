@@ -24,6 +24,11 @@ namespace DieuHanhCongTruong.Command
         private List<string> lstMayMin = new List<string>();
         //public static bool threadMagneticStopped = true;
         //public static bool threadPointStopped = true;
+        private static bool threadMagneticBombStopped = true;
+        private static bool threadMagneticMineStopped = true;
+
+        private static bool threadPointUnmodelStopped = true;
+        private static bool threadPointModelStopped = true;
 
         public static void Execute(long idDA)
         {
@@ -33,7 +38,8 @@ namespace DieuHanhCongTruong.Command
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {
                     MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-
+                        MyMainMenu2.Instance.tsProgressHistory.Visible = true;
+                        MyMainMenu2.Instance.tsProgressSurface.Visible = true;
                         MyMainMenu2.Instance.TogglePhanTichMenu(false);
                     }));
                 }
@@ -47,80 +53,61 @@ namespace DieuHanhCongTruong.Command
         {
             MapMenuCommand.ClearPolygon();
             MapMenuCommand.ClearHistoryPoints();
+            MapMenuCommand.ClearPointLayers();
+            MapMenuCommand.ClearSuspectPoints();
+            MapMenuCommand.ClearUserSuspectPoints();
             //Dictionary<long, Dictionary<string, List<InfoConnect>>> idKV__Points = GetPointDatabase(idDA);
-            Dictionary<long, Dictionary<bool, List<InfoConnect>>> idKV__Points = GetPointDatabase2(idDA);
+            Dictionary<long, Dictionary<bool, List<InfoConnect>>> idKV__PointsUnmodel = GetPointDatabase(idDA, false);
+            Dictionary<long, Dictionary<bool, List<InfoConnect>>> idKV__PointsModel = GetPointDatabase(idDA, true);
 
-            TINCommand.triangulations.Clear();
-            Thread threadMagnetic = new Thread(() =>
+            TINCommand.triangulations_bomb.Clear();
+            Thread threadMagneticBomb = new Thread(() =>
             {
-                foreach (var pair_idKV__Points in idKV__Points)
+                threadMagneticBombStopped = false;
+                foreach (var pair_idKV__Points in idKV__PointsUnmodel)
                 {
-                    //Dictionary<string, List<InfoConnect>> code__Points = pair_idKV__Points.Value;
-                    //List<InfoConnect> lstPointBomb = new List<InfoConnect>();
-                    //List<InfoConnect> lstPointMine = new List<InfoConnect>();
-                    //foreach (var pair_code__Points in code__Points)
-                    //{
-                    //    if (lstMayBom.Contains(pair_code__Points.Key))
-                    //    {
-                    //        lstPointBomb.AddRange(pair_code__Points.Value);
-                    //    }
-                    //    else if (lstMayMin.Contains(pair_code__Points.Key))
-                    //    {
-                    //        lstPointMine.AddRange(pair_code__Points.Value);
-                    //    }
-                    //    //foreach (var point in pair_code__Points.Value)
-                    //    //{
-                    //    //    if (point.isMachineBom)
-                    //    //    {
-                    //    //        lstPointBomb.Add(point);
-                    //    //    }
-                    //    //    else
-                    //    //    {
-                    //    //        lstPointMine.Add(point);
-                    //    //    }
-                    //    //}
-                    //}
-
                     List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
-                    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
 
                     TINCommand.BuildDelaunayTriangulation(lstPointBomb, true, pair_idKV__Points.Key);
-                    //TINCommand.BuildDelaunayTriangulation(lstPointMine, false);
                 }
-                //if (ThreadManager.CheckThread(Thread.CurrentThread))
-                //{
-                //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                //}
-                //threadMagneticStopped = true;
+                threadMagneticBombStopped = true;
+                MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                    if (threadMagneticMineStopped)
+                    {
+                        MyMainMenu2.Instance.tsProgressSurface.Visible = false;
+                        MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                    }
+                }));
+                
+
+            });
+            Thread threadMagneticMine = new Thread(() =>
+            {
+                threadMagneticMineStopped = false;
+                foreach (var pair_idKV__Points in idKV__PointsUnmodel)
+                {
+                    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
+
+                    TINCommand.BuildDelaunayTriangulation(lstPointMine, false, pair_idKV__Points.Key);
+                }
+                threadMagneticMineStopped = true;
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {
-                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-
-                        MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() =>
+                    {
+                        if (threadMagneticBombStopped)
+                        {
+                            MyMainMenu2.Instance.tsProgressSurface.Visible = false;
+                            MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                        }
                     }));
                 }
-                //else
-                //{
-                //    MyMainMenu2.Instance.ToggleMagneticMenu(true);
-                //}
-                //if (threadMagneticStopped && threadPointStopped)
-                //{
-                //    if (MyMainMenu2.Instance.InvokeRequired)
-                //    {
-                //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                
 
-                //            MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                //        }));
-                //    }
-                //    //else
-                //    //{
-                //    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                //    //}
-                //}
             });
-            Thread threadPoint = new Thread(() =>
+            Thread threadPointUndmodel = new Thread(() =>
             {
-                foreach (var pair_idKV__Points in idKV__Points)
+                foreach (var pair_idKV__Points in idKV__PointsUnmodel)
                 {
 
                     List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
@@ -129,33 +116,39 @@ namespace DieuHanhCongTruong.Command
                     MapMenuCommand.LoadPointsHistory(lstPointBomb);
                     MapMenuCommand.LoadPointsHistory(lstPointMine);
                 }
-                //if (ThreadManager.CheckThread(Thread.CurrentThread))
-                //{
-                //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                //}
-                //threadPointStopped = true;
-                //if (threadMagneticStopped && threadPointStopped)
-                //{
-                    if (MyMainMenu2.Instance.InvokeRequired)
-                    {
-                        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-                            MyMainMenu2.Instance.TogglePointMenu(true);
-                        }));
-                    }
-                    //else
-                    //{
-                    //    MyMainMenu2.Instance.TogglePhanTichMenu(true);
-                    //}
-                //}
+                if (MyMainMenu2.Instance.InvokeRequired)
+                {
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+                        MyMainMenu2.Instance.tsProgressHistory.Visible = false;
+                        MyMainMenu2.Instance.TogglePointMenu(true);
+                    }));
+                }
             });
-            threadMagnetic.IsBackground = true;
-            threadPoint.IsBackground = true;
-            //ThreadManager.threadPhanTichOffline.Add(threadMagnetic);
-            //ThreadManager.threadPhanTichOffline.Add(threadPoint);
-            //threadMagneticStopped = false;
-            //threadPointStopped = false;
-            threadMagnetic.Start();
-            threadPoint.Start();
+            //Thread threadPointModel = new Thread(() =>
+            //{
+            //    foreach (var pair_idKV__Points in idKV__PointsModel)
+            //    {
+
+            //        List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
+            //        List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
+
+            //        MapMenuCommand.LoadPointsHistory(lstPointBomb);
+            //        MapMenuCommand.LoadPointsHistory(lstPointMine);
+            //    }
+            //    if (MyMainMenu2.Instance.InvokeRequired)
+            //    {
+            //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
+            //            MyMainMenu2.Instance.tsProgressHistory.Visible = false;
+            //            MyMainMenu2.Instance.TogglePointMenu(true);
+            //        }));
+            //    }
+            //});
+            threadMagneticBomb.IsBackground = true;
+            threadMagneticMine.IsBackground = true;
+            threadPointUndmodel.IsBackground = true;
+            threadMagneticBomb.Start();
+            threadMagneticMine.Start();
+            threadPointUndmodel.Start();
         }
 
         private List<long> GetAllIDKV(long idDA)
@@ -178,143 +171,143 @@ namespace DieuHanhCongTruong.Command
             return idKVs;
         }
 
-        private Dictionary<long, Dictionary<string, List<InfoConnect>>> GetPointDatabase(long idDuAn)
-        {
-            //Dictionary<long, Dictionary<string, List<InfoConnect>>> retValTemp = new Dictionary<long, Dictionary<string, List<InfoConnect>>>();
-            Dictionary<long, Dictionary<string, List<InfoConnect>>> retVal = new Dictionary<long, Dictionary<string, List<InfoConnect>>>();
-            try
-            {
-                MenuLoaderManagerFrm frm = new MenuLoaderManagerFrm();
-                AppUtils.LoadRecentInput(frm.tbHeSoMayDoBom, AppUtils.DefaultNanoTesla.ToString());
-                AppUtils.LoadRecentInput(frm.tbHeSoMayDoMin, AppUtils.DefaultNanoTeslaMin.ToString());
-                double heSoMayDoBom = double.Parse(frm.tbHeSoMayDoBom.Text);
-                double heSoMayDoMin = double.Parse(frm.tbHeSoMayDoMin.Text);
+        //private Dictionary<long, Dictionary<string, List<InfoConnect>>> GetPointDatabase(long idDuAn)
+        //{
+        //    //Dictionary<long, Dictionary<string, List<InfoConnect>>> retValTemp = new Dictionary<long, Dictionary<string, List<InfoConnect>>>();
+        //    Dictionary<long, Dictionary<string, List<InfoConnect>>> retVal = new Dictionary<long, Dictionary<string, List<InfoConnect>>>();
+        //    try
+        //    {
+        //        MenuLoaderManagerFrm frm = new MenuLoaderManagerFrm();
+        //        AppUtils.LoadRecentInput(frm.tbHeSoMayDoBom, AppUtils.DefaultNanoTesla.ToString());
+        //        AppUtils.LoadRecentInput(frm.tbHeSoMayDoMin, AppUtils.DefaultNanoTeslaMin.ToString());
+        //        double heSoMayDoBom = double.Parse(frm.tbHeSoMayDoBom.Text);
+        //        double heSoMayDoMin = double.Parse(frm.tbHeSoMayDoMin.Text);
 
-                // Get all duong bao
-                //var oidDuongBaos = DBUtils.SelectAllDuongBao();
-                //if (oidDuongBaos != null && oidDuongBaos.Count != 0)
-                //{
-                //    using (Transaction tr = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database.TransactionManager.StartTransaction())
-                //    {
-                //        foreach (ObjectId oid in oidDuongBaos)
-                //        {
-                //            MgdAcDbVNTerrainBaseRegion mBaseRegion = oid.GetObject(OpenMode.ForRead) as MgdAcDbVNTerrainBaseRegion;
-                //            if (mBaseRegion == null)
-                //                continue;
+        //        // Get all duong bao
+        //        //var oidDuongBaos = DBUtils.SelectAllDuongBao();
+        //        //if (oidDuongBaos != null && oidDuongBaos.Count != 0)
+        //        //{
+        //        //    using (Transaction tr = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Database.TransactionManager.StartTransaction())
+        //        //    {
+        //        //        foreach (ObjectId oid in oidDuongBaos)
+        //        //        {
+        //        //            MgdAcDbVNTerrainBaseRegion mBaseRegion = oid.GetObject(OpenMode.ForRead) as MgdAcDbVNTerrainBaseRegion;
+        //        //            if (mBaseRegion == null)
+        //        //                continue;
 
-                //            if (retValTemp.ContainsKey(mBaseRegion) == false)
-                //                retValTemp.Add(mBaseRegion, new Dictionary<string, List<DataDatabase>>());
-                //        }
+        //        //            if (retValTemp.ContainsKey(mBaseRegion) == false)
+        //        //                retValTemp.Add(mBaseRegion, new Dictionary<string, List<DataDatabase>>());
+        //        //        }
 
-                //        tr.Commit();
-                //    }
-                //}
+        //        //        tr.Commit();
+        //        //    }
+        //        //}
 
-                List<long> idKVs = GetAllIDKV(idDuAn);
-                //foreach(int idKV in idKVs)
-                //{
-                //    retValTemp.Add(idKV, new Dictionary<string, List<InfoConnect>>());
-                //}
+        //        List<long> idKVs = GetAllIDKV(idDuAn);
+        //        //foreach(int idKV in idKVs)
+        //        //{
+        //        //    retValTemp.Add(idKV, new Dictionary<string, List<InfoConnect>>());
+        //        //}
 
-                // Get all machine boom in du an
-                List<string> lstCodeMachine = new List<string>();
-                var lstDatarow = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "Cecm_ProgramMachineBomb", "cecm_program_id", idDuAn.ToString());
-                foreach (var item in lstDatarow)
-                {
-                    lstCodeMachine.Add(item["mac_id"].ToString());
-                    if (item["IsMachineBoom"].ToString() == "1" || item["code"].ToString().StartsWith("B"))
-                    {
-                        lstMayBom.Add(item["mac_id"].ToString());
-                    }
-                    else
-                    {
-                        lstMayMin.Add(item["mac_id"].ToString());
-                    }
-                }
+        //        // Get all machine boom in du an
+        //        List<string> lstCodeMachine = new List<string>();
+        //        var lstDatarow = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "Cecm_ProgramMachineBomb", "cecm_program_id", idDuAn.ToString());
+        //        foreach (var item in lstDatarow)
+        //        {
+        //            lstCodeMachine.Add(item["mac_id"].ToString());
+        //            if (item["IsMachineBoom"].ToString() == "1" || item["code"].ToString().StartsWith("B"))
+        //            {
+        //                lstMayBom.Add(item["mac_id"].ToString());
+        //            }
+        //            else
+        //            {
+        //                lstMayMin.Add(item["mac_id"].ToString());
+        //            }
+        //        }
 
-                foreach (var idKV in idKVs)
-                {
-                    //var boundingBox = vungDuAn.Key.Bounds;
-                    //if (boundingBox == null)
-                    //    continue;
+        //        foreach (var idKV in idKVs)
+        //        {
+        //            //var boundingBox = vungDuAn.Key.Bounds;
+        //            //if (boundingBox == null)
+        //            //    continue;
 
-                    //List<Point3d> lstP = new List<Point3d>();
-                    //for (int i = 0; i < vungDuAn.Key.NumberOfVertices; i++)
-                    //    lstP.Add(vungDuAn.Key.GetPoint3dAt(i));
-                    //lstP.Add(vungDuAn.Key.GetPoint3dAt(0));
+        //            //List<Point3d> lstP = new List<Point3d>();
+        //            //for (int i = 0; i < vungDuAn.Key.NumberOfVertices; i++)
+        //            //    lstP.Add(vungDuAn.Key.GetPoint3dAt(i));
+        //            //lstP.Add(vungDuAn.Key.GetPoint3dAt(0));
 
-                    //Point3d minP = boundingBox.Value.MinPoint;
-                    //Point3d maxP = boundingBox.Value.MaxPoint;
+        //            //Point3d minP = boundingBox.Value.MinPoint;
+        //            //Point3d maxP = boundingBox.Value.MaxPoint;
 
-                    Dictionary<string, List<InfoConnect>> dicMayDoDiemDo = new Dictionary<string, List<InfoConnect>>();
+        //            Dictionary<string, List<InfoConnect>> dicMayDoDiemDo = new Dictionary<string, List<InfoConnect>>();
 
-                    foreach (var mayDo in lstCodeMachine)
-                    {
-                        //var lstDataBomb = ReadDataMongo(idKV, true);
-                        //var lstDataMine = ReadDataMongo(idKV, false);
-                        //foreach (var infoConnect in lstDataBomb)
-                        //{
-                        //    infoConnect.the_value *= heSoMayDoBom;
-                        //}
-                        //foreach (var infoConnect in lstDataMine)
-                        //{
-                        //    infoConnect.the_value *= heSoMayDoMin;
-                        //}
-                        //dicMayDoDiemDo.Add(true, lstDataBomb);
-                        //dicMayDoDiemDo.Add(false, lstDataMine);
-                        var lstData = ReadDataMongo(idKV, mayDo);
+        //            foreach (var mayDo in lstCodeMachine)
+        //            {
+        //                //var lstDataBomb = ReadDataMongo(idKV, true);
+        //                //var lstDataMine = ReadDataMongo(idKV, false);
+        //                //foreach (var infoConnect in lstDataBomb)
+        //                //{
+        //                //    infoConnect.the_value *= heSoMayDoBom;
+        //                //}
+        //                //foreach (var infoConnect in lstDataMine)
+        //                //{
+        //                //    infoConnect.the_value *= heSoMayDoMin;
+        //                //}
+        //                //dicMayDoDiemDo.Add(true, lstDataBomb);
+        //                //dicMayDoDiemDo.Add(false, lstDataMine);
+        //                var lstData = ReadDataMongo(idKV, mayDo);
 
-                        double x, y, z;
-                        //byte bitSensOut = byte.MinValue;
-                        //DateTime dateTimeMeasure = DateTime.MinValue;
-                        //DateTime dateTimeRecv = DateTime.MinValue;
+        //                double x, y, z;
+        //                //byte bitSensOut = byte.MinValue;
+        //                //DateTime dateTimeMeasure = DateTime.MinValue;
+        //                //DateTime dateTimeRecv = DateTime.MinValue;
 
-                        List<InfoConnect> lDataValDatabase = new List<InfoConnect>();
-                        foreach (var infoConnect in lstData)
-                        {
-                            //if (!AppUtils.IsNumber(dr.lat_value) || !AppUtils.IsNumber(dr.long_value) || !AppUtils.IsNumber(dr.long_value))
-                            //    continue;
+        //                List<InfoConnect> lDataValDatabase = new List<InfoConnect>();
+        //                foreach (var infoConnect in lstData)
+        //                {
+        //                    //if (!AppUtils.IsNumber(dr.lat_value) || !AppUtils.IsNumber(dr.long_value) || !AppUtils.IsNumber(dr.long_value))
+        //                    //    continue;
 
-                            x = infoConnect.lat_value;
-                            y = infoConnect.long_value;
-                            z = infoConnect.the_value;
+        //                    x = infoConnect.lat_value;
+        //                    y = infoConnect.long_value;
+        //                    z = infoConnect.the_value;
 
-                            if (x == 0 && y == 0)
-                                continue;
+        //                    if (x == 0 && y == 0)
+        //                        continue;
 
-                            if (infoConnect.isMachineBom)
-                                infoConnect.the_value *= heSoMayDoBom;
-                            else
-                                infoConnect.the_value *= heSoMayDoMin;
+        //                    if (infoConnect.isMachineBom)
+        //                        infoConnect.the_value *= heSoMayDoBom;
+        //                    else
+        //                        infoConnect.the_value *= heSoMayDoMin;
 
 
-                            lDataValDatabase.Add(infoConnect);
-                        }
+        //                    lDataValDatabase.Add(infoConnect);
+        //                }
 
-                        if (dicMayDoDiemDo.ContainsKey(mayDo) == false)
-                        {
-                            dicMayDoDiemDo.Add(mayDo, lDataValDatabase);
-                        }
-                        else
-                        {
-                            dicMayDoDiemDo[mayDo].AddRange(lDataValDatabase);
-                        }
+        //                if (dicMayDoDiemDo.ContainsKey(mayDo) == false)
+        //                {
+        //                    dicMayDoDiemDo.Add(mayDo, lDataValDatabase);
+        //                }
+        //                else
+        //                {
+        //                    dicMayDoDiemDo[mayDo].AddRange(lDataValDatabase);
+        //                }
                             
-                    }
+        //            }
 
-                    retVal.Add(idKV, dicMayDoDiemDo);
-                    //retValTemp[vungDuAn.Key] = dicMayDoDiemDo;
-                }
-            }
-            catch (System.Exception ex)
-            {
+        //            retVal.Add(idKV, dicMayDoDiemDo);
+        //            //retValTemp[vungDuAn.Key] = dicMayDoDiemDo;
+        //        }
+        //    }
+        //    catch (System.Exception ex)
+        //    {
 
-            }
+        //    }
 
-            return retVal;
-        }
+        //    return retVal;
+        //}
 
-        private Dictionary<long, Dictionary<bool, List<InfoConnect>>> GetPointDatabase2(long idDuAn)
+        private Dictionary<long, Dictionary<bool, List<InfoConnect>>> GetPointDatabase(long idDuAn, bool model)
         {
             //Dictionary<long, Dictionary<string, List<InfoConnect>>> retValTemp = new Dictionary<long, Dictionary<string, List<InfoConnect>>>();
             Dictionary<long, Dictionary<bool, List<InfoConnect>>> retVal = new Dictionary<long, Dictionary<bool, List<InfoConnect>>>();
@@ -348,18 +341,39 @@ namespace DieuHanhCongTruong.Command
                 {
 
                     Dictionary<bool, List<InfoConnect>> dicMayDoDiemDo = new Dictionary<bool, List<InfoConnect>>();
-                    var lstDataBomb = ReadDataMongo(idKV, true);
-                    var lstDataMine = ReadDataMongo(idKV, false);
+                    var lstDataBomb = ReadDataMongo(idKV, true, model);
+                    var lstDataMine = ReadDataMongo(idKV, false, model);
+                    double maxMine = double.MinValue;
+                    double minMine = double.MaxValue;
                     foreach (var infoConnect in lstDataBomb)
                     {
                         infoConnect.the_value *= heSoMayDoBom;
                     }
+                    List<InfoConnect> lstDataMineFinal = new List<InfoConnect>();
                     foreach (var infoConnect in lstDataMine)
                     {
+                        if(infoConnect.the_value > 12)
+                        {
+                            continue;
+                        }
                         infoConnect.the_value *= heSoMayDoMin;
+                        lstDataMineFinal.Add(infoConnect);
                     }
+                    //foreach (var infoConnect in lstDataMineFinal)
+                    //{
+                    //    if (infoConnect.the_value < minMine)
+                    //    {
+                    //        minMine = infoConnect.the_value;
+                    //    }
+                    //    if (infoConnect.the_value > maxMine)
+                    //    {
+                    //        maxMine = infoConnect.the_value;
+                    //    }
+                    //}
+                    maxMine = lstDataMineFinal.Max(x => x.the_value);
+                    minMine = lstDataMineFinal.Min(x => x.the_value);
                     dicMayDoDiemDo.Add(true, lstDataBomb);
-                    dicMayDoDiemDo.Add(false, lstDataMine);
+                    dicMayDoDiemDo.Add(false, lstDataMineFinal);
                     retVal.Add(idKV, dicMayDoDiemDo);
                     //retValTemp[vungDuAn.Key] = dicMayDoDiemDo;
                 }
@@ -445,7 +459,7 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        private List<InfoConnect> ReadDataMongo(long idKV, bool isMachineBomb)
+        private List<InfoConnect> ReadDataMongo(long idKV, bool isMachineBomb, bool model)
         {
             try
             {
@@ -458,7 +472,15 @@ namespace DieuHanhCongTruong.Command
 
                 MongoClient dbClient = frmLoggin.mgCon;
                 var database = dbClient.GetDatabase("db_cecm");
-                var collection = database.GetCollection<InfoConnect>("cecm_data");
+                IMongoCollection<InfoConnect> collection;
+                if (model)
+                {
+                    collection = database.GetCollection<InfoConnect>("cecm_data_model");
+                }
+                else
+                {
+                    collection = database.GetCollection<InfoConnect>("cecm_data");
+                }
 
                 List<FilterDefinition<InfoConnect>> predicates = new List<FilterDefinition<InfoConnect>>();
                 var builder = Builders<InfoConnect>.Filter;

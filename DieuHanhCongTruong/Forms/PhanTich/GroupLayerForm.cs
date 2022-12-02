@@ -175,13 +175,13 @@ namespace VNRaPaBomMin
             //listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
             //LoadDGV(listValueOut);
             bool hasCheckedItem = true;
-            if (MapMenuCommand.machinePointLayers.Count > 0)
+            if (MapMenuCommand.machinePointBombLayers.Count > 0)
             {
                 bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.imageLayers[0]);
-                int index = DGVData.Rows.Add("Qũy đạo đo", visible);
+                int index = DGVData.Rows.Add("Quỹ đạo đo", visible);
                 List<int> layers = new List<int>();
-                layers.AddRange(MapMenuCommand.machinePointLayers);
-                layers.AddRange(MapMenuCommand.machineLineLayers);
+                layers.AddRange(MapMenuCommand.machinePointBombLayers);
+                layers.AddRange(MapMenuCommand.machineLineBombLayers);
                 DGVData.Rows[index].Tag = layers;
                 if (!visible)
                 {
@@ -191,14 +191,24 @@ namespace VNRaPaBomMin
             if(MapMenuCommand.polygonLayers.Count > 0)
             {
                 bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]);
-                int index = DGVData.Rows.Add("Bề mặt địa hình", visible);
+                int index = DGVData.Rows.Add("Bề mặt địa hình (bom)", visible);
                 DGVData.Rows[index].Tag = MapMenuCommand.polygonLayers;
                 if (!visible)
                 {
                     hasCheckedItem = false;
                 }
             }
-            if(MapMenuCommand.imageLayers.Count > 0)
+            if (MapMenuCommand.polygonLayersMine.Count > 0)
+            {
+                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayersMine[0]);
+                int index = DGVData.Rows.Add("Bề mặt địa hình (mìn)", visible);
+                DGVData.Rows[index].Tag = MapMenuCommand.polygonLayersMine;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
+            if (MapMenuCommand.imageLayers.Count > 0)
             {
                 bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.imageLayers[0]);
                 int index = DGVData.Rows.Add("Ảnh vệ tinh", visible);
@@ -244,12 +254,24 @@ namespace VNRaPaBomMin
                     hasCheckedItem = false;
                 }
             }
-            if (MapMenuCommand.suspectPointLayer >= 0)
+            if (MapMenuCommand.suspectPointLayerBomb >= 0)
             {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayer);
-                int index = DGVData.Rows.Add("Điểm nghi ngờ", visible);
+                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerBomb);
+                int index = DGVData.Rows.Add("Điểm nghi ngờ (bom)", visible);
                 List<int> layers = new List<int>();
-                layers.Add(MapMenuCommand.suspectPointLayer);
+                layers.Add(MapMenuCommand.suspectPointLayerBomb);
+                DGVData.Rows[index].Tag = layers;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
+            if (MapMenuCommand.suspectPointLayerMine >= 0)
+            {
+                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerMine);
+                int index = DGVData.Rows.Add("Điểm nghi ngờ (mìn)", visible);
+                List<int> layers = new List<int>();
+                layers.Add(MapMenuCommand.suspectPointLayerMine);
                 DGVData.Rows[index].Tag = layers;
                 if (!visible)
                 {
