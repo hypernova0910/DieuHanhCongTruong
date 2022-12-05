@@ -119,12 +119,12 @@ namespace DieuHanhCongTruong.Command
             initPolygonLayer(true, false);
             InitPointImageLayer(true, false);
             InitPointImageLayer(false, false);
-            //InitPointImageLayer(true, true);
-            //InitPointImageLayer(false, true);
+            InitPointImageLayer(true, true);
+            InitPointImageLayer(false, true);
             InitLineLayer(true, false);
             InitLineLayer(false, false);
-            //InitLineLayer(true, true);
-            //InitLineLayer(false, true);
+            InitLineLayer(true, true);
+            InitLineLayer(false, true);
             InitSuspectPointLayer();
             InitSuspectPointMineLayer();
             InitUserSuspectPointLayer();
@@ -840,70 +840,83 @@ namespace DieuHanhCongTruong.Command
 
             initPolygonLayerBomb(bombVisible);
             initPolygonLayerMine(mineVisible);
-            //foreach(int layer in polygonLayers)
+            //foreach (int layer in polygonLayers)
             //{
             //    axMap1.MoveLayerBottom(layer);
             //}
-            //foreach(int layer in imageLayers)
+            //foreach (int layer in polygonLayersMine)
             //{
             //    axMap1.MoveLayerBottom(layer);
             //}
-            foreach (int layer in machinePointBombLayers)
+            axMap1.MoveLayerBottom(axMap1.get_LayerPosition(polygonAreaLayer));
+            foreach (int layer in imageLayers)
             {
-                axMap1.MoveLayerTop(layer);
+                axMap1.MoveLayerBottom(axMap1.get_LayerPosition(layer));
             }
-            foreach (int layer in machineLineBombLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
+            //foreach (int layer in machinePointBombLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
+            //foreach (int layer in machineLineBombLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
 
-            foreach (int layer in machinePointMineLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
-            foreach (int layer in machineLineMineLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
+            //foreach (int layer in machinePointMineLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
+            //foreach (int layer in machineLineMineLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
 
-            foreach (int layer in machinePointBombModelLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
-            foreach (int layer in machineLineBombModelLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
+            //foreach (int layer in machinePointBombModelLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
+            //foreach (int layer in machineLineBombModelLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
 
-            foreach (int layer in machinePointMineModelLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
-            foreach (int layer in machineLineMineModelLayers)
-            {
-                axMap1.MoveLayerTop(layer);
-            }
+            //foreach (int layer in machinePointMineModelLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
+            //foreach (int layer in machineLineMineModelLayers)
+            //{
+            //    axMap1.MoveLayerTop(layer);
+            //}
 
-            if (suspectPointLayerBomb > 0)
-            {
-                axMap1.MoveLayerTop(suspectPointLayerBomb);
-            }
-            if (suspectPointLayerMine > 0)
-            {
-                axMap1.MoveLayerTop(suspectPointLayerMine);
-            }
-            if (userSuspectPointLayerBomb > 0)
-            {
-                axMap1.MoveLayerTop(userSuspectPointLayerBomb);
-            }
-            if (userSuspectPointLayerMine > 0)
-            {
-                axMap1.MoveLayerTop(userSuspectPointLayerMine);
-            }
-            if (polygonLayerTest > 0)
-            {
-                axMap1.MoveLayerTop(polygonLayerTest);
-            }
+            //if (suspectPointLayerBomb > 0)
+            //{
+            //    axMap1.MoveLayerTop(suspectPointLayerBomb);
+            //}
+            //if (suspectPointLayerMine > 0)
+            //{
+            //    axMap1.MoveLayerTop(suspectPointLayerMine);
+            //}
+            //if (userSuspectPointLayerBomb > 0)
+            //{
+            //    axMap1.MoveLayerTop(userSuspectPointLayerBomb);
+            //}
+            //if (userSuspectPointLayerMine > 0)
+            //{
+            //    axMap1.MoveLayerTop(userSuspectPointLayerMine);
+            //}
+            //if (oluoiLayer > 0)
+            //{
+            //    axMap1.MoveLayerTop(oluoiLayer);
+            //}
+            //if (ranhDoLayer > 0)
+            //{
+            //    axMap1.MoveLayerTop(ranhDoLayer);
+            //}
+            //if (polygonLayerTest > 0)
+            //{
+            //    axMap1.MoveLayerTop(polygonLayerTest);
+            //}
         }
 
         private static void initPolygonAreaLayer()
@@ -970,6 +983,7 @@ namespace DieuHanhCongTruong.Command
                     sf.Identifiable = false;
                     int layer = axMap1.AddLayer(sf, visible);
                     axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(color));
+                    axMap1.MoveLayerBottom(axMap1.get_LayerPosition(layer));
                     //axMap1.set_ShapeLayerDrawLine(layer, false);
                     polygonLayers.Add(layer);
                 }
@@ -988,6 +1002,7 @@ namespace DieuHanhCongTruong.Command
                     sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
                     int layer = axMap1.AddLayer(sf_bomb, visible);
                     axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
+                    axMap1.MoveLayerBottom(axMap1.get_LayerPosition(layer));
                     //axMap1.set_ShapeLayerDrawLine(layer, false);
                     polygonLayers.Add(layer);
                 }
@@ -1022,6 +1037,7 @@ namespace DieuHanhCongTruong.Command
                     sf.Identifiable = false;
                     int layer = axMap1.AddLayer(sf, visible);
                     axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(color));
+                    axMap1.MoveLayerBottom(axMap1.get_LayerPosition(layer));
                     //axMap1.set_ShapeLayerDrawLine(layer, false);
                     polygonLayersMine.Add(layer);
                 }
@@ -1040,6 +1056,7 @@ namespace DieuHanhCongTruong.Command
                     sf_bomb.DefaultDrawingOptions.LineColor = AppUtils.ColorToUint(Constants.magnetic_colors[i]);
                     int layer = axMap1.AddLayer(sf_bomb, visible);
                     axMap1.set_ShapeLayerFillColor(layer, AppUtils.ColorToUint(Constants.magnetic_colors[i]));
+                    axMap1.MoveLayerBottom(axMap1.get_LayerPosition(layer));
                     //axMap1.set_ShapeLayerDrawLine(layer, false);
                     polygonLayersMine.Add(layer);
                 }
@@ -2206,15 +2223,15 @@ namespace DieuHanhCongTruong.Command
                     layer = machinePointMineLayers[machineActive__pointLayer.Count % machinePointMineLayers.Count];
                 }
                 machineActive__pointLayer.Add(codeMachine, layer);
-                //if (isBomb)
-                //{
-                //    layer = machinePointBombModelLayers[machineActive__pointModelLayer.Count % machinePointBombModelLayers.Count];
-                //}
-                //else
-                //{
-                //    layer = machinePointMineModelLayers[machineActive__pointModelLayer.Count % machinePointMineModelLayers.Count];
-                //}
-                //machineActive__pointModelLayer.Add(codeMachine, layer);
+                if (isBomb)
+                {
+                    layer = machinePointBombModelLayers[machineActive__pointModelLayer.Count % machinePointBombModelLayers.Count];
+                }
+                else
+                {
+                    layer = machinePointMineModelLayers[machineActive__pointModelLayer.Count % machinePointMineModelLayers.Count];
+                }
+                machineActive__pointModelLayer.Add(codeMachine, layer);
             }
         }
 
@@ -2234,17 +2251,17 @@ namespace DieuHanhCongTruong.Command
                     //lstPointMine.Add(lineLayer);
                 }
                 machineActive__lineLayer.Add(codeMachine, lineLayer);
-                //if (isBomb)
-                //{
-                //    lineLayer = machineLineBombModelLayers[machineActive__lineModelLayer.Count % machineLineBombLayers.Count];
-                //    //lstPointBomb.Add(lineLayer);
-                //}
-                //else
-                //{
-                //    lineLayer = machineLineMineModelLayers[machineActive__lineModelLayer.Count % machineLineMineLayers.Count];
-                //    //lstPointMine.Add(lineLayer);
-                //}
-                //machineActive__lineModelLayer.Add(codeMachine, lineLayer);
+                if (isBomb)
+                {
+                    lineLayer = machineLineBombModelLayers[machineActive__lineModelLayer.Count % machineLineBombModelLayers.Count];
+                    //lstPointBomb.Add(lineLayer);
+                }
+                else
+                {
+                    lineLayer = machineLineMineModelLayers[machineActive__lineModelLayer.Count % machineLineMineModelLayers.Count];
+                    //lstPointMine.Add(lineLayer);
+                }
+                machineActive__lineModelLayer.Add(codeMachine, lineLayer);
             }
         }
 
@@ -2299,35 +2316,43 @@ namespace DieuHanhCongTruong.Command
 
             foreach (int layer in machinePointBombLayers)
             {
-                axMap1.set_LayerVisible(layer, showBomb && !showModel);
+                bool visible = showBomb && !showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineBombLayers)
             {
-                axMap1.set_LayerVisible(layer, showBomb && !showModel);
+                bool visible = showBomb && !showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointBombModelLayers)
             {
-                axMap1.set_LayerVisible(layer, showBomb && showModel);
+                bool visible = showBomb && showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineBombModelLayers)
             {
-                axMap1.set_LayerVisible(layer, showBomb && showModel);
+                bool visible = showBomb && showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointMineLayers)
             {
-                axMap1.set_LayerVisible(layer, !showBomb && !showModel);
+                bool visible = !showBomb && !showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineMineLayers)
             {
-                axMap1.set_LayerVisible(layer, !showBomb && !showModel);
+                bool visible = !showBomb && !showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointMineModelLayers)
             {
-                axMap1.set_LayerVisible(layer, !showBomb && showModel);
+                bool visible = !showBomb && showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineMineModelLayers)
             {
-                axMap1.set_LayerVisible(layer, !showBomb && showModel);
+                bool visible = !showBomb && showModel;
+                axMap1.set_LayerVisible(layer, visible);
             }
         }
 

@@ -116,13 +116,13 @@ namespace DieuHanhCongTruong.Command
 
                     MapMenuCommand.LoadPointsHistory(lstPointBomb);
                 }
-                //foreach (var pair_idKV__Points in idKV__PointsModel)
-                //{
+                foreach (var pair_idKV__Points in idKV__PointsModel)
+                {
 
-                //    List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
+                    List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
 
-                //    MapMenuCommand.LoadPointsModelHistory(lstPointBomb);
-                //}
+                    MapMenuCommand.LoadPointsModelHistory(lstPointBomb);
+                }
                 threadPointBombStopped = true;
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {
@@ -147,13 +147,13 @@ namespace DieuHanhCongTruong.Command
 
                     MapMenuCommand.LoadPointsHistory(lstPointMine);
                 }
-                //foreach (var pair_idKV__Points in idKV__PointsModel)
-                //{
+                foreach (var pair_idKV__Points in idKV__PointsModel)
+                {
 
-                //    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
+                    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
 
-                //    MapMenuCommand.LoadPointsModelHistory(lstPointMine);
-                //}
+                    MapMenuCommand.LoadPointsModelHistory(lstPointMine);
+                }
                 threadPointMineStopped = true;
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {

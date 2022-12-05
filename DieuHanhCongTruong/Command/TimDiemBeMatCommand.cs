@@ -26,7 +26,10 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
             MyMainMenu2.Instance.menuStrip1.Enabled = false;
             MyMainMenu2.Instance.pnlToolBar.Enabled = false;
-            MapMenuCommand.axMap1.ShowToolTip("Chọn điểm nghi ngờ trên bản đồ. Nhấn ESC để hủy", Constants.TOOLTIP_MAP_TIME);
+            MyMainMenu2.Instance.pnlToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm nghi ngờ trên bản đồ. Nhấn ESC để hủy";
+            //MapMenuCommand.axMap1.ShowToolTip("Chọn điểm nghi ngờ trên bản đồ. Nhấn ESC để hủy", Constants.TOOLTIP_MAP_TIME);
         }
 
         private static void Instance_KeyDown(object sender, KeyEventArgs e)
@@ -115,6 +118,8 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
             MyMainMenu2.Instance.menuStrip1.Enabled = true;
             MyMainMenu2.Instance.pnlToolBar.Enabled = true;
+            MyMainMenu2.Instance.pnlToolTip.Visible = false;
+            MyMainMenu2.Instance.lblToolTip.Visible = false;
         }
     }
 }

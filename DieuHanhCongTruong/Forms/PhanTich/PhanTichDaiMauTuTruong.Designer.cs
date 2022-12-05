@@ -300,6 +300,7 @@
             this.DGVThongTinMine.RowHeadersWidth = 51;
             this.DGVThongTinMine.Size = new System.Drawing.Size(624, 468);
             this.DGVThongTinMine.TabIndex = 3;
+            this.DGVThongTinMine.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVThongTinMine_CellClick);
             // 
             // cotMin_Mine
             // 

@@ -555,5 +555,20 @@ namespace VNRaPaBomMin
         {
             SetDefaultMine();
         }
+
+        private void DGVThongTinMine_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != cotColor_Mine.Index || e.RowIndex == -1 || e.ColumnIndex == -1)
+                return;
+            DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinMine.Rows[e.RowIndex].Cells[cotColor_Mine.Index];
+            //this.Hide();
+            colorDialog1.Color = buttonCell.Style.BackColor;
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                buttonCell.Style.BackColor = colorDialog1.Color;
+
+                DGVThongTinMine.ClearSelection();
+            }
+        }
     }
 }

@@ -41,6 +41,8 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.pnlToolTip.Visible = false;
             MyMainMenu2.Instance.lblToolTip.Visible = false;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
+            MapMenuCommand.axMap1.MeasuringChanged -= AxMap1_MeasuringChanged;
+            MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
         }
 
         private static void AxMap1_MeasuringChanged(object sender, AxMapWinGIS._DMapEvents_MeasuringChangedEvent e)
