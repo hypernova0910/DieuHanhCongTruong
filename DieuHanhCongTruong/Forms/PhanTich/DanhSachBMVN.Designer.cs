@@ -29,15 +29,15 @@ namespace VNRaPaBomMin
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DanhSachBMVN));
             this.cbOLuoi = new System.Windows.Forms.ComboBox();
             this.cbKhuVuc = new System.Windows.Forms.ComboBox();
@@ -52,15 +52,6 @@ namespace VNRaPaBomMin
             this.btnSearch = new System.Windows.Forms.Button();
             this.btThem = new System.Windows.Forms.Button();
             this.dgvBMVN = new System.Windows.Forms.DataGridView();
-            this.cotSTT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotIDHidden = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotDuAn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotKhuVuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotOLuoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotViTri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotThoiGian = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotShapeIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotXoa = new System.Windows.Forms.DataGridViewImageColumn();
             this.buttonClose = new System.Windows.Forms.Button();
             this.axMap1 = new AxMapWinGIS.AxMap();
             this.label6 = new System.Windows.Forms.Label();
@@ -72,6 +63,14 @@ namespace VNRaPaBomMin
             this.lblKVCount = new System.Windows.Forms.Label();
             this.lblOLCount = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cotSTT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotIDHidden = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotDuAn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotKhuVuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotOLuoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotViTri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotThoiGian = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotXoa = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBMVN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -219,14 +218,14 @@ namespace VNRaPaBomMin
             this.dgvBMVN.AllowUserToResizeColumns = false;
             this.dgvBMVN.AllowUserToResizeRows = false;
             this.dgvBMVN.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBMVN.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBMVN.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvBMVN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBMVN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cotSTT,
@@ -236,7 +235,6 @@ namespace VNRaPaBomMin
             this.cotOLuoi,
             this.cotViTri,
             this.cotThoiGian,
-            this.cotShapeIndex,
             this.cotXoa});
             this.dgvBMVN.EnableHeadersVisualStyles = false;
             this.dgvBMVN.Location = new System.Drawing.Point(19, 128);
@@ -246,105 +244,14 @@ namespace VNRaPaBomMin
             this.dgvBMVN.ReadOnly = true;
             this.dgvBMVN.RowHeadersVisible = false;
             this.dgvBMVN.RowHeadersWidth = 51;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
-            this.dgvBMVN.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvBMVN.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvBMVN.RowTemplate.Height = 24;
             this.dgvBMVN.Size = new System.Drawing.Size(1025, 632);
             this.dgvBMVN.TabIndex = 264;
             this.dgvBMVN.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBMVN_CellClick);
             this.dgvBMVN.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgvBMVN_RowStateChanged);
-            // 
-            // cotSTT
-            // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(3);
-            this.cotSTT.DefaultCellStyle = dataGridViewCellStyle11;
-            this.cotSTT.FillWeight = 20F;
-            this.cotSTT.HeaderText = "STT";
-            this.cotSTT.MinimumWidth = 6;
-            this.cotSTT.Name = "cotSTT";
-            this.cotSTT.ReadOnly = true;
-            // 
-            // cotIDHidden
-            // 
-            this.cotIDHidden.HeaderText = "ID";
-            this.cotIDHidden.MinimumWidth = 6;
-            this.cotIDHidden.Name = "cotIDHidden";
-            this.cotIDHidden.ReadOnly = true;
-            this.cotIDHidden.Visible = false;
-            // 
-            // cotDuAn
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(3);
-            this.cotDuAn.DefaultCellStyle = dataGridViewCellStyle12;
-            this.cotDuAn.HeaderText = "Dự án";
-            this.cotDuAn.MinimumWidth = 6;
-            this.cotDuAn.Name = "cotDuAn";
-            this.cotDuAn.ReadOnly = true;
-            // 
-            // cotKhuVuc
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(3);
-            this.cotKhuVuc.DefaultCellStyle = dataGridViewCellStyle13;
-            this.cotKhuVuc.HeaderText = "Khu vực";
-            this.cotKhuVuc.MinimumWidth = 6;
-            this.cotKhuVuc.Name = "cotKhuVuc";
-            this.cotKhuVuc.ReadOnly = true;
-            // 
-            // cotOLuoi
-            // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Padding = new System.Windows.Forms.Padding(3);
-            this.cotOLuoi.DefaultCellStyle = dataGridViewCellStyle14;
-            this.cotOLuoi.FillWeight = 50F;
-            this.cotOLuoi.HeaderText = "Ô 50x50";
-            this.cotOLuoi.MinimumWidth = 6;
-            this.cotOLuoi.Name = "cotOLuoi";
-            this.cotOLuoi.ReadOnly = true;
-            // 
-            // cotViTri
-            // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Padding = new System.Windows.Forms.Padding(3);
-            this.cotViTri.DefaultCellStyle = dataGridViewCellStyle15;
-            this.cotViTri.HeaderText = "Vị trí";
-            this.cotViTri.MinimumWidth = 6;
-            this.cotViTri.Name = "cotViTri";
-            this.cotViTri.ReadOnly = true;
-            // 
-            // cotThoiGian
-            // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.Padding = new System.Windows.Forms.Padding(3);
-            this.cotThoiGian.DefaultCellStyle = dataGridViewCellStyle16;
-            this.cotThoiGian.HeaderText = "Thời gian";
-            this.cotThoiGian.MinimumWidth = 6;
-            this.cotThoiGian.Name = "cotThoiGian";
-            this.cotThoiGian.ReadOnly = true;
-            // 
-            // cotShapeIndex
-            // 
-            this.cotShapeIndex.HeaderText = "Shape Index";
-            this.cotShapeIndex.MinimumWidth = 6;
-            this.cotShapeIndex.Name = "cotShapeIndex";
-            this.cotShapeIndex.ReadOnly = true;
-            this.cotShapeIndex.Visible = false;
-            // 
-            // cotXoa
-            // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle17.NullValue")));
-            dataGridViewCellStyle17.Padding = new System.Windows.Forms.Padding(3);
-            this.cotXoa.DefaultCellStyle = dataGridViewCellStyle17;
-            this.cotXoa.FillWeight = 30F;
-            this.cotXoa.HeaderText = "Xóa";
-            this.cotXoa.Image = global::DieuHanhCongTruong.Properties.Resources.DeleteRed;
-            this.cotXoa.MinimumWidth = 6;
-            this.cotXoa.Name = "cotXoa";
-            this.cotXoa.ReadOnly = true;
             // 
             // buttonClose
             // 
@@ -460,6 +367,89 @@ namespace VNRaPaBomMin
             this.panel1.Size = new System.Drawing.Size(655, 657);
             this.panel1.TabIndex = 275;
             // 
+            // cotSTT
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            this.cotSTT.DefaultCellStyle = dataGridViewCellStyle2;
+            this.cotSTT.FillWeight = 20F;
+            this.cotSTT.HeaderText = "STT";
+            this.cotSTT.MinimumWidth = 6;
+            this.cotSTT.Name = "cotSTT";
+            this.cotSTT.ReadOnly = true;
+            // 
+            // cotIDHidden
+            // 
+            this.cotIDHidden.HeaderText = "ID";
+            this.cotIDHidden.MinimumWidth = 6;
+            this.cotIDHidden.Name = "cotIDHidden";
+            this.cotIDHidden.ReadOnly = true;
+            this.cotIDHidden.Visible = false;
+            // 
+            // cotDuAn
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            this.cotDuAn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.cotDuAn.HeaderText = "Dự án";
+            this.cotDuAn.MinimumWidth = 6;
+            this.cotDuAn.Name = "cotDuAn";
+            this.cotDuAn.ReadOnly = true;
+            // 
+            // cotKhuVuc
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3);
+            this.cotKhuVuc.DefaultCellStyle = dataGridViewCellStyle4;
+            this.cotKhuVuc.HeaderText = "Khu vực";
+            this.cotKhuVuc.MinimumWidth = 6;
+            this.cotKhuVuc.Name = "cotKhuVuc";
+            this.cotKhuVuc.ReadOnly = true;
+            // 
+            // cotOLuoi
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
+            this.cotOLuoi.DefaultCellStyle = dataGridViewCellStyle5;
+            this.cotOLuoi.FillWeight = 50F;
+            this.cotOLuoi.HeaderText = "Ô 50x50";
+            this.cotOLuoi.MinimumWidth = 6;
+            this.cotOLuoi.Name = "cotOLuoi";
+            this.cotOLuoi.ReadOnly = true;
+            // 
+            // cotViTri
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(3);
+            this.cotViTri.DefaultCellStyle = dataGridViewCellStyle6;
+            this.cotViTri.HeaderText = "Vị trí";
+            this.cotViTri.MinimumWidth = 6;
+            this.cotViTri.Name = "cotViTri";
+            this.cotViTri.ReadOnly = true;
+            // 
+            // cotThoiGian
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3);
+            this.cotThoiGian.DefaultCellStyle = dataGridViewCellStyle7;
+            this.cotThoiGian.HeaderText = "Thời gian";
+            this.cotThoiGian.MinimumWidth = 6;
+            this.cotThoiGian.Name = "cotThoiGian";
+            this.cotThoiGian.ReadOnly = true;
+            // 
+            // cotXoa
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle8.NullValue")));
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(3);
+            this.cotXoa.DefaultCellStyle = dataGridViewCellStyle8;
+            this.cotXoa.FillWeight = 30F;
+            this.cotXoa.HeaderText = "Xóa";
+            this.cotXoa.Image = global::DieuHanhCongTruong.Properties.Resources.DeleteRed;
+            this.cotXoa.MinimumWidth = 6;
+            this.cotXoa.Name = "cotXoa";
+            this.cotXoa.ReadOnly = true;
+            // 
             // DanhSachBMVN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -519,15 +509,6 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.DataGridView dgvBMVN;
         private System.Windows.Forms.Button buttonClose;
         private AxMapWinGIS.AxMap axMap1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotSTT;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotIDHidden;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotDuAn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotKhuVuc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotOLuoi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotViTri;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotThoiGian;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cotShapeIndex;
-        private System.Windows.Forms.DataGridViewImageColumn cotXoa;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
@@ -537,5 +518,13 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.Label lblKVCount;
         private System.Windows.Forms.Label lblOLCount;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotSTT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotIDHidden;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotDuAn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotKhuVuc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotOLuoi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotViTri;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotThoiGian;
+        private System.Windows.Forms.DataGridViewImageColumn cotXoa;
     }
 }

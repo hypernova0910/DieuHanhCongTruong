@@ -22,9 +22,10 @@ namespace DieuHanhCongTruong.Forms
 
         public MyMainMenu2()
         {
+            Instance = this;
             InitializeComponent();
             CustomizeDesign();
-            Instance = this;
+            
             init = true;
         }
 
@@ -38,7 +39,8 @@ namespace DieuHanhCongTruong.Forms
             tsProgressHistory.Visible = false;
             tsProgressPhanTich.Visible = false;
             tabControlBottom.Visible = false;
-            //toolTipMap.SetToolTip(pnlMain, "Chọn rãnh dò");
+            pnlToolTip.Visible = false;
+            
         }
 
         private delegate void MenuCommandDelegate();
@@ -298,12 +300,17 @@ namespace DieuHanhCongTruong.Forms
 
         private void rbBomb_CheckedChanged(object sender, EventArgs e)
         {
-            MapMenuCommand.togglePolygonBomb(rbBomb.Checked);
+            MapMenuCommand.togglePolygonBomb(rbBomb.Checked, rbModel.Checked);
         }
 
         private void rbMine_CheckedChanged(object sender, EventArgs e)
         {
-            MapMenuCommand.togglePolygonMine(rbMine.Checked);
+            //MapMenuCommand.togglePolygonMine(rbMine.Checked, rbModel.Checked);
+        }
+
+        private void rbUnmodel_CheckedChanged(object sender, EventArgs e)
+        {
+            MapMenuCommand.togglePolygonBomb(rbBomb.Checked, rbModel.Checked);
         }
     }
 }

@@ -72,10 +72,16 @@ namespace DieuHanhCongTruong.Command
         //private static Dictionary<string, Color> machineActive__color = new Dictionary<string, Color>();
         private static Dictionary<string, int> machineActive__pointLayer = new Dictionary<string, int>();
         private static Dictionary<string, int> machineActive__pointModelLayer = new Dictionary<string, int>();
-        private static Dictionary<string, Point> machineActive__lastPoint = new Dictionary<string, Point>();
+        
         private static Dictionary<string, int> machineActive__lineLayer = new Dictionary<string, int>();
         private static Dictionary<string, int> machineActive__lineModelLayer = new Dictionary<string, int>();
+
         private static Dictionary<string, DateTime> machineActive__lastTime = new Dictionary<string, DateTime>();
+        private static Dictionary<string, DateTime> machineActive__lastTimeModel = new Dictionary<string, DateTime>();
+
+        private static Dictionary<string, Point> machineActive__lastPoint = new Dictionary<string, Point>();
+        private static Dictionary<string, Point> machineActive__lastModelPoint = new Dictionary<string, Point>();
+
         public static Dictionary<long, List<Shape>> idKV__shapeOLuoi = new Dictionary<long, List<Shape>>();
 
         public static Dictionary<long, int> idKV__shapeIndex = new Dictionary<long, int>();
@@ -113,12 +119,12 @@ namespace DieuHanhCongTruong.Command
             initPolygonLayer(true, false);
             InitPointImageLayer(true, false);
             InitPointImageLayer(false, false);
-            InitPointImageLayer(true, true);
-            InitPointImageLayer(false, true);
+            //InitPointImageLayer(true, true);
+            //InitPointImageLayer(false, true);
             InitLineLayer(true, false);
             InitLineLayer(false, false);
-            InitLineLayer(true, true);
-            InitLineLayer(false, true);
+            //InitLineLayer(true, true);
+            //InitLineLayer(false, true);
             InitSuspectPointLayer();
             InitSuspectPointMineLayer();
             InitUserSuspectPointLayer();
@@ -375,7 +381,7 @@ namespace DieuHanhCongTruong.Command
             {
                 Shapefile sf = new Shapefile();
                 //sf.Open(filename, null);
-                int layer = axMap1.AddLayer(sf, isBomb);
+                int layer = axMap1.AddLayer(sf, isBomb && !model);
                 sf = axMap1.get_Shapefile(layer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
                 sf = new Shapefile();
                 if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT))
@@ -385,7 +391,7 @@ namespace DieuHanhCongTruong.Command
                     return;
                 }
                 sf.Identifiable = false;
-                layer = axMap1.AddLayer(sf, isBomb);
+                layer = axMap1.AddLayer(sf, isBomb && !model);
                 if (isBomb)
                 {
                     if (model)
@@ -433,7 +439,7 @@ namespace DieuHanhCongTruong.Command
                 //sf.EditInsertShape(shp, ref index);
                 //var sf = CreateLines();
                 sf.Identifiable = false;
-                int layer = axMap1.AddLayer(sf, isBomb);
+                int layer = axMap1.AddLayer(sf, isBomb && !model);
                 if (isBomb)
                 {
                     if (model)
@@ -850,13 +856,49 @@ namespace DieuHanhCongTruong.Command
             {
                 axMap1.MoveLayerTop(layer);
             }
-            if(suspectPointLayerBomb > 0)
+
+            foreach (int layer in machinePointMineLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+            foreach (int layer in machineLineMineLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+
+            foreach (int layer in machinePointBombModelLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+            foreach (int layer in machineLineBombModelLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+
+            foreach (int layer in machinePointMineModelLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+            foreach (int layer in machineLineMineModelLayers)
+            {
+                axMap1.MoveLayerTop(layer);
+            }
+
+            if (suspectPointLayerBomb > 0)
             {
                 axMap1.MoveLayerTop(suspectPointLayerBomb);
             }
             if (suspectPointLayerMine > 0)
             {
                 axMap1.MoveLayerTop(suspectPointLayerMine);
+            }
+            if (userSuspectPointLayerBomb > 0)
+            {
+                axMap1.MoveLayerTop(userSuspectPointLayerBomb);
+            }
+            if (userSuspectPointLayerMine > 0)
+            {
+                axMap1.MoveLayerTop(userSuspectPointLayerMine);
             }
             if (polygonLayerTest > 0)
             {
@@ -1949,6 +1991,134 @@ namespace DieuHanhCongTruong.Command
 
         }
 
+        public static void addMachinePointModel(InfoConnect infoConnect, bool isRedraw = true)
+        {
+            try
+            {
+                //if (!machine__label.ContainsKey(codeMachine))
+                //    return;
+                string codeMachine = infoConnect.code;
+                double x = infoConnect.coordinate.Coordinates.X;
+                double y = infoConnect.coordinate.Coordinates.Y;
+                DateTime timeAction = infoConnect.time_action.ToLocalTime();
+                getColorForMachine(codeMachine, infoConnect.isMachineBom);
+                Shapefile sf = axMap1.get_Shapefile(machineActive__pointModelLayer[codeMachine]);
+                Shape shp = new Shape();
+                shp.Create(ShpfileType.SHP_POINT);
+                Point pnt = new Point();
+                //axMap1.PixelToProj(x, y, ref x, ref y);
+                pnt.x = x;
+                pnt.y = y;
+                int index = shp.numPoints;
+                shp.InsertPoint(pnt, ref index);
+                index = sf.NumShapes;
+                if (!sf.EditInsertShape(shp, ref index))
+                {
+                    MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                    MessageBox.Show("addMachinePointModel()");
+                    return;
+                }
+                //if (!machine__shapeIndex_time.ContainsKey(codeMachine))
+                //{
+                //    machine__shapeIndex_time.Add(codeMachine, new Dictionary<int, DateTime>());
+                //}
+                //machine__shapeIndex_time[codeMachine].Add(index, timeAction);
+                if (!machineActive__lastTimeModel.ContainsKey(codeMachine))
+                {
+                    machineActive__lastTimeModel.Add(codeMachine, DateTime.MinValue);
+                }
+
+                double recentDistance = 0;
+                if (!machineActive__lastModelPoint.ContainsKey(codeMachine))
+                {
+                    machineActive__lastModelPoint.Add(codeMachine, pnt);
+                }
+                else
+                {
+                    Point recentPoint = machineActive__lastModelPoint[codeMachine];
+                    machineActive__lastModelPoint[codeMachine] = pnt;
+                    recentDistance = AppUtils.DistanceLatLong(recentPoint.y, recentPoint.x, y, x);
+                    //if (!machineActive__lineModelLayer.ContainsKey(codeMachine))
+                    //{
+                    //    int lineLayerNew = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+                    //    if (btnShowPoint.Text == "Hiện điểm dò được" || btnModel.Text == "Bật nắn điểm")
+                    //    {
+                    //        axMap1.SetDrawingLayerVisible(lineLayerNew, false);
+                    //    }
+                    //    machineActive__lineModelLayer.Add(codeMachine, lineLayerNew);
+                    //}
+                    //int lineLayer = machineActive__lineModelLayer[codeMachine];
+                    //axMap1.DrawLineEx(lineLayer, recentPoint.x, recentPoint.y, x, y, 2, ColorToUint(machineActive__color[codeMachine]));
+                }
+                if ((timeAction - machineActive__lastTimeModel[codeMachine]).TotalSeconds <= MIN_TIME_NEW_LINE && recentDistance < MIN_DISTANCE_NEW_LINE)
+                {
+                    addMachineLineModel(x, y, codeMachine, false);
+                }
+                else
+                {
+                    addMachineLineModel(x, y, codeMachine, true);
+                }
+                machineActive__lastTimeModel[codeMachine] = timeAction;
+                //if (!machineActive__highlightPoint.ContainsKey(codeMachine))
+                //{
+                //    addHighlightCurrentPoint(x, y, codeMachine);
+                //}
+                //else
+                //{
+                //    Point highlightPoint = machineActive__highlightPoint[codeMachine];
+                //    highlightPoint.Set(x, y);
+                //}
+                //if (!machineActive__highlightLayer.ContainsKey(codeMachine))
+                //{
+                //    int layer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+                //    axMap1.DrawCircleEx(layer, x, y, 12, ColorToUint(Color.Black), false);
+                //    machineActive__highlightLayer.Add(codeMachine, layer);
+                //}
+                //else
+                //{
+                //    axMap1.ClearDrawing(machineActive__highlightLayer[codeMachine]);
+                //    int layer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
+                //    axMap1.DrawCircleEx(layer, x, y, 12, ColorToUint(Color.Black), false);
+                //    machineActive__highlightLayer[codeMachine] = layer;
+                //}
+
+                if (isRedraw)
+                {
+                    axMap1.Redraw();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private static void addMachineLineModel(double x, double y, string codeMachine, bool isNewLine)
+        {
+            //getLayerLineForMachines(codeMachine);
+            Shapefile sf = axMap1.get_Shapefile(machineActive__lineModelLayer[codeMachine]);
+            //Shape shp = sf.Shape[0];
+            Shape shp;
+            if (isNewLine)
+            {
+                shp = new Shape();
+                shp.Create(ShpfileType.SHP_POLYLINE);
+                int indexShape = sf.NumShapes;
+                sf.EditInsertShape(shp, ref indexShape);
+            }
+            else
+            {
+                shp = sf.Shape[sf.NumShapes - 1];
+            }
+
+            Point pnt = new Point();
+            pnt.x = x;
+            pnt.y = y;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt, ref index);
+            //axMap1.Redraw();
+        }
+
         private static void addMachineLine(double x, double y, string codeMachine, bool isNewLine)
         {
             //getLayerLineForMachines(codeMachine);
@@ -2036,15 +2206,15 @@ namespace DieuHanhCongTruong.Command
                     layer = machinePointMineLayers[machineActive__pointLayer.Count % machinePointMineLayers.Count];
                 }
                 machineActive__pointLayer.Add(codeMachine, layer);
-                if (isBomb)
-                {
-                    layer = machinePointBombModelLayers[machineActive__pointLayer.Count % machinePointBombModelLayers.Count];
-                }
-                else
-                {
-                    layer = machinePointMineModelLayers[machineActive__pointLayer.Count % machinePointMineModelLayers.Count];
-                }
-                machineActive__pointModelLayer.Add(codeMachine, layer);
+                //if (isBomb)
+                //{
+                //    layer = machinePointBombModelLayers[machineActive__pointModelLayer.Count % machinePointBombModelLayers.Count];
+                //}
+                //else
+                //{
+                //    layer = machinePointMineModelLayers[machineActive__pointModelLayer.Count % machinePointMineModelLayers.Count];
+                //}
+                //machineActive__pointModelLayer.Add(codeMachine, layer);
             }
         }
 
@@ -2064,17 +2234,17 @@ namespace DieuHanhCongTruong.Command
                     //lstPointMine.Add(lineLayer);
                 }
                 machineActive__lineLayer.Add(codeMachine, lineLayer);
-                if (isBomb)
-                {
-                    lineLayer = machineLineBombModelLayers[machineActive__lineLayer.Count % machineLineBombLayers.Count];
-                    //lstPointBomb.Add(lineLayer);
-                }
-                else
-                {
-                    lineLayer = machineLineMineModelLayers[machineActive__lineLayer.Count % machineLineMineLayers.Count];
-                    //lstPointMine.Add(lineLayer);
-                }
-                machineActive__lineModelLayer.Add(codeMachine, lineLayer);
+                //if (isBomb)
+                //{
+                //    lineLayer = machineLineBombModelLayers[machineActive__lineModelLayer.Count % machineLineBombLayers.Count];
+                //    //lstPointBomb.Add(lineLayer);
+                //}
+                //else
+                //{
+                //    lineLayer = machineLineMineModelLayers[machineActive__lineModelLayer.Count % machineLineMineLayers.Count];
+                //    //lstPointMine.Add(lineLayer);
+                //}
+                //machineActive__lineModelLayer.Add(codeMachine, lineLayer);
             }
         }
 
@@ -2102,41 +2272,81 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        public static void togglePolygonBomb(bool show)
+        public static void LoadPointsModelHistory(List<InfoConnect> lst)
+        {
+            foreach (InfoConnect doc in lst)
+            {
+                addMachinePointModel(doc, false);
+            }
+        }
+
+        public static void togglePolygonBomb(bool showBomb, bool showModel)
         {
             //axMap1.set_LayerVisible(polygonLayer, show);
             foreach (int layer in polygonLayers)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showBomb);
             }
-            axMap1.set_LayerVisible(suspectPointLayerBomb, show);
-            axMap1.set_LayerVisible(userSuspectPointLayerBomb, show);
+            foreach (int layer in polygonLayersMine)
+            {
+                axMap1.set_LayerVisible(layer, !showBomb);
+            }
+
+            axMap1.set_LayerVisible(suspectPointLayerBomb, showBomb);
+            axMap1.set_LayerVisible(userSuspectPointLayerBomb, showBomb);
+            axMap1.set_LayerVisible(suspectPointLayerMine, !showBomb);
+            axMap1.set_LayerVisible(userSuspectPointLayerMine, !showBomb);
+
             foreach (int layer in machinePointBombLayers)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showBomb && !showModel);
             }
             foreach (int layer in machineLineBombLayers)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showBomb && !showModel);
+            }
+            foreach (int layer in machinePointBombModelLayers)
+            {
+                axMap1.set_LayerVisible(layer, showBomb && showModel);
+            }
+            foreach (int layer in machineLineBombModelLayers)
+            {
+                axMap1.set_LayerVisible(layer, showBomb && showModel);
+            }
+            foreach (int layer in machinePointMineLayers)
+            {
+                axMap1.set_LayerVisible(layer, !showBomb && !showModel);
+            }
+            foreach (int layer in machineLineMineLayers)
+            {
+                axMap1.set_LayerVisible(layer, !showBomb && !showModel);
+            }
+            foreach (int layer in machinePointMineModelLayers)
+            {
+                axMap1.set_LayerVisible(layer, !showBomb && showModel);
+            }
+            foreach (int layer in machineLineMineModelLayers)
+            {
+                axMap1.set_LayerVisible(layer, !showBomb && showModel);
             }
         }
 
-        public static void togglePolygonMine(bool show)
+        public static void togglePolygonMine(bool showMine, bool showModel)
         {
             //axMap1.set_LayerVisible(polygonLayerMine, show);
             foreach (int layer in polygonLayersMine)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showMine);
             }
-            axMap1.set_LayerVisible(suspectPointLayerMine, show);
-            axMap1.set_LayerVisible(userSuspectPointLayerMine, show);
+            axMap1.set_LayerVisible(suspectPointLayerMine, showMine);
+            axMap1.set_LayerVisible(userSuspectPointLayerMine, showMine);
             foreach (int layer in machinePointMineLayers)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showMine);
             }
             foreach (int layer in machineLineMineLayers)
             {
-                axMap1.set_LayerVisible(layer, show);
+                axMap1.set_LayerVisible(layer, showMine);
             }
         }
 
@@ -2219,6 +2429,7 @@ namespace DieuHanhCongTruong.Command
             int layer;
             if (isBomb)
             {
+                point.IsBomb = TypeBMVN.BOMB;
                 if (isUser)
                 {
                     layer = userSuspectPointLayerBomb;
@@ -2230,6 +2441,7 @@ namespace DieuHanhCongTruong.Command
             }
             else
             {
+                point.IsBomb = TypeBMVN.MINE;
                 if (isUser)
                 {
                     layer = userSuspectPointLayerMine;
@@ -2279,8 +2491,10 @@ namespace DieuHanhCongTruong.Command
         {
             Shapefile sf = axMap1.get_Shapefile(suspectPointLayerBomb);
             sf.EditClear();
+            sf.Labels.Clear();
             sf = axMap1.get_Shapefile(suspectPointLayerMine);
             sf.EditClear();
+            sf.Labels.Clear();
             //axMap1.RemoveLayer(suspectPointLayerBomb);
             //InitSuspectPointLayer();
             //axMap1.RemoveLayer(suspectPointLayerMine);
@@ -2291,8 +2505,10 @@ namespace DieuHanhCongTruong.Command
         {
             Shapefile sf = axMap1.get_Shapefile(userSuspectPointLayerBomb);
             sf.EditClear();
+            sf.Labels.Clear();
             sf = axMap1.get_Shapefile(userSuspectPointLayerMine);
             sf.EditClear();
+            sf.Labels.Clear();
             //axMap1.RemoveLayer(userSuspectPointLayerBomb);
             //InitUserSuspectPointLayer();
             //axMap1.RemoveLayer(userSuspectPointLayerMine);

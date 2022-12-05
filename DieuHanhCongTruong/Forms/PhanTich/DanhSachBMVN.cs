@@ -270,7 +270,7 @@ namespace VNRaPaBomMin
             //axMap1.MouseDownEvent += AxMap1MouseDownEvent;   // change MapEvents to axMap1
         }
 
-        public int addSuspectPoint(Vertex vertex)
+        public Shape addSuspectPoint(Vertex vertex)
         {
             Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
             Shape shp = new Shape();
@@ -291,10 +291,11 @@ namespace VNRaPaBomMin
             int indexShp = sf.EditAddShape(shp);
             
             axMap1.Redraw();
-            return indexShp;
+            //return indexShp;
+            return shp;
         }
 
-        public void removeSuspectPoint(int shapeIndex)
+        public void removeSuspectPoint(Shape shape)
         {
             Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
             //Shape shp = new Shape();
@@ -306,12 +307,13 @@ namespace VNRaPaBomMin
             //int index = shp.numPoints;
             //shp.InsertPoint(pnt, ref index);
 
-            int index = sf.NumShapes;
-            if (!sf.EditDeleteShape(shapeIndex))
-            {
-                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
-                return;
-            }
+            //int index = sf.NumShapes;
+            //if (!sf.EditDeleteShape(shapeIndex))
+            //{
+            //    MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+            //    return;
+            //}
+            shape.Clear();
             axMap1.Redraw();
         }
 
@@ -572,7 +574,8 @@ namespace VNRaPaBomMin
                         vertex.depth = double.Parse(dr["Deep"].ToString());
                         //dgvBMVN.Rows[i].Tag = dr["id"].ToString();
                         
-                        int shapeIndex = addSuspectPoint(vertex);
+                        Shape shape = addSuspectPoint(vertex);
+                        vertex.shape = shape;
                         int i = dgvBMVN.Rows.Add(
                             count,
                             dr["id"].ToString(),
@@ -580,8 +583,7 @@ namespace VNRaPaBomMin
                             dr["idAreaST"].ToString(),
                             dr["idRectangleST"].ToString(),
                             dr["position"].ToString(),
-                            dr["timeST"].ToString(),
-                            shapeIndex
+                            dr["timeST"].ToString()
                             );
                         dgvBMVN.Rows[i].Tag = vertex;
 
@@ -846,7 +848,8 @@ namespace VNRaPaBomMin
                         transaction.Commit();
 
                         dgvBMVN.Rows.RemoveAt(e.RowIndex);
-                        removeSuspectPoint((int)dgvRow.Cells[cotShapeIndex.Index].Value);
+                        Vertex vertex = dgvRow.Tag as Vertex;
+                        removeSuspectPoint(vertex.shape);
                     }
                     catch (System.Exception ex)
                     {

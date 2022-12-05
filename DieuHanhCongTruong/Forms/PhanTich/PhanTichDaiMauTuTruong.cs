@@ -310,7 +310,9 @@ namespace VNRaPaBomMin
                     MessageBox.Show("Cập nhật dải màu thành công");
                     DialogResult = DialogResult.OK;
                     MapMenuCommand.initPolygonLayer(bombVisible, mineVisible);
-                    MyMainMenu2.Instance.ToggleMagneticMenu(false);
+                    //MapMenuCommand.ClearPolygon();
+                    MyMainMenu2.Instance.TogglePhanTichMenu(false);
+                    MyMainMenu2.Instance.tsProgressSurface.Visible = true;
                     Thread threadMagneticBomb = new Thread(() =>
                     {
                         threadMagneticBombStopped = false;
@@ -332,7 +334,8 @@ namespace VNRaPaBomMin
                             {
                                 MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
 
-                                    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                                    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                                    MyMainMenu2.Instance.tsProgressSurface.Visible = false;
                                 }));
                             }
                         }
@@ -358,7 +361,8 @@ namespace VNRaPaBomMin
                             {
                                 MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
 
-                                    MyMainMenu2.Instance.ToggleMagneticMenu(true);
+                                    MyMainMenu2.Instance.TogglePhanTichMenu(true);
+                                    MyMainMenu2.Instance.tsProgressSurface.Visible = false;
                                 }));
                             }
                         }

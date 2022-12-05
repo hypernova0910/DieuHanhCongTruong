@@ -14,6 +14,7 @@ using System.Net;
 using DieuHanhCongTruong.Forms.Account;
 using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Properties;
+using DieuHanhCongTruong.Forms;
 
 namespace VNRaPaBomMin
 {
@@ -107,6 +108,7 @@ namespace VNRaPaBomMin
             frm.Close();
 
             MessageBox.Show(string.Format("Cập nhật dữ liệu thành công"));
+            MyMainMenu2.Instance.managerCECMUserControl1.LoadTreeView(false);
 
             LoadDanhSachDuAn();
         }

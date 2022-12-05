@@ -21,29 +21,50 @@ namespace DieuHanhCongTruong.Command
             measuring.LengthUnits = tkLengthDisplayMode.ldmMetric;
             MapMenuCommand.axMap1.MeasuringChanged += AxMap1_MeasuringChanged;
             measuring.ShowLength = false;
-            //MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
+            MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
+            MyMainMenu2.Instance.pnlToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 1. Nhấn ESC để hủy";
         }
 
         private static void Instance_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Escape)
             {
-                MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
-                e.SuppressKeyPress = true;
+                Exit();
+                //e.SuppressKeyPress = true;
             }
+        }
+
+        private static void Exit()
+        {
+            MyMainMenu2.Instance.pnlToolTip.Visible = false;
+            MyMainMenu2.Instance.lblToolTip.Visible = false;
+            MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
         }
 
         private static void AxMap1_MeasuringChanged(object sender, AxMapWinGIS._DMapEvents_MeasuringChangedEvent e)
         {
             Measuring measuring = MapMenuCommand.axMap1.Measuring;
+            if(measuring.PointCount == 1)
+            {
+                MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 2. Nhấn ESC để hủy";
+            }
             if (measuring.PointCount == 2)
             {
                 measuring.get_PointXY(0, out double x1, out double y1);
                 measuring.get_PointXY(1, out double x2, out double y2);
                 double distance = AppUtils.DistanceLatLong(y1, x1, y2, x2);
-                MessageBox.Show("Khoảng cách: " + distance + "m");
+                MessageBox.Show(
+                    "Kinh độ điểm 1: " + x1 + "\n" +
+                    "Vĩ độ điểm 1: " + y1 + "\n" +
+                    "Kinh độ điểm 2: " + x2 + "\n" +
+                    "Vĩ độ điểm 2: " + y2 + "\n" +
+                    "Khoảng cách: " + distance + "m"
+                );
                 MapMenuCommand.axMap1.Measuring.FinishMeasuring();
-                MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
+                MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 1. Nhấn ESC để hủy";
+                //MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
             }
         }
     }

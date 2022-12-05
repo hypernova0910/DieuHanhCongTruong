@@ -206,11 +206,26 @@ namespace VNRaPaBomMin
                     Shapefile sf;
                     if (bmvn.IsBomb == TypeBMVN.BOMB)
                     {
-                        sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
+                        if (bmvn.UserAdd)
+                        {
+                            sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.userSuspectPointLayerBomb);
+                        }
+                        else
+                        {
+                            sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
+                        }
                     }
                     else
                     {
-                        sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerMine);
+                        if (bmvn.UserAdd)
+                        {
+                            sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.userSuspectPointLayerMine);
+                        }
+                        else
+                        {
+                            sf = MyMainMenu2.Instance.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerMine);
+                        }
+                        
                     }
                     sf.Labels.RemoveLabel(bmvn.indexLabel);
                     shapeBomb.Clear();
@@ -405,7 +420,7 @@ namespace VNRaPaBomMin
         {
             MapMenuCommand.RemoveHighlight();
             MapMenuCommand.axMap1.Redraw();
-            if (e.CloseReason == CloseReason.UserClosing && MyMainMenu2.Instance.tabCtrlLineChart.Visible == false)
+            if (e.CloseReason == CloseReason.UserClosing && MyMainMenu2.Instance.tabCtrlLineChart.TabPages.Count == 0)
             {
                 MyMainMenu2.Instance.tabControlBottom.Visible = false;
             }

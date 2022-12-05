@@ -26,6 +26,7 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
             MyMainMenu2.Instance.menuStrip1.Enabled = false;
             MyMainMenu2.Instance.pnlToolBar.Enabled = false;
+            MapMenuCommand.axMap1.ShowToolTip("Chọn điểm nghi ngờ trên bản đồ. Nhấn ESC để hủy", Constants.TOOLTIP_MAP_TIME);
         }
 
         private static void Instance_KeyDown(object sender, KeyEventArgs e)
@@ -51,6 +52,7 @@ namespace DieuHanhCongTruong.Command
                 point.XPoint = utm[0];
                 point.YPoint = utm[1];
                 point.UserAdd = true;
+                point.programId = MyMainMenu2.idDADH;
                 Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.polygonAreaLayer);
 
                 Point pntMap = new Point();

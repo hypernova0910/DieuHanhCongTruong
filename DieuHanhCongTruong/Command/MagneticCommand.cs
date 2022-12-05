@@ -27,8 +27,8 @@ namespace DieuHanhCongTruong.Command
         private static bool threadMagneticBombStopped = true;
         private static bool threadMagneticMineStopped = true;
 
-        private static bool threadPointUnmodelStopped = true;
-        private static bool threadPointModelStopped = true;
+        private static bool threadPointBombStopped = true;
+        private static bool threadPointMineStopped = true;
 
         public static void Execute(long idDA)
         {
@@ -61,6 +61,7 @@ namespace DieuHanhCongTruong.Command
             Dictionary<long, Dictionary<bool, List<InfoConnect>>> idKV__PointsModel = GetPointDatabase(idDA, true);
 
             TINCommand.triangulations_bomb.Clear();
+            TINCommand.triangulations_mine.Clear();
             Thread threadMagneticBomb = new Thread(() =>
             {
                 threadMagneticBombStopped = false;
@@ -105,50 +106,75 @@ namespace DieuHanhCongTruong.Command
                 
 
             });
-            Thread threadPointUndmodel = new Thread(() =>
+            Thread threadPointBomb = new Thread(() =>
             {
+                threadPointBombStopped = false;
                 foreach (var pair_idKV__Points in idKV__PointsUnmodel)
                 {
 
                     List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
-                    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
 
                     MapMenuCommand.LoadPointsHistory(lstPointBomb);
-                    MapMenuCommand.LoadPointsHistory(lstPointMine);
                 }
+                //foreach (var pair_idKV__Points in idKV__PointsModel)
+                //{
+
+                //    List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
+
+                //    MapMenuCommand.LoadPointsModelHistory(lstPointBomb);
+                //}
+                threadPointBombStopped = true;
                 if (MyMainMenu2.Instance.InvokeRequired)
                 {
                     MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-                        MyMainMenu2.Instance.tsProgressHistory.Visible = false;
-                        MyMainMenu2.Instance.TogglePointMenu(true);
+                        if (threadPointMineStopped)
+                        {
+                            MyMainMenu2.Instance.tsProgressHistory.Visible = false;
+                            MyMainMenu2.Instance.TogglePointMenu(true);
+                        }
+                        
                     }));
                 }
             });
-            //Thread threadPointModel = new Thread(() =>
-            //{
-            //    foreach (var pair_idKV__Points in idKV__PointsModel)
-            //    {
+            Thread threadPointMine = new Thread(() =>
+            {
+                threadPointMineStopped = false;
+                Thread.Sleep(500);
+                foreach (var pair_idKV__Points in idKV__PointsUnmodel)
+                {
 
-            //        List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
-            //        List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
+                    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
 
-            //        MapMenuCommand.LoadPointsHistory(lstPointBomb);
-            //        MapMenuCommand.LoadPointsHistory(lstPointMine);
-            //    }
-            //    if (MyMainMenu2.Instance.InvokeRequired)
-            //    {
-            //        MyMainMenu2.Instance.Invoke(new MethodInvoker(() => {
-            //            MyMainMenu2.Instance.tsProgressHistory.Visible = false;
-            //            MyMainMenu2.Instance.TogglePointMenu(true);
-            //        }));
-            //    }
-            //});
+                    MapMenuCommand.LoadPointsHistory(lstPointMine);
+                }
+                //foreach (var pair_idKV__Points in idKV__PointsModel)
+                //{
+
+                //    List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
+
+                //    MapMenuCommand.LoadPointsModelHistory(lstPointMine);
+                //}
+                threadPointMineStopped = true;
+                if (MyMainMenu2.Instance.InvokeRequired)
+                {
+                    MyMainMenu2.Instance.Invoke(new MethodInvoker(() =>
+                    {
+                        if (threadPointBombStopped)
+                        {
+                            MyMainMenu2.Instance.tsProgressHistory.Visible = false;
+                            MyMainMenu2.Instance.TogglePointMenu(true);
+                        }
+                    }));
+                }
+            });
             threadMagneticBomb.IsBackground = true;
             threadMagneticMine.IsBackground = true;
-            threadPointUndmodel.IsBackground = true;
+            threadPointBomb.IsBackground = true;
+            threadPointMine.IsBackground = true;
             threadMagneticBomb.Start();
             threadMagneticMine.Start();
-            threadPointUndmodel.Start();
+            threadPointBomb.Start();
+            threadPointMine.Start();
         }
 
         private List<long> GetAllIDKV(long idDA)
@@ -343,8 +369,8 @@ namespace DieuHanhCongTruong.Command
                     Dictionary<bool, List<InfoConnect>> dicMayDoDiemDo = new Dictionary<bool, List<InfoConnect>>();
                     var lstDataBomb = ReadDataMongo(idKV, true, model);
                     var lstDataMine = ReadDataMongo(idKV, false, model);
-                    double maxMine = double.MinValue;
-                    double minMine = double.MaxValue;
+                    //double maxMine = double.MinValue;
+                    //double minMine = double.MaxValue;
                     foreach (var infoConnect in lstDataBomb)
                     {
                         infoConnect.the_value *= heSoMayDoBom;
@@ -370,8 +396,8 @@ namespace DieuHanhCongTruong.Command
                     //        maxMine = infoConnect.the_value;
                     //    }
                     //}
-                    maxMine = lstDataMineFinal.Max(x => x.the_value);
-                    minMine = lstDataMineFinal.Min(x => x.the_value);
+                    //maxMine = lstDataMineFinal.Max(x => x.the_value);
+                    //minMine = lstDataMineFinal.Min(x => x.the_value);
                     dicMayDoDiemDo.Add(true, lstDataBomb);
                     dicMayDoDiemDo.Add(false, lstDataMineFinal);
                     retVal.Add(idKV, dicMayDoDiemDo);

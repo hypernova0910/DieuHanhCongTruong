@@ -280,7 +280,7 @@ namespace DieuHanhCongTruong.Command
 
         public static void PhanTichDoSauKhoangGiamNghiNgo(object sender, EventArgs e)
         {
-            PhanTichKhoangGiamNghiNgoCommand.ExecuteDoSau();
+            PhanTichKhoangGiamNghiNgoCommand.ExecuteDoSauChooseCombobox();
         }
 
         public static void DanhSachBMVN(object sender, EventArgs e)

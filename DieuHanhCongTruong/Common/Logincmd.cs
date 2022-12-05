@@ -44,7 +44,18 @@ namespace DieuHanhCongTruong.Common
                 //cn = new SqlConnection(String.Format("server={0};", ipAddr) + "Initial Catalog=LOGIN;" + "User id=sa;" + "Password=Vuthelam1608;");
 
                 if (string.IsNullOrEmpty(ipAddr) || ipAddr == "...")
-                    ipAddr = Environment.MachineName + "\\SQLEXPRESS";
+                {
+                    var lstSeverName = GetDataSources2();
+                    if(lstSeverName.Count > 0)
+                    {
+                        ipAddr = lstSeverName[0];
+                    }
+                    else
+                    {
+                        ipAddr = Environment.MachineName + "\\SQLEXPRESS";
+                    }
+                }
+                    
                 SqlConnectionStringBuilder DBconnbuilder = new SqlConnectionStringBuilder();
                 DBconnbuilder["server"] = ipAddr;
                 DBconnbuilder["Initial Catalog"] = databaseName;

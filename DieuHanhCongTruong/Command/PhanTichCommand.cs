@@ -137,7 +137,12 @@ namespace DieuHanhCongTruong.Command
             //bmvn.ZPoint = z;
             bmvn.ZPoint = GeometryUtils.GetMagneticAtPoint(x, y, triangles);
             List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-            double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, 50, triangles, ref contourGiamNghiNgo, ascend, false);
+            double KGNN = 50;
+            if (double.TryParse(AppUtils.GetRecentInput("$KhoangGiamNghiNgoForm$tbKhoangNghiNgo"), out double KGNNTemp))
+            {
+                KGNN = KGNNTemp;
+            }
+            double area = PhanTichKhoangGiamNghiNgoCommand.FindArea(bmvn, KGNN, triangles, ref contourGiamNghiNgo, ascend, false);
             bmvn.Area = area;
             bmvn.contour = contourGiamNghiNgo;
             if (contourGiamNghiNgo.Count > 2)

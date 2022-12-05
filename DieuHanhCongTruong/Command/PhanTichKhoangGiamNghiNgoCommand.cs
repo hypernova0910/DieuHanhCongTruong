@@ -80,6 +80,61 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.KeyDown += Instance_KeyDown;
         }
 
+        public static void ExecuteDoSauChooseCombobox()
+        {
+            SelectVungDuAn selectVungDuAnForm = new SelectVungDuAn(MyMainMenu2.idDADH);
+            if (selectVungDuAnForm.ShowDialog() == DialogResult.OK)
+            {
+                var selectForm = new KhoangGiamNghiNgoForm();
+
+                selectForm.ShowDialog();
+
+                if (selectForm.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                double KGNN = selectForm.GetKhoangNghiNgo;
+
+                int shapeIndex = MapMenuCommand.idKV__shapeIndex[selectVungDuAnForm.idKV];
+                Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.polygonAreaLayer);
+                Shape shp = sf.Shape[shapeIndex];
+                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
+                long.TryParse(shp.Key, out long idKV);
+                if (TINCommand.triangulations_bomb.ContainsKey(idKV))
+                {
+                    List<CustomFace> triangle = TINCommand.triangulations_bomb[idKV];
+                    //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
+                    for (int i = 0; i < sf_bomb.NumShapes; i++)
+                    {
+                        Shape shapeBomb = sf_bomb.Shape[i];
+                        Point pnt = shapeBomb.Point[0];
+                        if (shp.PointInThisPoly(pnt))
+                        {
+                            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                            //lstBMVN.Add(bmvn);
+                            List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
+                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo, true);
+                            bmvn.Area = area;
+                            bmvn.contour = contourGiamNghiNgo;
+                            if (contourGiamNghiNgo.Count > 2)
+                            {
+                                FindDeep(bmvn);
+                            }
+                            else
+                            {
+                                bmvn.Deep = 0;
+                            }
+                            MapWinGIS.Label label = sf_bomb.Labels.Label[bmvn.indexLabel, 0];
+                            label.Text = Math.Round(bmvn.Deep, 3).ToString() + "m";
+                            shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
+                        }
+                    }
+                    MyMainMenu2.Instance.axMap1.Redraw();
+                }
+            }
+        }
+
         private static void Exit()
         {
             MapMenuCommand.axMap1.ChooseLayer -= AxMap1_ChooseLayer;

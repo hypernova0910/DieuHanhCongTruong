@@ -143,6 +143,8 @@ namespace DieuHanhCongTruong.Forms
             this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lbProgressDescription = new System.Windows.Forms.ToolStripLabel();
             this.managerCECMUserControl1 = new VNRaPaBomMin.ManagerCECMUserControl();
+            this.pnlToolTip = new System.Windows.Forms.Panel();
+            this.lblToolTip = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.toolBarContainer.SuspendLayout();
             this.pnlFilter.SuspendLayout();
@@ -157,6 +159,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressPhanTich.SuspendLayout();
             this.tsProgressHistory.SuspendLayout();
             this.tsProgressSurface.SuspendLayout();
+            this.pnlToolTip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -176,7 +179,7 @@ namespace DieuHanhCongTruong.Forms
             this.tàiKhoảnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1902, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1902, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -184,7 +187,7 @@ namespace DieuHanhCongTruong.Forms
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(14, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(14, 26);
             // 
             // dữLiệuHỗTrợToolStripMenuItem
             // 
@@ -192,7 +195,7 @@ namespace DieuHanhCongTruong.Forms
             this.quảnLýĐơnVịToolStripMenuItem});
             this.dữLiệuHỗTrợToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dữLiệuHỗTrợToolStripMenuItem.Image")));
             this.dữLiệuHỗTrợToolStripMenuItem.Name = "dữLiệuHỗTrợToolStripMenuItem";
-            this.dữLiệuHỗTrợToolStripMenuItem.Size = new System.Drawing.Size(135, 24);
+            this.dữLiệuHỗTrợToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.dữLiệuHỗTrợToolStripMenuItem.Text = "Dữ liệu hỗ trợ";
             // 
             // quảnLýĐơnVịToolStripMenuItem
@@ -208,7 +211,7 @@ namespace DieuHanhCongTruong.Forms
             this.danhSáchCácDựÁnToolStripMenuItem});
             this.quảnLýDựÁnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("quảnLýDựÁnToolStripMenuItem.Image")));
             this.quảnLýDựÁnToolStripMenuItem.Name = "quảnLýDựÁnToolStripMenuItem";
-            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(135, 24);
+            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.quảnLýDựÁnToolStripMenuItem.Text = "Quản lý dự án";
             // 
             // danhSáchCácDựÁnToolStripMenuItem
@@ -232,7 +235,7 @@ namespace DieuHanhCongTruong.Forms
             this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem});
             this.inẤnBảnĐồToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("inẤnBảnĐồToolStripMenuItem.Image")));
             this.inẤnBảnĐồToolStripMenuItem.Name = "inẤnBảnĐồToolStripMenuItem";
-            this.inẤnBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(126, 24);
+            this.inẤnBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
             this.inẤnBảnĐồToolStripMenuItem.Text = "In ấn bản đồ";
             // 
             // địnhNghĩaVùngDựÁnToolStripMenuItem
@@ -351,7 +354,7 @@ namespace DieuHanhCongTruong.Forms
             this.danhSáchBMVNToolStripMenuItem});
             this.phânTíchDữLiệuToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("phânTíchDữLiệuToolStripMenuItem.Image")));
             this.phânTíchDữLiệuToolStripMenuItem.Name = "phânTíchDữLiệuToolStripMenuItem";
-            this.phânTíchDữLiệuToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.phânTíchDữLiệuToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
             this.phânTíchDữLiệuToolStripMenuItem.Text = "Phân tích dữ liệu";
             // 
             // tựĐộngPhânTíchDữLiệuToolStripMenuItem
@@ -474,7 +477,7 @@ namespace DieuHanhCongTruong.Forms
             this.thayĐổiKiểuHiểnThịNhãnĐườngĐồngMứcToolStripMenuItem});
             this.tiệnÍchToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("tiệnÍchToolStripMenuItem.Image")));
             this.tiệnÍchToolStripMenuItem.Name = "tiệnÍchToolStripMenuItem";
-            this.tiệnÍchToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
+            this.tiệnÍchToolStripMenuItem.Size = new System.Drawing.Size(94, 26);
             this.tiệnÍchToolStripMenuItem.Text = "Tiện ích";
             // 
             // khoảngCáchToolStripMenuItem
@@ -483,7 +486,6 @@ namespace DieuHanhCongTruong.Forms
             this.khoảngCáchToolStripMenuItem.Name = "khoảngCáchToolStripMenuItem";
             this.khoảngCáchToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.khoảngCáchToolStripMenuItem.Text = "Khoảng cách";
-            this.khoảngCáchToolStripMenuItem.Visible = false;
             // 
             // thayĐổiKiểuHiểnThịĐườngĐồngMứcToolStripMenuItem
             // 
@@ -516,7 +518,7 @@ namespace DieuHanhCongTruong.Forms
             this.ks05ToolStripMenuItem});
             this.kếtQuảKSToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("kếtQuảKSToolStripMenuItem.Image")));
             this.kếtQuảKSToolStripMenuItem.Name = "kếtQuảKSToolStripMenuItem";
-            this.kếtQuảKSToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
+            this.kếtQuảKSToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
             this.kếtQuảKSToolStripMenuItem.Text = "Kết quả KS";
             // 
             // ks01ToolStripMenuItem
@@ -576,7 +578,7 @@ namespace DieuHanhCongTruong.Forms
             this.rp17ToolStripMenuItem});
             this.kếtQuảRPToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("kếtQuảRPToolStripMenuItem.Image")));
             this.kếtQuảRPToolStripMenuItem.Name = "kếtQuảRPToolStripMenuItem";
-            this.kếtQuảRPToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
+            this.kếtQuảRPToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
             this.kếtQuảRPToolStripMenuItem.Text = "Kết quả RP";
             // 
             // rp01ToolStripMenuItem
@@ -705,7 +707,7 @@ namespace DieuHanhCongTruong.Forms
             this.thôngTinPhầnMềmToolStripMenuItem});
             this.càiĐặtToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("càiĐặtToolStripMenuItem.Image")));
             this.càiĐặtToolStripMenuItem.Name = "càiĐặtToolStripMenuItem";
-            this.càiĐặtToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+            this.càiĐặtToolStripMenuItem.Size = new System.Drawing.Size(90, 26);
             this.càiĐặtToolStripMenuItem.Text = "Cài đặt";
             // 
             // càiĐặtChungToolStripMenuItem
@@ -729,7 +731,7 @@ namespace DieuHanhCongTruong.Forms
             this.đăngXuấtToolStripMenuItem});
             this.tàiKhoảnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("tàiKhoảnToolStripMenuItem.Image")));
             this.tàiKhoảnToolStripMenuItem.Name = "tàiKhoảnToolStripMenuItem";
-            this.tàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(105, 24);
+            this.tàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(105, 26);
             this.tàiKhoảnToolStripMenuItem.Text = "Tài khoản";
             // 
             // đổiMậtKhẩuToolStripMenuItem
@@ -751,7 +753,7 @@ namespace DieuHanhCongTruong.Forms
             this.toolBarContainer.Controls.Add(this.pnlFilter);
             this.toolBarContainer.Controls.Add(this.pnlToolBar);
             this.toolBarContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolBarContainer.Location = new System.Drawing.Point(0, 28);
+            this.toolBarContainer.Location = new System.Drawing.Point(0, 30);
             this.toolBarContainer.Name = "toolBarContainer";
             this.toolBarContainer.Size = new System.Drawing.Size(1902, 80);
             this.toolBarContainer.TabIndex = 9;
@@ -836,6 +838,7 @@ namespace DieuHanhCongTruong.Forms
             this.rbUnmodel.TabStop = true;
             this.rbUnmodel.Text = "Chưa nắn";
             this.rbUnmodel.UseVisualStyleBackColor = true;
+            this.rbUnmodel.CheckedChanged += new System.EventHandler(this.rbUnmodel_CheckedChanged);
             // 
             // pnlToolBar
             // 
@@ -1088,7 +1091,7 @@ namespace DieuHanhCongTruong.Forms
             this.axMap1.Margin = new System.Windows.Forms.Padding(2);
             this.axMap1.Name = "axMap1";
             this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(1555, 925);
+            this.axMap1.Size = new System.Drawing.Size(1555, 923);
             this.axMap1.TabIndex = 13;
             // 
             // pnlMain
@@ -1099,9 +1102,9 @@ namespace DieuHanhCongTruong.Forms
             this.pnlMain.Controls.Add(this.tsProgressSurface);
             this.pnlMain.Controls.Add(this.axMap1);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(347, 108);
+            this.pnlMain.Location = new System.Drawing.Point(347, 110);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1555, 925);
+            this.pnlMain.Size = new System.Drawing.Size(1555, 923);
             this.pnlMain.TabIndex = 11;
             // 
             // tabControlBottom
@@ -1109,7 +1112,7 @@ namespace DieuHanhCongTruong.Forms
             this.tabControlBottom.Controls.Add(this.tabPageTimDiemTuTruongMatCat);
             this.tabControlBottom.Controls.Add(this.tabPageBMVN);
             this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControlBottom.Location = new System.Drawing.Point(0, 454);
+            this.tabControlBottom.Location = new System.Drawing.Point(0, 452);
             this.tabControlBottom.Name = "tabControlBottom";
             this.tabControlBottom.SelectedIndex = 0;
             this.tabControlBottom.Size = new System.Drawing.Size(1555, 378);
@@ -1211,7 +1214,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressPhanTich.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar2,
             this.toolStripLabel2});
-            this.tsProgressPhanTich.Location = new System.Drawing.Point(0, 832);
+            this.tsProgressPhanTich.Location = new System.Drawing.Point(0, 830);
             this.tsProgressPhanTich.Name = "tsProgressPhanTich";
             this.tsProgressPhanTich.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressPhanTich.Size = new System.Drawing.Size(1555, 31);
@@ -1239,7 +1242,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripLabel1});
-            this.tsProgressHistory.Location = new System.Drawing.Point(0, 863);
+            this.tsProgressHistory.Location = new System.Drawing.Point(0, 861);
             this.tsProgressHistory.Name = "tsProgressHistory";
             this.tsProgressHistory.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressHistory.Size = new System.Drawing.Size(1555, 31);
@@ -1267,7 +1270,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbProgress,
             this.lbProgressDescription});
-            this.tsProgressSurface.Location = new System.Drawing.Point(0, 894);
+            this.tsProgressSurface.Location = new System.Drawing.Point(0, 892);
             this.tsProgressSurface.Name = "tsProgressSurface";
             this.tsProgressSurface.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressSurface.Size = new System.Drawing.Size(1555, 31);
@@ -1291,17 +1294,36 @@ namespace DieuHanhCongTruong.Forms
             // managerCECMUserControl1
             // 
             this.managerCECMUserControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 108);
+            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 110);
             this.managerCECMUserControl1.Margin = new System.Windows.Forms.Padding(4);
             this.managerCECMUserControl1.Name = "managerCECMUserControl1";
-            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 925);
+            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 923);
             this.managerCECMUserControl1.TabIndex = 10;
+            // 
+            // pnlToolTip
+            // 
+            this.pnlToolTip.Controls.Add(this.lblToolTip);
+            this.pnlToolTip.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlToolTip.Location = new System.Drawing.Point(347, 110);
+            this.pnlToolTip.Name = "pnlToolTip";
+            this.pnlToolTip.Size = new System.Drawing.Size(1555, 36);
+            this.pnlToolTip.TabIndex = 12;
+            // 
+            // lblToolTip
+            // 
+            this.lblToolTip.AutoSize = true;
+            this.lblToolTip.Location = new System.Drawing.Point(7, 10);
+            this.lblToolTip.Name = "lblToolTip";
+            this.lblToolTip.Size = new System.Drawing.Size(76, 17);
+            this.lblToolTip.TabIndex = 0;
+            this.lblToolTip.Text = "Chọn gì đó";
             // 
             // MyMainMenu2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1902, 1033);
+            this.Controls.Add(this.pnlToolTip);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.managerCECMUserControl1);
             this.Controls.Add(this.toolBarContainer);
@@ -1338,6 +1360,8 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressHistory.PerformLayout();
             this.tsProgressSurface.ResumeLayout(false);
             this.tsProgressSurface.PerformLayout();
+            this.pnlToolTip.ResumeLayout(false);
+            this.pnlToolTip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1456,5 +1480,7 @@ namespace DieuHanhCongTruong.Forms
         public System.Windows.Forms.ToolStrip tsProgressSurface;
         private System.Windows.Forms.ToolStripProgressBar pbProgress;
         private System.Windows.Forms.ToolStripLabel lbProgressDescription;
+        public System.Windows.Forms.Panel pnlToolTip;
+        public System.Windows.Forms.Label lblToolTip;
     }
 }

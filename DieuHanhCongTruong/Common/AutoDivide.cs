@@ -186,6 +186,7 @@ namespace DieuHanhCongTruong.Common
 
             List<CecmProgramAreaLineDTO> lines = calculateLines(item);
             DateTime start2 = DateTime.Now;
+            int count = 1;
             foreach (CecmProgramAreaLineDTO line in lines)
             {
                 CecmProgramAreaLineDTO lineDTO = new CecmProgramAreaLineDTO();
@@ -202,6 +203,8 @@ namespace DieuHanhCongTruong.Common
                 lineDTO.cecmprogramareasub_id = item.gid;
                 lineDTO.cecmprogramareamap_id = item.cecm_program_areamap_ID;
                 lineDTO.cecmprogram_id = item.cecm_program_id;
+                lineDTO.code = count.ToString();
+                count++;
                 axMap1.DrawLineEx(lineLayer, lineDTO.start_y, lineDTO.start_x, lineDTO.end_y, lineDTO.end_x, 1, AppUtils.ColorToUint(Color.White));
                 lst.Add(lineDTO);
             }

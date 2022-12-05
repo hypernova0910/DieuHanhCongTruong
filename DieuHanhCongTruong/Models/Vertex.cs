@@ -12,6 +12,7 @@
 namespace DieuHanhCongTruong.Models
 {
     using DieuHanhCongTruong.CustomControl;
+    using MapWinGIS;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -97,6 +98,8 @@ namespace DieuHanhCongTruong.Models
         public string MachineCode { get; set; }
 
         public KQPhanTichControl phanTichControl;
+
+        public Shape shape { get; set; }
 
         /// <summary>
         /// Delta distance squared between this and other vertex t

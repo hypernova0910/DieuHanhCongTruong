@@ -21,7 +21,10 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.Identifier.IdentifierMode = tkIdentifierMode.imSingleLayer;
             MapMenuCommand.axMap1.Identifier.HotTracking = true;
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmIdentify;
-            MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", Constants.TOOLTIP_MAP_TIME);
+            //MapMenuCommand.axMap1.ShowToolTip("Chon rãnh dò", Constants.TOOLTIP_MAP_TIME);
+            MyMainMenu2.Instance.pnlToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Visible = true;
+            MyMainMenu2.Instance.lblToolTip.Text = "Chọn rãnh dò. Nhấn ESC để hủy";
 
             MapMenuCommand.axMap1.ShapeIdentified += AxMap1_ShapeIdentified;
 
@@ -43,6 +46,8 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.menuStrip1.Enabled = true;
             MyMainMenu2.Instance.pnlToolBar.Enabled = true;
             //MapMenuCommand.axMap1.IdentifiedShapes.Clear();
+            MyMainMenu2.Instance.pnlToolTip.Visible = false;
+            MyMainMenu2.Instance.lblToolTip.Visible = false;
         }
 
         private static void AxMap1_ChooseLayer(object sender, AxMapWinGIS._DMapEvents_ChooseLayerEvent e)
