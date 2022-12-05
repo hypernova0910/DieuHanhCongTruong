@@ -25,6 +25,8 @@ namespace DieuHanhCongTruong.Command
             MyMainMenu2.Instance.pnlToolTip.Visible = true;
             MyMainMenu2.Instance.lblToolTip.Visible = true;
             MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 1. Nhấn ESC để hủy";
+            MyMainMenu2.Instance.menuStrip1.Enabled = false;
+            MyMainMenu2.Instance.pnlToolBar.Enabled = false;
         }
 
         private static void Instance_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -43,6 +45,8 @@ namespace DieuHanhCongTruong.Command
             MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
             MapMenuCommand.axMap1.MeasuringChanged -= AxMap1_MeasuringChanged;
             MyMainMenu2.Instance.KeyDown -= Instance_KeyDown;
+            MyMainMenu2.Instance.menuStrip1.Enabled = true;
+            MyMainMenu2.Instance.pnlToolBar.Enabled = true;
         }
 
         private static void AxMap1_MeasuringChanged(object sender, AxMapWinGIS._DMapEvents_MeasuringChangedEvent e)
@@ -57,6 +61,8 @@ namespace DieuHanhCongTruong.Command
                 measuring.get_PointXY(0, out double x1, out double y1);
                 measuring.get_PointXY(1, out double x2, out double y2);
                 double distance = AppUtils.DistanceLatLong(y1, x1, y2, x2);
+                MapMenuCommand.axMap1.Measuring.FinishMeasuring();
+                MapMenuCommand.axMap1.Redraw();
                 MessageBox.Show(
                     "Kinh độ điểm 1: " + x1 + "\n" +
                     "Vĩ độ điểm 1: " + y1 + "\n" +
@@ -64,7 +70,6 @@ namespace DieuHanhCongTruong.Command
                     "Vĩ độ điểm 2: " + y2 + "\n" +
                     "Khoảng cách: " + distance + "m"
                 );
-                MapMenuCommand.axMap1.Measuring.FinishMeasuring();
                 MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 1. Nhấn ESC để hủy";
                 //MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
             }
