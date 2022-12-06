@@ -725,6 +725,7 @@ namespace VNRaPaBomMin
                     //labels.ApplyCategories();
 
                     labels.Alignment = tkLabelAlignment.laCenterRight;
+                    labels.InboxAlignment = tkLabelAlignment.laCenterLeft;
                     labels.FontSize = 14;
 
                     var lstDatarow = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "cecm_programData", "id", MyMainMenu2.idDADH.ToString());
