@@ -127,7 +127,18 @@ namespace DieuHanhCongTruong.Command
                             DataRow dr = lstColor[i];
                             double min = double.Parse(dr["min"].ToString());
                             double max = double.Parse(dr["max"].ToString());
-                            BuildOneColorSurface(lstCell, min, max, i, isBomb);
+                            if(i == 0)
+                            {
+                                BuildOneColorSurface(lstCell, double.MinValue, max, i, isBomb);
+                            }
+                            else if(i == lstColor.Count - 1)
+                            {
+                                BuildOneColorSurface(lstCell, min, double.MaxValue, i, isBomb);
+                            }
+                            else
+                            {
+                                BuildOneColorSurface(lstCell, min, max, i, isBomb);
+                            }
                         }
                         MapMenuCommand.Redraw();
                     }
@@ -334,7 +345,19 @@ namespace DieuHanhCongTruong.Command
                     double minElevation = minZ + i * elevation;
                     double maxElevation = minZ + (i + 1) * elevation;
 
-                    BuildOneColorSurface(lstCell, minElevation, maxElevation, i, isBomb);
+                    //BuildOneColorSurface(lstCell, minElevation, maxElevation, i, isBomb);
+                    if (i == 0)
+                    {
+                        BuildOneColorSurface(lstCell, double.MinValue, maxElevation, i, isBomb);
+                    }
+                    else if (i == Constants.magnetic_colors.Length - 1)
+                    {
+                        BuildOneColorSurface(lstCell, minElevation, double.MaxValue, i, isBomb);
+                    }
+                    else
+                    {
+                        BuildOneColorSurface(lstCell, minElevation, maxElevation, i, isBomb);
+                    }
                 }
                 MapMenuCommand.Redraw();
             }

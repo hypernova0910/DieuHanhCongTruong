@@ -28,6 +28,8 @@ namespace DieuHanhCongTruong.Models
 
         public double minMine { get; set; }
 
+        public double ranhDoPT { get; set; }
+
         public Boundary()
         {
             minLat = -1;

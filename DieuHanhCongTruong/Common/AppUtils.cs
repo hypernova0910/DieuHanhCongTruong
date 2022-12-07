@@ -110,6 +110,24 @@ namespace DieuHanhCongTruong.Common
             return string.Format("{0}\\Data", GetAppPath());
         }
 
+        public static bool CheckCamCo(int aValue, out bool isButton1Press)
+        {
+            // Button 1 la diem cam co, button 2 la dung de do do sau (A An)
+            isButton1Press = false;
+            bool isButton1 = ((aValue & 8) > 0);   // khong thay doi
+            bool isButton2 = ((aValue & 2) > 0);  // sua lai
+            bool isButton3 = ((aValue & 4) > 0); // sua lai
+            bool isButton4 = ((aValue & 1) > 0); // khong sua
+
+            if (isButton1)
+                isButton1Press = true;
+
+            if (isButton1 || isButton2)
+                return true;
+            else
+                return false;
+        }
+
         public static MapWinGIS.Image OpenImage(string path)
         {
             //string path = @"../../data/marker.png";

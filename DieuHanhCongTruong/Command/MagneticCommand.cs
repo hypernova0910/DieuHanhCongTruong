@@ -1,4 +1,5 @@
-﻿using DieuHanhCongTruong.Common;
+﻿using DieuHanhCongTruong.Command.Clustering;
+using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms;
 using DieuHanhCongTruong.Forms.Account;
 using DieuHanhCongTruong.Models;
@@ -68,7 +69,7 @@ namespace DieuHanhCongTruong.Command
                 foreach (var pair_idKV__Points in idKV__PointsUnmodel)
                 {
                     List<InfoConnect> lstPointBomb = pair_idKV__Points.Value[true];
-
+                    addFlagFromPoints(lstPointBomb, true);
                     TINCommand.BuildDelaunayTriangulation(lstPointBomb, true, pair_idKV__Points.Key);
                 }
                 threadMagneticBombStopped = true;
@@ -88,7 +89,7 @@ namespace DieuHanhCongTruong.Command
                 foreach (var pair_idKV__Points in idKV__PointsUnmodel)
                 {
                     List<InfoConnect> lstPointMine = pair_idKV__Points.Value[false];
-
+                    addFlagFromPoints(lstPointMine, false);
                     TINCommand.BuildDelaunayTriangulation(lstPointMine, false, pair_idKV__Points.Key);
                 }
                 threadMagneticMineStopped = true;
@@ -175,6 +176,33 @@ namespace DieuHanhCongTruong.Command
             threadMagneticMine.Start();
             threadPointBomb.Start();
             threadPointMine.Start();
+        }
+
+        private static void addFlagFromPoints(List<InfoConnect> lst, bool isBomb)
+        {
+            //Lấy điểm cám cờ
+            List<InfoConnect> lstFlag = new List<InfoConnect>();
+            foreach (InfoConnect point in lst)
+            {
+                if (AppUtils.CheckCamCo(point.bit_sens, out bool isButton1Press))
+                {
+                    lstFlag.Add(point);
+                }
+            }
+            HierarchicalClustering clustering = new HierarchicalClustering();
+            List<InfoConnect> lstFlagClustered = clustering.Cluster(lstFlag);
+            foreach (InfoConnect flag in lstFlagClustered)
+            {
+                Point2d flagLatLong = AppUtils.ConverUTMToLatLong(flag.lat_value, flag.long_value);
+                if (isBomb)
+                {
+                    MapMenuCommand.addFlagBomb(flagLatLong.X, flagLatLong.Y);
+                }
+                else
+                {
+                    MapMenuCommand.addFlagMine(flagLatLong.X, flagLatLong.Y);
+                }
+            }
         }
 
         private List<long> GetAllIDKV(long idDA)
@@ -378,11 +406,11 @@ namespace DieuHanhCongTruong.Command
                     List<InfoConnect> lstDataMineFinal = new List<InfoConnect>();
                     foreach (var infoConnect in lstDataMine)
                     {
-                        if(infoConnect.the_value > 12)
+                        if (infoConnect.the_value > 13)
                         {
                             continue;
                         }
-                        infoConnect.the_value *= heSoMayDoMin;
+                        //infoConnect.the_value *= heSoMayDoMin;
                         lstDataMineFinal.Add(infoConnect);
                     }
                     //foreach (var infoConnect in lstDataMineFinal)

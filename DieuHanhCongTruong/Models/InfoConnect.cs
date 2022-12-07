@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DieuHanhCongTruong.Models
 {
-    public class InfoConnect : IVertex, IVertex2D
+    public class InfoConnect : IVertex, IVertex2D, IComparable<InfoConnect>
     {
         public InfoConnect()
         {
@@ -51,7 +51,7 @@ namespace DieuHanhCongTruong.Models
         public double satelliteCount { get; set; }
 
         //Điểm có thuộc rìa lưới tam giác không
-        public bool isInEdgeTriangles { get; set; }
+        //public bool isInEdgeTriangles { get; set; }
 
         public double[] Position
         {
@@ -75,6 +75,11 @@ namespace DieuHanhCongTruong.Models
             {
                 return long_value;
             }
+        }
+
+        public int CompareTo(InfoConnect other)
+        {
+            return string.Compare(this._id, other._id);
         }
     }
 }

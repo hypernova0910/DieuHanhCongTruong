@@ -300,7 +300,7 @@ namespace DieuHanhCongTruong.Forms
 
         private void rbBomb_CheckedChanged(object sender, EventArgs e)
         {
-            MapMenuCommand.togglePolygonBomb(rbBomb.Checked, rbModel.Checked);
+            MapMenuCommand.toggleLayer(rbBomb.Checked, rbModel.Checked);
         }
 
         private void rbMine_CheckedChanged(object sender, EventArgs e)
@@ -310,7 +310,7 @@ namespace DieuHanhCongTruong.Forms
 
         private void rbUnmodel_CheckedChanged(object sender, EventArgs e)
         {
-            MapMenuCommand.togglePolygonBomb(rbBomb.Checked, rbModel.Checked);
+            MapMenuCommand.toggleLayer(rbBomb.Checked, rbModel.Checked);
         }
     }
 }

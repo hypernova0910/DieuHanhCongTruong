@@ -98,15 +98,7 @@ namespace DieuHanhCongTruong
             AppUtils.LoadRecentInput(tbHeSoMayDoBom, AppUtils.DefaultNanoTesla.ToString());
             AppUtils.LoadRecentInput(tbHeSoMayDoMin, AppUtils.DefaultNanoTeslaMin.ToString());
             AppUtils.LoadRecentInput(tbKhoangThoiGian, "10");
-            AppUtils.LoadRecentInput(tbPhanTichOnline, "1000");
             AppUtils.LoadRecentInput(lbTepDuongDan, "...");
-            AppUtils.LoadRecentInput(nudKhoangPT, "");
-            AppUtils.LoadRecentInput(nudRanhDoPT, "");
-            AppUtils.LoadRecentInput(nudNguongBom, "");
-            AppUtils.LoadRecentInput(nudNguongMin, "");
-            AppUtils.LoadRecentInput(nudMinClusterSize, "");
-            AppUtils.LoadRecentInput(nudMinBomb, "");
-            AppUtils.LoadRecentInput(nudMinMine, "");
         }
 
         private void tvControl_AfterSelect(object sender, TreeViewEventArgs e)
@@ -184,8 +176,7 @@ namespace DieuHanhCongTruong
 
             if (AppUtils.ValidateNumber(tbHeSoMayDoBom) == false ||
                 AppUtils.ValidateNumber(tbHeSoMayDoMin) == false ||
-                AppUtils.ValidateNumber(tbKhoangThoiGian) == false ||
-                AppUtils.ValidateNumber(tbPhanTichOnline) == false)
+                AppUtils.ValidateNumber(tbKhoangThoiGian) == false)
             {
                 MessageBox.Show("Hãy nhập số");
                 return;
@@ -195,15 +186,7 @@ namespace DieuHanhCongTruong
             AppUtils.SaveRecentInput(tbHeSoMayDoBom);
             AppUtils.SaveRecentInput(tbHeSoMayDoMin);
             AppUtils.SaveRecentInput(tbKhoangThoiGian);
-            AppUtils.SaveRecentInput(tbPhanTichOnline);
             AppUtils.SaveRecentInput(lbTepDuongDan);
-            AppUtils.SaveRecentInput(nudKhoangPT);
-            AppUtils.SaveRecentInput(nudRanhDoPT);
-            AppUtils.SaveRecentInput(nudNguongBom);
-            AppUtils.SaveRecentInput(nudNguongMin);
-            AppUtils.SaveRecentInput(nudMinClusterSize);
-            AppUtils.SaveRecentInput(nudMinBomb);
-            AppUtils.SaveRecentInput(nudMinMine);
 
             this.DialogResult = DialogResult.OK;
         }

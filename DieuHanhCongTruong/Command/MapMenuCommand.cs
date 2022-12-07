@@ -28,16 +28,16 @@ namespace DieuHanhCongTruong.Command
 
         public static List<int> machinePointBombLayers = new List<int>();
         public static List<int> machinePointMineLayers = new List<int>();
-        private static List<int> machinePointBombModelLayers = new List<int>();
-        private static List<int> machinePointMineModelLayers = new List<int>();
+        public static List<int> machinePointBombModelLayers = new List<int>();
+        public static List<int> machinePointMineModelLayers = new List<int>();
         private static List<int> machinePointModelHistoryLayers = new List<int>();
         private static List<int> machinePointRealTimeLayers = new List<int>();
         private static List<int> machinePointRealTimeModelLayers = new List<int>();
 
         public static List<int> machineLineBombLayers = new List<int>();
         public static List<int> machineLineMineLayers = new List<int>();
-        private static List<int> machineLineBombModelLayers = new List<int>();
-        private static List<int> machineLineMineModelLayers = new List<int>();
+        public static List<int> machineLineBombModelLayers = new List<int>();
+        public static List<int> machineLineMineModelLayers = new List<int>();
         private static List<int> machineLineModelHistoryLayers = new List<int>();
         private static List<int> machineLineRealTimeLayers = new List<int>();
         private static List<int> machineLineRealTimeModelLayers = new List<int>();
@@ -51,8 +51,8 @@ namespace DieuHanhCongTruong.Command
         public static int suspectPointLayerMine = -1;
         public static int userSuspectPointLayerBomb = -1;
         public static int userSuspectPointLayerMine = -1;
-        private static int flagLayer = -1;
-        private static int flagRealTimeLayer = -1;
+        private static int flagBombLayer = -1;
+        private static int flagMineLayer = -1;
         public static List<int> imageLayers = new List<int>();
         private static int deepLayer = -1;
         private static int pointLayer = -1;
@@ -129,8 +129,8 @@ namespace DieuHanhCongTruong.Command
             InitSuspectPointMineLayer();
             InitUserSuspectPointLayer();
             InitUserSuspectPointMineLayer();
-            //InitFlagLayer();
-            //InitFlagRealTimeLayer();
+            InitFlagBombLayer();
+            InitFlagMineLayer();
             //InitDeepLayer();
             //InitGreenFlagLayer();
             //InitMachineLayer();
@@ -1394,7 +1394,7 @@ namespace DieuHanhCongTruong.Command
             //axMap1.MouseDownEvent += AxMap1MouseDownEvent;   // change MapEvents to axMap1
         }
 
-        private static void InitFlagLayer()
+        private static void InitFlagBombLayer()
         {
             //axMap1.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
             //string filename = dataPath + "buildings.shp";
@@ -1405,8 +1405,8 @@ namespace DieuHanhCongTruong.Command
             //}
             Shapefile sf = new Shapefile();
             //sf.Open(filename, null);
-            flagLayer = axMap1.AddLayer(sf, true);
-            sf = axMap1.get_Shapefile(flagLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
+            flagBombLayer = axMap1.AddLayer(sf, true);
+            sf = axMap1.get_Shapefile(flagBombLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
             sf = new Shapefile();
             if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT))
             {
@@ -1414,7 +1414,7 @@ namespace DieuHanhCongTruong.Command
                 MessageBox.Show("InitFlagLayer()");
                 return;
             }
-            flagLayer = axMap1.AddLayer(sf, true);
+            flagBombLayer = axMap1.AddLayer(sf, true);
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
@@ -1427,7 +1427,7 @@ namespace DieuHanhCongTruong.Command
             //axMap1.MouseDownEvent += AxMap1MouseDownEvent;   // change MapEvents to axMap1
         }
 
-        private static void InitFlagRealTimeLayer()
+        private static void InitFlagMineLayer()
         {
             //axMap1.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
             //string filename = dataPath + "buildings.shp";
@@ -1438,8 +1438,8 @@ namespace DieuHanhCongTruong.Command
             //}
             Shapefile sf = new Shapefile();
             //sf.Open(filename, null);
-            flagRealTimeLayer = axMap1.AddLayer(sf, true);
-            sf = axMap1.get_Shapefile(flagRealTimeLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
+            flagMineLayer = axMap1.AddLayer(sf, false);
+            sf = axMap1.get_Shapefile(flagMineLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
             sf = new Shapefile();
             if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT))
             {
@@ -1447,7 +1447,7 @@ namespace DieuHanhCongTruong.Command
                 MessageBox.Show("InitFlagLayer()");
                 return;
             }
-            flagRealTimeLayer = axMap1.AddLayer(sf, true);
+            flagMineLayer = axMap1.AddLayer(sf, false);
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
@@ -2297,7 +2297,7 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        public static void togglePolygonBomb(bool showBomb, bool showModel)
+        public static void toggleLayer(bool showBomb, bool showModel, bool visibleAll = true)
         {
             //axMap1.set_LayerVisible(polygonLayer, show);
             foreach (int layer in polygonLayers)
@@ -2308,6 +2308,9 @@ namespace DieuHanhCongTruong.Command
             {
                 axMap1.set_LayerVisible(layer, !showBomb);
             }
+
+            axMap1.set_LayerVisible(flagBombLayer, showBomb);
+            axMap1.set_LayerVisible(flagMineLayer, !showBomb);
 
             axMap1.set_LayerVisible(suspectPointLayerBomb, showBomb);
             axMap1.set_LayerVisible(userSuspectPointLayerBomb, showBomb);
@@ -2356,24 +2359,24 @@ namespace DieuHanhCongTruong.Command
             }
         }
 
-        public static void togglePolygonMine(bool showMine, bool showModel)
-        {
-            //axMap1.set_LayerVisible(polygonLayerMine, show);
-            foreach (int layer in polygonLayersMine)
-            {
-                axMap1.set_LayerVisible(layer, showMine);
-            }
-            axMap1.set_LayerVisible(suspectPointLayerMine, showMine);
-            axMap1.set_LayerVisible(userSuspectPointLayerMine, showMine);
-            foreach (int layer in machinePointMineLayers)
-            {
-                axMap1.set_LayerVisible(layer, showMine);
-            }
-            foreach (int layer in machineLineMineLayers)
-            {
-                axMap1.set_LayerVisible(layer, showMine);
-            }
-        }
+        //public static void togglePolygonMine(bool showMine, bool showModel)
+        //{
+        //    //axMap1.set_LayerVisible(polygonLayerMine, show);
+        //    foreach (int layer in polygonLayersMine)
+        //    {
+        //        axMap1.set_LayerVisible(layer, showMine);
+        //    }
+        //    axMap1.set_LayerVisible(suspectPointLayerMine, showMine);
+        //    axMap1.set_LayerVisible(userSuspectPointLayerMine, showMine);
+        //    foreach (int layer in machinePointMineLayers)
+        //    {
+        //        axMap1.set_LayerVisible(layer, showMine);
+        //    }
+        //    foreach (int layer in machineLineMineLayers)
+        //    {
+        //        axMap1.set_LayerVisible(layer, showMine);
+        //    }
+        //}
 
         public static void ClearPolygon()
         {
@@ -2447,6 +2450,64 @@ namespace DieuHanhCongTruong.Command
         public static void Redraw()
         {
             axMap1.Redraw();
+        }
+
+        public static void addFlagBomb(double x, double y, double depth = -1)
+        {
+            Shapefile sf = axMap1.get_Shapefile(flagBombLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POINT);
+            Point pnt = new Point();
+            //axMap1.PixelToProj(x, y, ref x, ref y);
+            pnt.x = x;
+            pnt.y = y;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt, ref index);
+            index = sf.NumShapes;
+            if (depth >= 0)
+            {
+                sf.Labels.AddLabel(depth.ToString(), x, y);
+                sf.Labels.OffsetX = 20;
+                sf.Labels.OffsetY = 20;
+                sf.Labels.Alignment = tkLabelAlignment.laBottomRight;
+            }
+            //if (!sf.EditInsertShape(shp, ref index))
+            if (sf.EditAddShape(shp) < 0)
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("addFlag()");
+                return;
+            }
+            //axMap1.Redraw();
+        }
+
+        public static void addFlagMine(double x, double y, double depth = -1)
+        {
+            Shapefile sf = axMap1.get_Shapefile(flagMineLayer);
+            Shape shp = new Shape();
+            shp.Create(ShpfileType.SHP_POINT);
+            Point pnt = new Point();
+            //axMap1.PixelToProj(x, y, ref x, ref y);
+            pnt.x = x;
+            pnt.y = y;
+            int index = shp.numPoints;
+            shp.InsertPoint(pnt, ref index);
+            index = sf.NumShapes;
+            if (depth >= 0)
+            {
+                sf.Labels.AddLabel(depth.ToString(), x, y);
+                sf.Labels.OffsetX = 20;
+                sf.Labels.OffsetY = 20;
+                sf.Labels.Alignment = tkLabelAlignment.laBottomRight;
+            }
+            //if (!sf.EditInsertShape(shp, ref index))
+            if (sf.EditAddShape(shp) < 0)
+            {
+                MessageBox.Show("Failed to insert shape: " + sf.ErrorMsg[sf.LastErrorCode]);
+                MessageBox.Show("addFlag()");
+                return;
+            }
+            //axMap1.Redraw();
         }
 
         public static void addSuspectPoint(double x, double y, CecmReportPollutionAreaBMVN point, bool isBomb, bool isUser)

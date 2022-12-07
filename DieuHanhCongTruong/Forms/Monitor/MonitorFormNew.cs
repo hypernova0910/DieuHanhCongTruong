@@ -1023,9 +1023,10 @@ namespace VNRaPaBomMin
 
             MenuLoaderManagerFrm frm = new MenuLoaderManagerFrm();
             AppUtils.LoadRecentInput(frm.tbKhoangThoiGian, "10");
-            AppUtils.LoadRecentInput(frm.tbPhanTichOnline, "1000");
+            ParametersFrm parametersFrm = new ParametersFrm();
+            AppUtils.LoadRecentInput(parametersFrm.tbPhanTichOnline, "1000");
             double heSoThoiGiand = double.Parse(frm.tbKhoangThoiGian.Text);
-            double heSoPhanTichOnline = double.Parse(frm.tbPhanTichOnline.Text);
+            double heSoPhanTichOnline = double.Parse(parametersFrm.tbPhanTichOnline.Text);
 
             string pathSound = AppUtils.GetAppDataPath();
             pathSound = System.IO.Path.Combine(pathSound, "SoundRing.wav");
@@ -4504,37 +4505,40 @@ namespace VNRaPaBomMin
                     oluoi.long_corner4 = long_corner4;
 
                     //Thêm rãnh dò
-                    double ranhDoPT = 0.2;
-                    if (!string.IsNullOrEmpty(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudRanhDoPT")))
+                    oluoi_boundary.ranhDoPT = 0.2;
+                    if (!string.IsNullOrEmpty(AppUtils.GetRecentInput("$ParametersFrm$nudRanhDoPT")))
                     {
-                        if (double.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudRanhDoPT"), out double ranhDoPT_))
+                        if (double.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudRanhDoPT"), out double ranhDoPT_))
                         {
-                            ranhDoPT = ranhDoPT_;
+                            oluoi_boundary.ranhDoPT = ranhDoPT_;
                         }
                     }
-                    ChiaMatCatOLuoiData data = new ChiaMatCatOLuoiData();
-                    data.gocTuyChon1 = 90;
-                    data.isBacNamGoc1 = 3;
-                    data.khoangCachChia1 = ranhDoPT;
-                    //double[] latlongCenter = AppUtils.ConverLatLongToUTM(double.Parse(dr["lat_center"].ToString()), double.Parse(dr["long_center"].ToString()));
-                    //double lat_center = latlongCenter[0];
-                    //double long_center = latlongCenter[1];
-                    //MgdAcDbVNTerrainRectangle mgdAcDbVNTerrainRectangle = new MgdAcDbVNTerrainRectangle();
-                    //mgdAcDbVNTerrainRectangle.Create("OLTemp" + cb50x50.SelectedValue, lat_center, long_center, 0, 25, 3, "OLInfo",
-                    //                    DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second,
-                    //                    DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, 60);
-                    ChiaMatCatCmd cmd = new ChiaMatCatCmd();
-                    List<CecmProgramAreaLineDTO> lines = cmd.DrawLineJigAll(oluoi, data);
-                    //foreach (CecmProgramAreaLineDTO line in lines)
-                    //{
-                    //    CecmProgramAreaLineDTO lineDTO = new CecmProgramAreaLineDTO();
-                    //    lineDTO.start_x = line.StartPoint.X;
-                    //    lineDTO.start_y = line.StartPoint.Y;
-                    //    lineDTO.end_x = line.EndPoint.X;
-                    //    lineDTO.end_y = line.EndPoint.Y;
-                    //    oluoi_boundary.lstRanhDo.Add(lineDTO);
-                    //}
-                    oluoi_boundary.lstRanhDo = lines;
+                    //ChiaMatCatOLuoiData data = new ChiaMatCatOLuoiData();
+                    //data.gocTuyChon1 = 90;
+                    //data.isBacNamGoc1 = 3;
+                    //data.khoangCachChia1 = ranhDoPT;
+
+                    //convert to utm
+                    //double[] latlongCenter = AppUtils.ConverLatLongToUTM(oluoi.lat_center, oluoi.long_center);
+                    //oluoi.lat_center = latlongCenter[0];
+                    //oluoi.long_center = latlongCenter[1];
+                    //double[] latlong1 = AppUtils.ConverLatLongToUTM(oluoi.lat_corner1, oluoi.long_corner1);
+                    //oluoi.lat_corner1 = latlong1[0];
+                    //oluoi.long_corner1 = latlong1[1];
+                    //double[] latlong2 = AppUtils.ConverLatLongToUTM(oluoi.lat_corner2, oluoi.long_corner2);
+                    //oluoi.lat_corner2 = latlong2[0];
+                    //oluoi.long_corner2 = latlong2[1];
+                    //double[] latlong3 = AppUtils.ConverLatLongToUTM(oluoi.lat_corner3, oluoi.long_corner3);
+                    //oluoi.lat_corner3 = latlong3[0];
+                    //oluoi.long_corner3 = latlong3[1];
+                    //double[] latlong4 = AppUtils.ConverLatLongToUTM(oluoi.lat_corner4, oluoi.long_corner4);
+                    //oluoi.lat_corner4 = latlong4[0];
+                    //oluoi.long_corner4 = latlong4[1];
+
+                    //ChiaMatCatCmd cmd = new ChiaMatCatCmd();
+                    //List<CecmProgramAreaLineDTO> lines = cmd.DrawLineJigAll(oluoi, data);
+                    
+                    //oluoi_boundary.lstRanhDo = lines;
                     //Hết thêm rãnh dò
 
                     if (ptTimeout != null)
@@ -5266,7 +5270,7 @@ namespace VNRaPaBomMin
             //        oluoi_boundary.khoangPT = 3;
             //    }
             //}
-            if (int.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudKhoangPT"), out int khoangPT))
+            if (int.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudKhoangPT"), out int khoangPT))
             {
                 oluoi_boundary.khoangPT = khoangPT;
             }
@@ -5277,24 +5281,24 @@ namespace VNRaPaBomMin
             //        oluoi_boundary.nguongBom = nguongBom;
             //    }
             //}
-            if (double.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudNguongBom"), out double nguongBom))
+            if (double.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudNguongBom"), out double nguongBom))
             {
                 oluoi_boundary.nguongBom = nguongBom;
             }
 
-            if (double.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudNguongMin"), out double nguongMin))
+            if (double.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudNguongMin"), out double nguongMin))
             {
                 oluoi_boundary.nguongMin = nguongMin;
             }
-            if (int.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudMinClusterSize"), out int minClusterSize))
+            if (int.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudMinClusterSize"), out int minClusterSize))
             {
                 oluoi_boundary.minClusterSize = minClusterSize;
             }
-            if (double.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudMinBomb"), out double minBomb))
+            if (double.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudMinBomb"), out double minBomb))
             {
                 oluoi_boundary.minBomb = minBomb;
             }
-            if (double.TryParse(AppUtils.GetRecentInput("$MenuLoaderManagerFrm$nudMinMine"), out double minMine))
+            if (double.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudMinMine"), out double minMine))
             {
                 oluoi_boundary.minMine = minMine;
             }

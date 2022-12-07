@@ -323,7 +323,19 @@ namespace VNRaPaBomMin
                                 DataGridViewRow row = DGVThongTinBomb.Rows[i];
                                 double min = double.Parse(row.Cells[cotMin_Bomb.Index].Value.ToString());
                                 double max = double.Parse(row.Cells[cotMax_Bomb.Index].Value.ToString());
-                                TINCommand.BuildOneColorSurface(triangle, min, max, i, true);
+                                //TINCommand.BuildOneColorSurface(triangle, min, max, i, true);
+                                if (i == 0)
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, double.MinValue, max, i, true);
+                                }
+                                else if (i == DGVThongTinBomb.Rows.Count - 1)
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, min, double.MaxValue, i, true);
+                                }
+                                else
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, min, max, i, true);
+                                }
                             }
                             MapMenuCommand.Redraw();
                         }
@@ -350,7 +362,19 @@ namespace VNRaPaBomMin
                                 DataGridViewRow row = DGVThongTinMine.Rows[i];
                                 double min = double.Parse(row.Cells[cotMin_Mine.Index].Value.ToString());
                                 double max = double.Parse(row.Cells[cotMax_Mine.Index].Value.ToString());
-                                TINCommand.BuildOneColorSurface(triangle, min, max, i, false);
+                                //TINCommand.BuildOneColorSurface(triangle, min, max, i, false);
+                                if (i == 0)
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, double.MinValue, max, i, false);
+                                }
+                                else if (i == DGVThongTinMine.Rows.Count - 1)
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, min, double.MaxValue, i, false);
+                                }
+                                else
+                                {
+                                    TINCommand.BuildOneColorSurface(triangle, min, max, i, false);
+                                }
                             }
                             MapMenuCommand.Redraw();
                         }

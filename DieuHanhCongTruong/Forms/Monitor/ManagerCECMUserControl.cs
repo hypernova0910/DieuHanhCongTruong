@@ -20,6 +20,7 @@ namespace VNRaPaBomMin
         public static bool isManaging = false;
         private bool isClick = false;
         private TreeNode managingdNode = null;
+        public long idKV = -1;
 
         public ManagerCECMUserControl()
         {

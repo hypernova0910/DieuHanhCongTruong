@@ -42,94 +42,94 @@ namespace DieuHanhCongTruong.Command
                 {
                     polygon_temp.Add(A);
                     //Check điểm ở rìa lưới tam giác
-                    if (cell.Adjacency.Length < 3)
-                    {
-                        bool isInEdgeTriangles = true;
-                        foreach (CustomFace adjacent in cell.Adjacency)
-                        {
-                            if (adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1] &&
-                               adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1] &&
-                               adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1] &&
-                               adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                        }
-                        A.isInEdgeTriangles = isInEdgeTriangles;
-                    }
+                    //if (cell.Adjacency.Length < 3)
+                    //{
+                    //    bool isInEdgeTriangles = true;
+                    //    foreach (CustomFace adjacent in cell.Adjacency)
+                    //    {
+                    //        if (adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1] &&
+                    //           adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[1] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1] &&
+                    //           adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[1] == cell.Vertices[1])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[2] == cell.Vertices[0] && adjacent.Vertices[0] == cell.Vertices[1] &&
+                    //           adjacent.Vertices[0] == cell.Vertices[0] && adjacent.Vertices[2] == cell.Vertices[1])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    A.isInEdgeTriangles = isInEdgeTriangles;
+                    //}
                 }
                 InfoConnect B = TINCommand.GiaoDoanThangMatPhang(cell.Vertices[1], cell.Vertices[2], z0);
                 if (B != null)
                 {
                     polygon_temp.Add(B);
-                    if (cell.Adjacency.Length < 3)
-                    {
-                        bool isInEdgeTriangles = true;
-                        foreach (CustomFace adjacent in cell.Adjacency)
-                        {
-                            if (adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2] &&
-                               adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2] &&
-                               adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2] &&
-                               adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                        }
-                        A.isInEdgeTriangles = isInEdgeTriangles;
-                    }
+                    //if (cell.Adjacency.Length < 3)
+                    //{
+                    //    bool isInEdgeTriangles = true;
+                    //    foreach (CustomFace adjacent in cell.Adjacency)
+                    //    {
+                    //        if (adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2] &&
+                    //           adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[1] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2] &&
+                    //           adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[1] == cell.Vertices[2])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[2] == cell.Vertices[1] && adjacent.Vertices[0] == cell.Vertices[2] &&
+                    //           adjacent.Vertices[0] == cell.Vertices[1] && adjacent.Vertices[2] == cell.Vertices[2])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    A.isInEdgeTriangles = isInEdgeTriangles;
+                    //}
                 }
                 InfoConnect C = TINCommand.GiaoDoanThangMatPhang(cell.Vertices[2], cell.Vertices[0], z0);
                 if (C != null)
                 {
                     polygon_temp.Add(C);
-                    if (cell.Adjacency.Length < 3)
-                    {
-                        bool isInEdgeTriangles = true;
-                        foreach (CustomFace adjacent in cell.Adjacency)
-                        {
-                            if (adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0] &&
-                               adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0] &&
-                               adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                            if (adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0] &&
-                               adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0])
-                            {
-                                isInEdgeTriangles = false;
-                                break;
-                            }
-                        }
-                        A.isInEdgeTriangles = isInEdgeTriangles;
-                    }
+                    //if (cell.Adjacency.Length < 3)
+                    //{
+                    //    bool isInEdgeTriangles = true;
+                    //    foreach (CustomFace adjacent in cell.Adjacency)
+                    //    {
+                    //        if (adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0] &&
+                    //           adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[1] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0] &&
+                    //           adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[1] == cell.Vertices[0])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //        if (adjacent.Vertices[2] == cell.Vertices[2] && adjacent.Vertices[0] == cell.Vertices[0] &&
+                    //           adjacent.Vertices[0] == cell.Vertices[2] && adjacent.Vertices[2] == cell.Vertices[0])
+                    //        {
+                    //            isInEdgeTriangles = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    A.isInEdgeTriangles = isInEdgeTriangles;
+                    //}
                 }
                 //sắp xếp các điểm theo thứ tự
                 if (polygon_temp.Count == 0)
