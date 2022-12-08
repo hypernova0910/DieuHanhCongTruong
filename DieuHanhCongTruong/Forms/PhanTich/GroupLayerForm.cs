@@ -8,109 +8,14 @@ namespace VNRaPaBomMin
 {
     public partial class GroupLayerForm : Form
     {
+        private const string POINT_LAYER_NAME = "Điểm đã thu thập";
+        private const string SURFACE_LAYER_NAME = "Bề mặt từ trường";
+        private const string FLAG_LAYER_NAME = "Cờ";
+        private const string SUSPECT_POINT_LAYER_NAME = "Điểm nghi ngờ";
+
         public GroupLayerForm()
         {
             InitializeComponent();
-        }
-
-        public void LoadDGV(List<string> listValueOut)
-        {
-            //try
-            //{
-            //    bool hasCheckedItem = true;
-            //    DGVData.Rows.Clear();
-            //    int index = 0;
-            //    if (listValueOut != null)
-            //    {
-            //        string[] arrData = new string[listValueOut.Count];
-            //        arrData = listValueOut.ToArray();
-            //        for (int i = 0; i < listValueOut.Count; i++)
-            //        {
-            //            string[] ss = new string[3];
-            //            ss = arrData[i].Split(';');
-            //            if (ss[0] != null && ss[1] != null && ss[2] != null && ss[3] != null)
-            //                if (ss[1] != "" || ss[2] != "" || ss[3] != "")
-            //                {
-            //                    DGVData.Rows.Add(ss[1], "");
-            //                    if (ss[2] != null && ss[2].Length > 0)
-            //                    {
-            //                        string[] ss2 = ss[2].Split(',');
-            //                        for (int k = 0; k < ss2.Length; k++)
-            //                        {
-            //                            if (ClassGroupLayer.findLayerOnOff(ss2[k]))
-            //                            {
-            //                                DGVData.Rows[index].Cells["Visible"].Value = true;
-            //                                index++;
-            //                                break;
-            //                            }
-            //                            else
-            //                            {
-            //                                DGVData.Rows[index].Cells["Visible"].Value = false;
-            //                                hasCheckedItem = false;
-            //                                index++;
-            //                                break;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //        }
-            //    }
-
-            //    DGVData.Rows.Add("Các lớp", "");
-            //    DGVData.Rows[index].Cells["Visible"].Value = hasCheckedItem;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MyLogger.Log(string.Format("Có lỗi xảy ra trong quá trình hiển thị lớp {0}", ex.Message));
-            //}
-        }
-
-        public void findLayerNameOnOff(List<string> listData, ref List<string> layerOn, ref List<string> layerOff)
-        {
-            if (listData != null)
-            {
-                string[] arrData = new string[listData.Count];
-                arrData = listData.ToArray();
-                for (int i = 0; i < listData.Count; i++)
-                {
-                    string[] ss = new string[4];
-                    ss = arrData[i].Split(';');
-                    if (ss[0] != null && ss[1] != null && ss[2] != null && ss[3] != null)
-                    {
-                        if (ss[2] != "")
-                        {
-                            if ((bool)DGVData.Rows[i].Cells[1].Value == true)
-                            {
-                                string[] desc = ss[2].Split(',');
-                                if (desc != null && desc.Length > 0)
-                                {
-                                    for (int j = 0; j < desc.Length; j++)
-                                    {
-                                        string[] layer = ss[2].Split(',');
-                                        for (int k = 0; k < layer.Length; k++)
-                                            if (layer != null && layer.Length > 0 && !layerOn.Contains(layer[k]))
-                                                layerOn.Add(layer[k]);
-                                    }
-                                }
-                            }
-                            if ((bool)DGVData.Rows[i].Cells[1].Value == false)
-                            {
-                                string[] desc = ss[2].Split(',');
-                                if (desc != null && desc.Length > 0)
-                                {
-                                    for (int j = 0; j < desc.Length; j++)
-                                    {
-                                        string[] layer = ss[2].Split(',');
-                                        for (int k = 0; k < layer.Length; k++)
-                                            if (layer != null && layer.Length > 0 && !layerOff.Contains(layer[k]))
-                                                layerOff.Add(layer[k]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -120,52 +25,6 @@ namespace VNRaPaBomMin
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    bool itemcheked = true;
-            //    foreach (DataGridViewRow row in DGVData.Rows)
-            //    {
-            //        if ((bool)row.Cells[1].Value == false && row.Cells[0].Value.ToString() != "Các lớp")
-            //        {
-            //            itemcheked = false;
-            //        }
-            //    }
-
-            //    if ((bool)DGVData.Rows[DGVData.Rows.Count - 1].Cells[1].Value == true && itemcheked == true)
-            //    {
-            //        List<string> listValueOut = new List<string>();
-            //        List<string> layerOn = new List<string>();
-            //        List<string> layerOff = new List<string>();
-            //        List<string> alllayerOn = new List<string>();
-            //        listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
-            //        findLayerNameOnOff(listValueOut, ref layerOn, ref layerOff);
-            //        int number = ClassGroupLayer.onLayer(layerOn);
-            //        ClassGroupLayer.onLayer(layerOff);
-            //        Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.UpdateScreen();
-
-            //        DGVData.Rows.Clear();
-            //        LoadDGV(listValueOut);
-            //    }
-            //    else
-            //    {
-            //        List<string> listValueOut = new List<string>();
-            //        List<string> layerOn = new List<string>();
-            //        List<string> layerOff = new List<string>();
-            //        List<string> alllayerOn = new List<string>();
-            //        listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
-            //        findLayerNameOnOff(listValueOut, ref layerOn, ref layerOff);
-            //        int number = ClassGroupLayer.onLayer(layerOn);
-            //        ClassGroupLayer.offLayer(layerOff);
-            //        Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.UpdateScreen();
-
-            //        DGVData.Rows.Clear();
-            //        LoadDGV(listValueOut);
-            //    }
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    MyLogger.Log("Đã có lỗi xảy ra khi tắt bật lớp! {0}", ex.Message);
-            //}
             ApplyChange();
             this.Close();
         }
@@ -176,118 +35,154 @@ namespace VNRaPaBomMin
             //listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
             //LoadDGV(listValueOut);
             bool hasCheckedItem = true;
-            if (MapMenuCommand.machinePointBombLayers.Count > 0)
+            if (MapMenuCommand.machinePointBombLayers.Count > 0 &&
+                MapMenuCommand.machinePointMineLayers.Count > 0 &&
+                MapMenuCommand.machinePointBombModelLayers.Count > 0 &&
+                MapMenuCommand.machinePointMineModelLayers.Count > 0)
             {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombLayers[0]);
-                int index = DGVData.Rows.Add("Quỹ đạo đo (bom chưa nắn)", visible);
+                bool visible;
                 List<int> layers = new List<int>();
-                layers.AddRange(MapMenuCommand.machinePointBombLayers);
-                layers.AddRange(MapMenuCommand.machineLineBombLayers);
+                bool showBomb = MyMainMenu2.Instance.rbBomb.Checked;
+                bool showModel = MyMainMenu2.Instance.rbModel.Checked;
+                if (showBomb && !showModel)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombLayers[0]);
+                    layers.AddRange(MapMenuCommand.machinePointBombLayers);
+                    layers.AddRange(MapMenuCommand.machineLineBombLayers);
+                }
+                else if(!showBomb && !showModel)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineLayers[0]);
+                    layers.AddRange(MapMenuCommand.machinePointMineLayers);
+                    layers.AddRange(MapMenuCommand.machineLineMineLayers);
+                }
+                else if(showBomb && showModel)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombModelLayers[0]);
+                    layers.AddRange(MapMenuCommand.machinePointBombModelLayers);
+                    layers.AddRange(MapMenuCommand.machineLineBombModelLayers);
+                }
+                else
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineModelLayers[0]);
+                    layers.AddRange(MapMenuCommand.machinePointMineModelLayers);
+                    layers.AddRange(MapMenuCommand.machineLineMineModelLayers);
+                }
+                int index = DGVData.Rows.Add(POINT_LAYER_NAME, visible);
+                
                 DGVData.Rows[index].Tag = layers;
                 if (!visible)
                 {
                     hasCheckedItem = false;
                 }
             }
-            if (MapMenuCommand.machinePointMineLayers.Count > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineLayers[0]);
-                int index = DGVData.Rows.Add("Quỹ đạo đo (mìn chưa nắn)", visible);
-                List<int> layers = new List<int>();
-                layers.AddRange(MapMenuCommand.machinePointMineLayers);
-                layers.AddRange(MapMenuCommand.machineLineMineLayers);
-                DGVData.Rows[index].Tag = layers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if (MapMenuCommand.machinePointBombModelLayers.Count > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombModelLayers[0]);
-                int index = DGVData.Rows.Add("Quỹ đạo đo (bom đã nắn)", visible);
-                List<int> layers = new List<int>();
-                layers.AddRange(MapMenuCommand.machinePointBombModelLayers);
-                layers.AddRange(MapMenuCommand.machineLineBombModelLayers);
-                DGVData.Rows[index].Tag = layers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if (MapMenuCommand.machinePointMineModelLayers.Count > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineModelLayers[0]);
-                int index = DGVData.Rows.Add("Quỹ đạo đo (mìn đã nắn)", visible);
-                List<int> layers = new List<int>();
-                layers.AddRange(MapMenuCommand.machinePointMineModelLayers);
-                layers.AddRange(MapMenuCommand.machineLineMineModelLayers);
-                DGVData.Rows[index].Tag = layers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if (MapMenuCommand.polygonLayers.Count > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]);
-                int index = DGVData.Rows.Add("Bề mặt địa hình (bom)", visible);
-                DGVData.Rows[index].Tag = MapMenuCommand.polygonLayers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if (MapMenuCommand.polygonLayersMine.Count > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayersMine[0]);
-                int index = DGVData.Rows.Add("Bề mặt địa hình (mìn)", visible);
-                DGVData.Rows[index].Tag = MapMenuCommand.polygonLayersMine;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if(MapMenuCommand.flagBombLayer > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagBombLayer);
-                int index = DGVData.Rows.Add("Cờ (bom)", visible);
-                List<int> layers = new List<int>();
-                layers.Add(MapMenuCommand.flagBombLayer);
-                DGVData.Rows[index].Tag = layers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            if (MapMenuCommand.flagMineLayer > 0)
-            {
-                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagMineLayer);
-                int index = DGVData.Rows.Add("Cờ (mìn)", visible);
-                List<int> layers = new List<int>();
-                layers.Add(MapMenuCommand.flagMineLayer);
-                DGVData.Rows[index].Tag = layers;
-                if (!visible)
-                {
-                    hasCheckedItem = false;
-                }
-            }
-            //if (MapMenuCommand.machinePointBombLayers.Count > 0)
+            //if (MapMenuCommand.machinePointMineLayers.Count > 0)
             //{
-            //    bool visiblePoint;
-            //    if (MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombLayers[0]) ||
-            //       MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineLayers[0]) ||
-            //       MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombModelLayers[0]) ||
-            //       MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineModelLayers[0]))
+            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineLayers[0]);
+            //    int index = DGVData.Rows.Add("Quỹ đạo đo (mìn chưa nắn)", visible);
+            //    List<int> layers = new List<int>();
+            //    layers.AddRange(MapMenuCommand.machinePointMineLayers);
+            //    layers.AddRange(MapMenuCommand.machineLineMineLayers);
+            //    DGVData.Rows[index].Tag = layers;
+            //    if (!visible)
             //    {
-            //        visiblePoint = true;
+            //        hasCheckedItem = false;
             //    }
-            //    else
+            //}
+            //if (MapMenuCommand.machinePointBombModelLayers.Count > 0)
+            //{
+            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointBombModelLayers[0]);
+            //    int index = DGVData.Rows.Add("Quỹ đạo đo (bom đã nắn)", visible);
+            //    List<int> layers = new List<int>();
+            //    layers.AddRange(MapMenuCommand.machinePointBombModelLayers);
+            //    layers.AddRange(MapMenuCommand.machineLineBombModelLayers);
+            //    DGVData.Rows[index].Tag = layers;
+            //    if (!visible)
             //    {
-            //        visiblePoint = false;
+            //        hasCheckedItem = false;
             //    }
-            //    DGVData.Rows.Add("Quỹ đạo đo", visiblePoint);
-            //} 
+            //}
+            //if (MapMenuCommand.machinePointMineModelLayers.Count > 0)
+            //{
+            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.machinePointMineModelLayers[0]);
+            //    int index = DGVData.Rows.Add("Quỹ đạo đo (mìn đã nắn)", visible);
+            //    List<int> layers = new List<int>();
+            //    layers.AddRange(MapMenuCommand.machinePointMineModelLayers);
+            //    layers.AddRange(MapMenuCommand.machineLineMineModelLayers);
+            //    DGVData.Rows[index].Tag = layers;
+            //    if (!visible)
+            //    {
+            //        hasCheckedItem = false;
+            //    }
+            //}
+            if (MapMenuCommand.polygonLayers.Count > 0 &&
+                MapMenuCommand.polygonLayersMine.Count > 0)
+            {
+                bool showBomb = MyMainMenu2.Instance.rbBomb.Checked;
+                bool visible;
+                List<int> layer;
+                if (showBomb)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]);
+                    layer = MapMenuCommand.polygonLayers;
+                }
+                else
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayersMine[0]);
+                    layer = MapMenuCommand.polygonLayersMine;
+                }
+                int index = DGVData.Rows.Add(SURFACE_LAYER_NAME, visible);
+                DGVData.Rows[index].Tag = layer;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
+            //if (MapMenuCommand.polygonLayersMine.Count > 0)
+            //{
+            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayersMine[0]);
+            //    int index = DGVData.Rows.Add("Bề mặt địa hình (mìn)", visible);
+            //    DGVData.Rows[index].Tag = MapMenuCommand.polygonLayersMine;
+            //    if (!visible)
+            //    {
+            //        hasCheckedItem = false;
+            //    }
+            //}
+            if (MapMenuCommand.flagBombLayer > 0 &&
+                MapMenuCommand.flagMineLayer > 0)
+            {
+                bool showBomb = MyMainMenu2.Instance.rbBomb.Checked;
+                List<int> layers = new List<int>();
+                bool visible;
+                if (showBomb)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagBombLayer);
+                    layers.Add(MapMenuCommand.flagBombLayer);
+                }
+                else
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagMineLayer);
+                    layers.Add(MapMenuCommand.flagMineLayer);
+                }
+                int index = DGVData.Rows.Add(FLAG_LAYER_NAME, visible);
+                DGVData.Rows[index].Tag = layers;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
+            //if (MapMenuCommand.flagMineLayer > 0)
+            //{
+            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagMineLayer);
+            //    int index = DGVData.Rows.Add("Cờ (mìn)", visible);
+            //    List<int> layers = new List<int>();
+            //    layers.Add(MapMenuCommand.flagMineLayer);
+            //    DGVData.Rows[index].Tag = layers;
+            //    if (!visible)
+            //    {
+            //        hasCheckedItem = false;
+            //    }
+            //}
 
             if (MapMenuCommand.imageLayers.Count > 0)
             {
@@ -335,19 +230,33 @@ namespace VNRaPaBomMin
                     hasCheckedItem = false;
                 }
             }
-            //if (MapMenuCommand.suspectPointLayerBomb >= 0)
-            //{
-            //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerBomb);
-            //    int index = DGVData.Rows.Add("Điểm nghi ngờ (bom)", visible);
-            //    List<int> layers = new List<int>();
-            //    layers.Add(MapMenuCommand.suspectPointLayerBomb);
-            //    layers.Add(MapMenuCommand.userSuspectPointLayerBomb);
-            //    DGVData.Rows[index].Tag = layers;
-            //    if (!visible)
-            //    {
-            //        hasCheckedItem = false;
-            //    }
-            //}
+            if (MapMenuCommand.suspectPointLayerBomb >= 0 &&
+                MapMenuCommand.suspectPointLayerMine >= 0 &&
+                MapMenuCommand.userSuspectPointLayerBomb >= 0 &&
+                MapMenuCommand.userSuspectPointLayerMine >= 0)
+            {
+                bool showBomb = MyMainMenu2.Instance.rbBomb.Checked;
+                bool visible;
+                List<int> layers = new List<int>();
+                if (showBomb)
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerBomb);
+                    layers.Add(MapMenuCommand.suspectPointLayerBomb);
+                    layers.Add(MapMenuCommand.userSuspectPointLayerBomb);
+                }
+                else
+                {
+                    visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerMine);
+                    layers.Add(MapMenuCommand.suspectPointLayerMine);
+                    layers.Add(MapMenuCommand.userSuspectPointLayerMine);
+                }
+                int index = DGVData.Rows.Add(SUSPECT_POINT_LAYER_NAME, visible);
+                DGVData.Rows[index].Tag = layers;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
             //if (MapMenuCommand.suspectPointLayerMine >= 0)
             //{
             //    bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.suspectPointLayerMine);
@@ -367,52 +276,6 @@ namespace VNRaPaBomMin
 
         private void btApDung_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    bool itemcheked = true;
-            //    foreach (DataGridViewRow row in DGVData.Rows)
-            //    {
-            //        if ((bool)row.Cells[1].Value == false && row.Cells[0].Value.ToString() != "Các lớp")
-            //        {
-            //            itemcheked = false;
-            //        }
-            //    }
-
-            //    if ((bool)DGVData.Rows[DGVData.Rows.Count - 1].Cells[1].Value == true && itemcheked == true)
-            //    {
-            //        List<string> listValueOut = new List<string>();
-            //        List<string> layerOn = new List<string>();
-            //        List<string> layerOff = new List<string>();
-            //        List<string> alllayerOn = new List<string>();
-            //        listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
-            //        findLayerNameOnOff(listValueOut, ref layerOn, ref layerOff);
-            //        int number = ClassGroupLayer.onLayer(layerOn);
-            //        ClassGroupLayer.onLayer(layerOff);
-            //        Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.UpdateScreen();
-
-            //        DGVData.Rows.Clear();
-            //        LoadDGV(listValueOut);
-            //    }
-            //    else
-            //    {
-            //        List<string> listValueOut = new List<string>();
-            //        List<string> layerOn = new List<string>();
-            //        List<string> layerOff = new List<string>();
-            //        List<string> alllayerOn = new List<string>();
-            //        listValueOut = ClassGroupLayer.CreateDictionary(ClassGroupLayer.CreateListData());
-            //        findLayerNameOnOff(listValueOut, ref layerOn, ref layerOff);
-            //        int number = ClassGroupLayer.onLayer(layerOn);
-            //        ClassGroupLayer.offLayer(layerOff);
-            //        Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.UpdateScreen();
-
-            //        DGVData.Rows.Clear();
-            //        LoadDGV(listValueOut);
-            //    }
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    MyLogger.Log("Đã có lỗi xảy ra khi tắt bật lớp! {0}", ex.Message);
-            //}
             ApplyChange();
         }
 
@@ -420,24 +283,28 @@ namespace VNRaPaBomMin
         {
             foreach (DataGridViewRow row in DGVData.Rows)
             {
-                //if(row.Cells[Layer.Index].Value.ToString() == "Quỹ đạo đo")
-                //{
-                //    bool isBomb = MyMainMenu2.Instance.rbBomb.Checked;
-                //    bool isModel = MyMainMenu2.Instance.rbModel.Checked;
-                //    bool visible = (bool)row.Cells[1].Value;
-                //    if (visible)
-                //    {
-                //        MapMenuCommand.toggleLayer(isBomb, isModel);
-                //    }
-                //}
-                //else
-                //{
-                    List<int> layers = row.Tag as List<int>;
-                    foreach (int layer in layers)
-                    {
-                        MapMenuCommand.axMap1.set_LayerVisible(layer, (bool)row.Cells[1].Value);
-                    }
-                //}
+                string layerName = row.Cells[cotLayer.Index].Value.ToString();
+                if(layerName == POINT_LAYER_NAME)
+                {
+                    MapMenuCommand.pointVisible = (bool)row.Cells[cotVisible.Index].Value;
+                }
+                else if(layerName == SURFACE_LAYER_NAME)
+                {
+                    MapMenuCommand.surfaceVisible = (bool)row.Cells[cotVisible.Index].Value;
+                }
+                else if(layerName == FLAG_LAYER_NAME)
+                {
+                    MapMenuCommand.flagVisible = (bool)row.Cells[cotVisible.Index].Value;
+                }
+                else if(layerName == SUSPECT_POINT_LAYER_NAME)
+                {
+                    MapMenuCommand.suspectPointVisible = (bool)row.Cells[cotVisible.Index].Value;
+                }
+                List<int> layers = row.Tag as List<int>;
+                foreach (int layer in layers)
+                {
+                    MapMenuCommand.axMap1.set_LayerVisible(layer, (bool)row.Cells[cotVisible.Index].Value);
+                }
                 
             }
         }

@@ -89,7 +89,10 @@ namespace DieuHanhCongTruong.Command
         private static int MIN_TIME_NEW_LINE = 90;
         private static double MIN_DISTANCE_NEW_LINE = 7;
 
-        private static Color[] activeMachineColor;
+        public static bool pointVisible = true;
+        public static bool surfaceVisible = true;
+        public static bool flagVisible = true;
+        public static bool suspectPointVisible = true;
 
         //private static string[] machine_colors = {
         //    "#A2231D",
@@ -114,7 +117,6 @@ namespace DieuHanhCongTruong.Command
 
         public static void LoadMap()
         {
-            activeMachineColor = Constants.MACHINE_COLORS.Select(color => ColorTranslator.FromHtml(color)).ToArray();
             initPolygonAreaLayer();
             initPolygonLayer(true, false);
             InitPointImageLayer(true, false);
@@ -2001,7 +2003,7 @@ namespace DieuHanhCongTruong.Command
                     axMap1.Redraw();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -2302,59 +2304,59 @@ namespace DieuHanhCongTruong.Command
             //axMap1.set_LayerVisible(polygonLayer, show);
             foreach (int layer in polygonLayers)
             {
-                axMap1.set_LayerVisible(layer, showBomb);
+                axMap1.set_LayerVisible(layer, showBomb && surfaceVisible);
             }
             foreach (int layer in polygonLayersMine)
             {
-                axMap1.set_LayerVisible(layer, !showBomb);
+                axMap1.set_LayerVisible(layer, !showBomb && surfaceVisible);
             }
 
-            axMap1.set_LayerVisible(flagBombLayer, showBomb);
-            axMap1.set_LayerVisible(flagMineLayer, !showBomb);
+            axMap1.set_LayerVisible(flagBombLayer, showBomb && flagVisible);
+            axMap1.set_LayerVisible(flagMineLayer, !showBomb && flagVisible);
 
-            axMap1.set_LayerVisible(suspectPointLayerBomb, showBomb);
-            axMap1.set_LayerVisible(userSuspectPointLayerBomb, showBomb);
-            axMap1.set_LayerVisible(suspectPointLayerMine, !showBomb);
-            axMap1.set_LayerVisible(userSuspectPointLayerMine, !showBomb);
+            axMap1.set_LayerVisible(suspectPointLayerBomb, showBomb && suspectPointVisible);
+            axMap1.set_LayerVisible(userSuspectPointLayerBomb, showBomb && suspectPointVisible);
+            axMap1.set_LayerVisible(suspectPointLayerMine, !showBomb && suspectPointVisible);
+            axMap1.set_LayerVisible(userSuspectPointLayerMine, !showBomb && suspectPointVisible);
 
             foreach (int layer in machinePointBombLayers)
             {
-                bool visible = showBomb && !showModel;
+                bool visible = showBomb && !showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineBombLayers)
             {
-                bool visible = showBomb && !showModel;
+                bool visible = showBomb && !showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointBombModelLayers)
             {
-                bool visible = showBomb && showModel;
+                bool visible = showBomb && showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineBombModelLayers)
             {
-                bool visible = showBomb && showModel;
+                bool visible = showBomb && showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointMineLayers)
             {
-                bool visible = !showBomb && !showModel;
+                bool visible = !showBomb && !showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineMineLayers)
             {
-                bool visible = !showBomb && !showModel;
+                bool visible = !showBomb && !showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machinePointMineModelLayers)
             {
-                bool visible = !showBomb && showModel;
+                bool visible = !showBomb && showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
             foreach (int layer in machineLineMineModelLayers)
             {
-                bool visible = !showBomb && showModel;
+                bool visible = !showBomb && showModel && pointVisible;
                 axMap1.set_LayerVisible(layer, visible);
             }
         }

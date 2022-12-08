@@ -377,7 +377,7 @@ namespace DieuHanhCongTruong.Command
         public static void BatTatDoiTuong(object sender, EventArgs e)
         {
             GroupLayerForm form = new GroupLayerForm();
-            form.Show();
+            form.ShowDialog();
         }
     }
 }
