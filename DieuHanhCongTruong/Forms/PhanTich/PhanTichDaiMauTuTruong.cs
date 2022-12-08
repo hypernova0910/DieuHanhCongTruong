@@ -107,6 +107,10 @@ namespace VNRaPaBomMin
 
         private void DGVThongTin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
             //selectedRow = e.RowIndex;
             if (e.ColumnIndex != cotColor_Bomb.Index || e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
@@ -582,6 +586,10 @@ namespace VNRaPaBomMin
 
         private void DGVThongTinMine_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
             if (e.ColumnIndex != cotColor_Mine.Index || e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
             DataGridViewButtonCell buttonCell = (DataGridViewButtonCell)DGVThongTinMine.Rows[e.RowIndex].Cells[cotColor_Mine.Index];

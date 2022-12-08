@@ -37,6 +37,7 @@ namespace DieuHanhCongTruong.Forms.PhanTich
             this.btnOk = new System.Windows.Forms.Button();
             this.tbDuAn = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label49 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,11 +112,22 @@ namespace DieuHanhCongTruong.Forms.PhanTich
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.ForeColor = System.Drawing.Color.Red;
+            this.label49.Location = new System.Drawing.Point(114, 78);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(13, 17);
+            this.label49.TabIndex = 315;
+            this.label49.Text = "*";
+            // 
             // SelectVungDuAn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 213);
+            this.Controls.Add(this.label49);
             this.Controls.Add(this.tbDuAn);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -145,5 +157,6 @@ namespace DieuHanhCongTruong.Forms.PhanTich
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TextBox tbDuAn;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label49;
     }
 }

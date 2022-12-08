@@ -32,6 +32,7 @@ namespace VNRaPaBomMin
         private ConnectionWithExtraInfo _ExtraInfoConnettion = null;
 
         private int suspectPointLayer = -1;
+        private int suspectPointMineLayer = -1;
         private int highlightLayer = -1;
         private int labelLayer = -1;
         private int oluoiLayer = -1;
@@ -123,8 +124,9 @@ namespace VNRaPaBomMin
             lineLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
             InitOLuoiRanhDo();
             InitSuspectPointLayer();
-            LoadData();
+            InitSuspectPointMineLayer();
             InitHighlightLayer();
+            LoadData();
             labelLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
         }
 
@@ -208,13 +210,6 @@ namespace VNRaPaBomMin
 
         private void InitSuspectPointLayer()
         {
-            //axMap1.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
-            //string filename = dataPath + "buildings.shp";
-            //if (!File.Exists(filename))
-            //{
-            //    MessageBox.Show("Couldn't file the file: " + filename);
-            //    return;
-            //}
             Shapefile sf = new Shapefile();
             //sf.Open(filename, null);
             suspectPointLayer = axMap1.AddLayer(sf, true);
@@ -233,9 +228,28 @@ namespace VNRaPaBomMin
             options.Picture = this.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
-            //axMap1.SendMouseDown = true;
-            //axMap1.CursorMode = tkCursorMode.cmNone;
-            //axMap1.MouseDownEvent += AxMap1MouseDownEvent;   // change MapEvents to axMap1
+        }
+
+        private void InitSuspectPointMineLayer()
+        {
+            Shapefile sf = new Shapefile();
+            //sf.Open(filename, null);
+            suspectPointMineLayer = axMap1.AddLayer(sf, true);
+            sf = axMap1.get_Shapefile(suspectPointMineLayer);     // in case a copy of shapefile was created by GlobalSettings.ReprojectLayersOnAdding
+            sf = new Shapefile();
+            if (!sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT))
+            {
+                MessageBox.Show("Failed to create shapefile: " + sf.ErrorMsg[sf.LastErrorCode]);
+                return;
+            }
+            suspectPointMineLayer = axMap1.AddLayer(sf, true);
+            ShapeDrawingOptions options = sf.DefaultDrawingOptions;
+            options.PointType = tkPointSymbolType.ptSymbolPicture;
+            var pathpng = AppUtils.GetAppDataPath();
+            pathpng = System.IO.Path.Combine(pathpng, "marker min.png");
+            options.Picture = this.OpenImage(pathpng);
+            options.AlignPictureByBottom = false;
+            sf.CollisionMode = tkCollisionMode.AllowCollisions;
         }
 
         public void InitHighlightLayer()
@@ -273,6 +287,14 @@ namespace VNRaPaBomMin
         public Shape addSuspectPoint(Vertex vertex)
         {
             Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
+            if(vertex.TypeBombMine == Vertex.TYPE_BOMB)
+            {
+                sf = axMap1.get_Shapefile(suspectPointLayer);
+            }
+            else
+            {
+                sf = axMap1.get_Shapefile(suspectPointMineLayer);
+            }
             Shape shp = new Shape();
             shp.Create(ShpfileType.SHP_POINT);
             Point pnt = new Point();
@@ -297,7 +319,7 @@ namespace VNRaPaBomMin
 
         public void removeSuspectPoint(Shape shape)
         {
-            Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
+            //Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
             //Shape shp = new Shape();
             //shp.Create(ShpfileType.SHP_POINT);
             //Point pnt = new Point();
@@ -339,10 +361,16 @@ namespace VNRaPaBomMin
 
         private void resetPoints()
         {
-            axMap1.RemoveLayer(suspectPointLayer);
-            InitSuspectPointLayer();
-            axMap1.RemoveLayer(highlightLayer);
-            InitHighlightLayer();
+            //axMap1.RemoveLayer(suspectPointLayer);
+            //InitSuspectPointLayer();
+            //axMap1.RemoveLayer(highlightLayer);
+            //InitHighlightLayer();
+            Shapefile sf = axMap1.get_Shapefile(suspectPointLayer);
+            sf.EditClear();
+            sf = axMap1.get_Shapefile(suspectPointMineLayer);
+            sf.EditClear();
+            sf = axMap1.get_Shapefile(highlightLayer);
+            sf.EditClear();
             axMap1.ClearDrawingLabels(labelLayer);
         }
 
@@ -481,8 +509,8 @@ namespace VNRaPaBomMin
                 pro.name as programIdST, 
                 CONCAT(area_map.code, ' - ', area_map.address) as idAreaST,
                 ol.o_id as idRectangleST,
-                Kinhdo, Vido, ZPoint, Deep,
-                CONCAT(tbl.XPoint, ', ', tbl.YPoint) as position,
+                Kinhdo, Vido, ZPoint, Deep, IsBomb,
+                CONCAT(tbl.Kinhdo, ', ', tbl.Vido) as position,
                 FORMAT(tbl.TimeExecute, 'HH:mm:ss dd/MM/yyyy') as timeST
                 FROM Cecm_VNTerrainMinePoint tbl
                 left join cecm_programData pro on (pro.id = tbl.programId)
@@ -570,7 +598,7 @@ namespace VNRaPaBomMin
                         //    linhVucHoatDong = FindLinhVuc(action_type);
                         //}
                         //Coordinate coordinate = new Coordinate(double.Parse(dr["YPoint"].ToString()), double.Parse(dr["XPoint"].ToString()));
-                        Vertex vertex = new Vertex(double.Parse(dr["Kinhdo"].ToString()), double.Parse(dr["Vido"].ToString()), double.Parse(dr["ZPoint"].ToString()));
+                        Vertex vertex = new Vertex(double.Parse(dr["Kinhdo"].ToString()), double.Parse(dr["Vido"].ToString()), double.Parse(dr["ZPoint"].ToString()), int.TryParse(dr["IsBomb"].ToString(), out int IsBomb) ? IsBomb : Vertex.TYPE_BOMB);
                         vertex.depth = double.Parse(dr["Deep"].ToString());
                         //dgvBMVN.Rows[i].Tag = dr["id"].ToString();
                         
@@ -583,7 +611,8 @@ namespace VNRaPaBomMin
                             dr["idAreaST"].ToString(),
                             dr["idRectangleST"].ToString(),
                             dr["position"].ToString(),
-                            dr["timeST"].ToString()
+                            dr["timeST"].ToString(),
+                            dr["IsBomb"].ToString() == "1" ? "Bom" : "Mìn"
                             );
                         dgvBMVN.Rows[i].Tag = vertex;
 
@@ -894,10 +923,9 @@ namespace VNRaPaBomMin
                 //dgvBMVN.SelectedRows[0]
                 Vertex vertex = dgvBMVN.SelectedRows[0].Tag as Vertex;
                 axMap1.ClearDrawingLabels(labelLayer);
-                axMap1.RemoveLayer(highlightLayer);
-                InitHighlightLayer();
-                //axMap1.SetLatitudeLongitude(latt, longt);
-                //axMap1.ZoomToTileLevel(25);
+                //axMap1.RemoveLayer(highlightLayer);
+                //InitHighlightLayer();
+                axMap1.get_Shapefile(highlightLayer).EditClear();
                 Extents extents = new Extents();
                 extents.SetBounds(vertex.X - 0.00001, vertex.Y - 0.00001, 0, vertex.X + 0.00001, vertex.Y + 0.00001, 0);
                 axMap1.Extents = extents;
@@ -948,8 +976,9 @@ namespace VNRaPaBomMin
                             if (e3.x < ext.xMin || e3.x > ext.xMax || e3.y < ext.yMin || e3.y > ext.yMax)
                             {
                                 labels.Visible = false;
-                                axMap1.RemoveLayer(highlightLayer);
-                                InitHighlightLayer();
+                                //axMap1.RemoveLayer(highlightLayer);
+                                //InitHighlightLayer();
+                                axMap1.get_Shapefile(highlightLayer).EditClear();
                             }
                         }
                     }

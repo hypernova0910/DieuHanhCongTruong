@@ -969,6 +969,7 @@
     <Compile Include="Models\Point2d.cs" />
     <Compile Include="Models\Point3d.cs" />
     <Compile Include="Models\PointDTO.cs" />
+    <Compile Include="Models\TabPageTag.cs" />
     <Compile Include="Models\TimeQuery.cs" />
     <Compile Include="Models\Vertex.cs" />
     <Compile Include="Program.cs" />

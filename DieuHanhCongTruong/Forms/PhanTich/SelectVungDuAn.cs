@@ -48,6 +48,7 @@ namespace DieuHanhCongTruong.Forms.PhanTich
                 cbKhuVuc.DisplayMember = "name";
                 cbKhuVuc.ValueMember = "id";
 
+                cbKhuVuc.SelectedValue = MyMainMenu2.Instance.managerCECMUserControl1.idKV;
             }
             catch (Exception ex)
             {

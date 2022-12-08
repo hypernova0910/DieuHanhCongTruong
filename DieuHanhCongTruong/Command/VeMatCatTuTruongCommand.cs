@@ -72,13 +72,13 @@ namespace DieuHanhCongTruong.Command
                 CecmProgramAreaLineDTO line = JsonConvert.DeserializeObject<CecmProgramAreaLineDTO>(shp.Key);
                 Point pnt_start = shp.Point[0];
                 Point pnt_end = shp.Point[1];
-                Draw(pnt_start.y, pnt_start.x, pnt_end.y, pnt_end.x, line);
+                Draw(pnt_start.y, pnt_start.x, pnt_end.y, pnt_end.x, line, e.shapeIndex);
                 
                 Exit();
             }
         }
 
-        private static void Draw(double latt1, double longt1, double latt2, double longt2, CecmProgramAreaLineDTO line)
+        private static void Draw(double latt1, double longt1, double latt2, double longt2, CecmProgramAreaLineDTO line, int lineShapeIndex)
         {
             double[] utm1 = AppUtils.ConverLatLongToUTM(latt1, longt1);
             double[] utm2 = AppUtils.ConverLatLongToUTM(latt2, longt2);
@@ -86,16 +86,20 @@ namespace DieuHanhCongTruong.Command
             List<Point2d> points = new List<Point2d>();
             Dictionary<long, List<CustomFace>> idKV__triangulations;
             TabPage tabPage = new TabPage();
+            TabPageTag tag = new TabPageTag();
+            tag.lineShapeIndex = lineShapeIndex;
             if (MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.polygonLayers[0]))
             {
                 tabPage.Text = "CĐTT bom rãnh " + line.code + "     ";
-                tabPage.Tag = true;
+                tag.isBomb = true;
+                tabPage.Tag = tag;
                 idKV__triangulations = TINCommand.triangulations_bomb;
             }
             else
             {
                 tabPage.Text = "CĐTT mìn rãnh " + line.code + "     ";
-                tabPage.Tag = false;
+                tag.isBomb = false;
+                tabPage.Tag = tag;
                 idKV__triangulations = TINCommand.triangulations_mine;
             }
             foreach (CustomFace face in idKV__triangulations[line.cecmprogramareamap_id.Value])

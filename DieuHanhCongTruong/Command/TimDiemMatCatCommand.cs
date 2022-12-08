@@ -105,7 +105,8 @@ namespace DieuHanhCongTruong.Command
                         bmvn.ZPoint = point_temp_1.YValues[0] + ratio * (point_temp_2.YValues[0] - point_temp_1.YValues[0]);
                     }
                 }
-                bool isBomb = (bool)activeTab.Tag;
+                TabPageTag tag = (TabPageTag)activeTab.Tag;
+                bool isBomb = tag.isBomb;
                 bmvn.UserAdd = true;
                 MapMenuCommand.addSuspectPoint(longt, latt, bmvn, isBomb, true);
             }

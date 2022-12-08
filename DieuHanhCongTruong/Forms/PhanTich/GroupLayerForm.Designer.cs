@@ -31,9 +31,9 @@
             this.DGVData = new System.Windows.Forms.DataGridView();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.Layer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btApDung = new System.Windows.Forms.Button();
+            this.cotLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGVData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,8 +49,8 @@
             this.DGVData.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DGVData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Layer,
-            this.Visible});
+            this.cotLayer,
+            this.cotVisible});
             this.DGVData.Location = new System.Drawing.Point(16, 15);
             this.DGVData.Margin = new System.Windows.Forms.Padding(4);
             this.DGVData.MultiSelect = false;
@@ -95,20 +95,6 @@
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // Layer
-            // 
-            this.Layer.HeaderText = "Lớp";
-            this.Layer.MinimumWidth = 6;
-            this.Layer.Name = "Layer";
-            this.Layer.ReadOnly = true;
-            // 
-            // Visible
-            // 
-            this.Visible.FillWeight = 20F;
-            this.Visible.HeaderText = "Hiển thị";
-            this.Visible.MinimumWidth = 6;
-            this.Visible.Name = "Visible";
-            // 
             // btApDung
             // 
             this.btApDung.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -126,6 +112,20 @@
             this.btApDung.Text = "Áp dụng";
             this.btApDung.UseVisualStyleBackColor = false;
             this.btApDung.Click += new System.EventHandler(this.btApDung_Click);
+            // 
+            // cotLayer
+            // 
+            this.cotLayer.HeaderText = "Lớp";
+            this.cotLayer.MinimumWidth = 6;
+            this.cotLayer.Name = "cotLayer";
+            this.cotLayer.ReadOnly = true;
+            // 
+            // cotVisible
+            // 
+            this.cotVisible.FillWeight = 20F;
+            this.cotVisible.HeaderText = "Hiển thị";
+            this.cotVisible.MinimumWidth = 6;
+            this.cotVisible.Name = "cotVisible";
             // 
             // GroupLayerForm
             // 
@@ -156,8 +156,8 @@
         private System.Windows.Forms.DataGridView DGVData;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Layer;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
         private System.Windows.Forms.Button btApDung;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotLayer;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cotVisible;
     }
 }

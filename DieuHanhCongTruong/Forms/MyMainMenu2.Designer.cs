@@ -114,6 +114,7 @@ namespace DieuHanhCongTruong.Forms
             this.btnDanhSachBMVN = new System.Windows.Forms.Button();
             this.btnBatTatDoiTuong = new System.Windows.Forms.Button();
             this.btnBieuDoTuTruong = new System.Windows.Forms.Button();
+            this.splitter2 = new System.Windows.Forms.Splitter();
             this.btnPhanTichDaiMau = new System.Windows.Forms.Button();
             this.btnChiTietBMVNPhanTich = new System.Windows.Forms.Button();
             this.btnPhanTichDoSau = new System.Windows.Forms.Button();
@@ -121,6 +122,7 @@ namespace DieuHanhCongTruong.Forms
             this.btnTimDiemTuTruongDuaVaoMatCat = new System.Windows.Forms.Button();
             this.btnVeMatCatTuTruong = new System.Windows.Forms.Button();
             this.btnTuDongPhanTich = new System.Windows.Forms.Button();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.btnNhanDuLieuMayDo = new System.Windows.Forms.Button();
             this.btnInManhBanDoOLuoi = new System.Windows.Forms.Button();
             this.axMap1 = new AxMapWinGIS.AxMap();
@@ -179,7 +181,7 @@ namespace DieuHanhCongTruong.Forms
             this.tàiKhoảnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1902, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1902, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -187,7 +189,7 @@ namespace DieuHanhCongTruong.Forms
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(14, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(14, 24);
             // 
             // dữLiệuHỗTrợToolStripMenuItem
             // 
@@ -195,7 +197,7 @@ namespace DieuHanhCongTruong.Forms
             this.quảnLýĐơnVịToolStripMenuItem});
             this.dữLiệuHỗTrợToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dữLiệuHỗTrợToolStripMenuItem.Image")));
             this.dữLiệuHỗTrợToolStripMenuItem.Name = "dữLiệuHỗTrợToolStripMenuItem";
-            this.dữLiệuHỗTrợToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
+            this.dữLiệuHỗTrợToolStripMenuItem.Size = new System.Drawing.Size(135, 24);
             this.dữLiệuHỗTrợToolStripMenuItem.Text = "Dữ liệu hỗ trợ";
             // 
             // quảnLýĐơnVịToolStripMenuItem
@@ -211,7 +213,7 @@ namespace DieuHanhCongTruong.Forms
             this.danhSáchCácDựÁnToolStripMenuItem});
             this.quảnLýDựÁnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("quảnLýDựÁnToolStripMenuItem.Image")));
             this.quảnLýDựÁnToolStripMenuItem.Name = "quảnLýDựÁnToolStripMenuItem";
-            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
+            this.quảnLýDựÁnToolStripMenuItem.Size = new System.Drawing.Size(135, 24);
             this.quảnLýDựÁnToolStripMenuItem.Text = "Quản lý dự án";
             // 
             // danhSáchCácDựÁnToolStripMenuItem
@@ -235,7 +237,7 @@ namespace DieuHanhCongTruong.Forms
             this.inMảnhBảnĐồTheoÔLướiToolStripMenuItem});
             this.inẤnBảnĐồToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("inẤnBảnĐồToolStripMenuItem.Image")));
             this.inẤnBảnĐồToolStripMenuItem.Name = "inẤnBảnĐồToolStripMenuItem";
-            this.inẤnBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.inẤnBảnĐồToolStripMenuItem.Size = new System.Drawing.Size(126, 24);
             this.inẤnBảnĐồToolStripMenuItem.Text = "In ấn bản đồ";
             // 
             // địnhNghĩaVùngDựÁnToolStripMenuItem
@@ -328,7 +330,7 @@ namespace DieuHanhCongTruong.Forms
             this.danhSáchBMVNToolStripMenuItem});
             this.phânTíchDữLiệuToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("phânTíchDữLiệuToolStripMenuItem.Image")));
             this.phânTíchDữLiệuToolStripMenuItem.Name = "phânTíchDữLiệuToolStripMenuItem";
-            this.phânTíchDữLiệuToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.phânTíchDữLiệuToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.phânTíchDữLiệuToolStripMenuItem.Text = "Phân tích dữ liệu";
             // 
             // tựĐộngPhânTíchDữLiệuToolStripMenuItem
@@ -519,7 +521,7 @@ namespace DieuHanhCongTruong.Forms
             this.ks05ToolStripMenuItem});
             this.kếtQuảKSToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("kếtQuảKSToolStripMenuItem.Image")));
             this.kếtQuảKSToolStripMenuItem.Name = "kếtQuảKSToolStripMenuItem";
-            this.kếtQuảKSToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
+            this.kếtQuảKSToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
             this.kếtQuảKSToolStripMenuItem.Text = "Kết quả KS";
             // 
             // ks01ToolStripMenuItem
@@ -579,7 +581,7 @@ namespace DieuHanhCongTruong.Forms
             this.rp17ToolStripMenuItem});
             this.kếtQuảRPToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("kếtQuảRPToolStripMenuItem.Image")));
             this.kếtQuảRPToolStripMenuItem.Name = "kếtQuảRPToolStripMenuItem";
-            this.kếtQuảRPToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
+            this.kếtQuảRPToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
             this.kếtQuảRPToolStripMenuItem.Text = "Kết quả RP";
             // 
             // rp01ToolStripMenuItem
@@ -708,7 +710,7 @@ namespace DieuHanhCongTruong.Forms
             this.thôngTinPhầnMềmToolStripMenuItem});
             this.càiĐặtToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("càiĐặtToolStripMenuItem.Image")));
             this.càiĐặtToolStripMenuItem.Name = "càiĐặtToolStripMenuItem";
-            this.càiĐặtToolStripMenuItem.Size = new System.Drawing.Size(90, 26);
+            this.càiĐặtToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.càiĐặtToolStripMenuItem.Text = "Cài đặt";
             // 
             // càiĐặtChungToolStripMenuItem
@@ -732,7 +734,7 @@ namespace DieuHanhCongTruong.Forms
             this.đăngXuấtToolStripMenuItem});
             this.tàiKhoảnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("tàiKhoảnToolStripMenuItem.Image")));
             this.tàiKhoảnToolStripMenuItem.Name = "tàiKhoảnToolStripMenuItem";
-            this.tàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(105, 26);
+            this.tàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(105, 24);
             this.tàiKhoảnToolStripMenuItem.Text = "Tài khoản";
             // 
             // đổiMậtKhẩuToolStripMenuItem
@@ -754,7 +756,7 @@ namespace DieuHanhCongTruong.Forms
             this.toolBarContainer.Controls.Add(this.pnlFilter);
             this.toolBarContainer.Controls.Add(this.pnlToolBar);
             this.toolBarContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolBarContainer.Location = new System.Drawing.Point(0, 30);
+            this.toolBarContainer.Location = new System.Drawing.Point(0, 28);
             this.toolBarContainer.Name = "toolBarContainer";
             this.toolBarContainer.Size = new System.Drawing.Size(1902, 80);
             this.toolBarContainer.TabIndex = 9;
@@ -848,6 +850,7 @@ namespace DieuHanhCongTruong.Forms
             this.pnlToolBar.Controls.Add(this.btnDanhSachBMVN);
             this.pnlToolBar.Controls.Add(this.btnBatTatDoiTuong);
             this.pnlToolBar.Controls.Add(this.btnBieuDoTuTruong);
+            this.pnlToolBar.Controls.Add(this.splitter2);
             this.pnlToolBar.Controls.Add(this.btnPhanTichDaiMau);
             this.pnlToolBar.Controls.Add(this.btnChiTietBMVNPhanTich);
             this.pnlToolBar.Controls.Add(this.btnPhanTichDoSau);
@@ -855,12 +858,13 @@ namespace DieuHanhCongTruong.Forms
             this.pnlToolBar.Controls.Add(this.btnTimDiemTuTruongDuaVaoMatCat);
             this.pnlToolBar.Controls.Add(this.btnVeMatCatTuTruong);
             this.pnlToolBar.Controls.Add(this.btnTuDongPhanTich);
+            this.pnlToolBar.Controls.Add(this.splitter1);
             this.pnlToolBar.Controls.Add(this.btnNhanDuLieuMayDo);
             this.pnlToolBar.Controls.Add(this.btnInManhBanDoOLuoi);
             this.pnlToolBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlToolBar.Location = new System.Drawing.Point(0, 0);
             this.pnlToolBar.Name = "pnlToolBar";
-            this.pnlToolBar.Size = new System.Drawing.Size(1465, 80);
+            this.pnlToolBar.Size = new System.Drawing.Size(1471, 80);
             this.pnlToolBar.TabIndex = 8;
             // 
             // btnKhoangCach
@@ -870,12 +874,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnKhoangCach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnKhoangCach.Image = ((System.Drawing.Image)(resources.GetObject("btnKhoangCach.Image")));
             this.btnKhoangCach.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnKhoangCach.Location = new System.Drawing.Point(1336, 0);
+            this.btnKhoangCach.Location = new System.Drawing.Point(1342, 0);
             this.btnKhoangCach.Margin = new System.Windows.Forms.Padding(10);
             this.btnKhoangCach.Name = "btnKhoangCach";
             this.btnKhoangCach.Padding = new System.Windows.Forms.Padding(7);
             this.btnKhoangCach.Size = new System.Drawing.Size(129, 80);
-            this.btnKhoangCach.TabIndex = 35;
+            this.btnKhoangCach.TabIndex = 68;
             this.btnKhoangCach.Text = "Đo khoảng cách";
             this.btnKhoangCach.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnKhoangCach.UseVisualStyleBackColor = false;
@@ -887,12 +891,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnDanhSachBMVN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDanhSachBMVN.Image = ((System.Drawing.Image)(resources.GetObject("btnDanhSachBMVN.Image")));
             this.btnDanhSachBMVN.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnDanhSachBMVN.Location = new System.Drawing.Point(1202, 0);
+            this.btnDanhSachBMVN.Location = new System.Drawing.Point(1208, 0);
             this.btnDanhSachBMVN.Margin = new System.Windows.Forms.Padding(10);
             this.btnDanhSachBMVN.Name = "btnDanhSachBMVN";
             this.btnDanhSachBMVN.Padding = new System.Windows.Forms.Padding(7);
             this.btnDanhSachBMVN.Size = new System.Drawing.Size(134, 80);
-            this.btnDanhSachBMVN.TabIndex = 34;
+            this.btnDanhSachBMVN.TabIndex = 67;
             this.btnDanhSachBMVN.Text = "Danh sách BMVN";
             this.btnDanhSachBMVN.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnDanhSachBMVN.UseVisualStyleBackColor = false;
@@ -904,12 +908,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnBatTatDoiTuong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBatTatDoiTuong.Image = ((System.Drawing.Image)(resources.GetObject("btnBatTatDoiTuong.Image")));
             this.btnBatTatDoiTuong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnBatTatDoiTuong.Location = new System.Drawing.Point(1102, 0);
+            this.btnBatTatDoiTuong.Location = new System.Drawing.Point(1108, 0);
             this.btnBatTatDoiTuong.Margin = new System.Windows.Forms.Padding(10);
             this.btnBatTatDoiTuong.Name = "btnBatTatDoiTuong";
             this.btnBatTatDoiTuong.Padding = new System.Windows.Forms.Padding(7);
             this.btnBatTatDoiTuong.Size = new System.Drawing.Size(100, 80);
-            this.btnBatTatDoiTuong.TabIndex = 33;
+            this.btnBatTatDoiTuong.TabIndex = 66;
             this.btnBatTatDoiTuong.Text = "Bật tắt đối tượng";
             this.btnBatTatDoiTuong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnBatTatDoiTuong.UseVisualStyleBackColor = false;
@@ -921,15 +925,24 @@ namespace DieuHanhCongTruong.Forms
             this.btnBieuDoTuTruong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBieuDoTuTruong.Image = ((System.Drawing.Image)(resources.GetObject("btnBieuDoTuTruong.Image")));
             this.btnBieuDoTuTruong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnBieuDoTuTruong.Location = new System.Drawing.Point(1002, 0);
+            this.btnBieuDoTuTruong.Location = new System.Drawing.Point(1008, 0);
             this.btnBieuDoTuTruong.Margin = new System.Windows.Forms.Padding(10);
             this.btnBieuDoTuTruong.Name = "btnBieuDoTuTruong";
             this.btnBieuDoTuTruong.Padding = new System.Windows.Forms.Padding(7);
             this.btnBieuDoTuTruong.Size = new System.Drawing.Size(100, 80);
-            this.btnBieuDoTuTruong.TabIndex = 32;
+            this.btnBieuDoTuTruong.TabIndex = 65;
             this.btnBieuDoTuTruong.Text = "Biểu đồ từ trường";
             this.btnBieuDoTuTruong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnBieuDoTuTruong.UseVisualStyleBackColor = false;
+            // 
+            // splitter2
+            // 
+            this.splitter2.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.splitter2.Location = new System.Drawing.Point(1005, 0);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(3, 80);
+            this.splitter2.TabIndex = 64;
+            this.splitter2.TabStop = false;
             // 
             // btnPhanTichDaiMau
             // 
@@ -938,12 +951,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnPhanTichDaiMau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPhanTichDaiMau.Image = ((System.Drawing.Image)(resources.GetObject("btnPhanTichDaiMau.Image")));
             this.btnPhanTichDaiMau.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnPhanTichDaiMau.Location = new System.Drawing.Point(902, 0);
+            this.btnPhanTichDaiMau.Location = new System.Drawing.Point(905, 0);
             this.btnPhanTichDaiMau.Margin = new System.Windows.Forms.Padding(10);
             this.btnPhanTichDaiMau.Name = "btnPhanTichDaiMau";
             this.btnPhanTichDaiMau.Padding = new System.Windows.Forms.Padding(7);
             this.btnPhanTichDaiMau.Size = new System.Drawing.Size(100, 80);
-            this.btnPhanTichDaiMau.TabIndex = 31;
+            this.btnPhanTichDaiMau.TabIndex = 63;
             this.btnPhanTichDaiMau.Text = "Phân tích dải màu";
             this.btnPhanTichDaiMau.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnPhanTichDaiMau.UseVisualStyleBackColor = false;
@@ -955,12 +968,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnChiTietBMVNPhanTich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChiTietBMVNPhanTich.Image = ((System.Drawing.Image)(resources.GetObject("btnChiTietBMVNPhanTich.Image")));
             this.btnChiTietBMVNPhanTich.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnChiTietBMVNPhanTich.Location = new System.Drawing.Point(802, 0);
+            this.btnChiTietBMVNPhanTich.Location = new System.Drawing.Point(805, 0);
             this.btnChiTietBMVNPhanTich.Margin = new System.Windows.Forms.Padding(10);
             this.btnChiTietBMVNPhanTich.Name = "btnChiTietBMVNPhanTich";
             this.btnChiTietBMVNPhanTich.Padding = new System.Windows.Forms.Padding(7);
             this.btnChiTietBMVNPhanTich.Size = new System.Drawing.Size(100, 80);
-            this.btnChiTietBMVNPhanTich.TabIndex = 30;
+            this.btnChiTietBMVNPhanTich.TabIndex = 62;
             this.btnChiTietBMVNPhanTich.Text = "BMVN đã phân tích";
             this.btnChiTietBMVNPhanTich.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnChiTietBMVNPhanTich.UseVisualStyleBackColor = false;
@@ -972,12 +985,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnPhanTichDoSau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPhanTichDoSau.Image = ((System.Drawing.Image)(resources.GetObject("btnPhanTichDoSau.Image")));
             this.btnPhanTichDoSau.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnPhanTichDoSau.Location = new System.Drawing.Point(702, 0);
+            this.btnPhanTichDoSau.Location = new System.Drawing.Point(705, 0);
             this.btnPhanTichDoSau.Margin = new System.Windows.Forms.Padding(10);
             this.btnPhanTichDoSau.Name = "btnPhanTichDoSau";
             this.btnPhanTichDoSau.Padding = new System.Windows.Forms.Padding(7);
             this.btnPhanTichDoSau.Size = new System.Drawing.Size(100, 80);
-            this.btnPhanTichDoSau.TabIndex = 29;
+            this.btnPhanTichDoSau.TabIndex = 61;
             this.btnPhanTichDoSau.Text = "Phân tích độ sâu";
             this.btnPhanTichDoSau.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnPhanTichDoSau.UseVisualStyleBackColor = false;
@@ -989,12 +1002,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnTuTruongBeMat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTuTruongBeMat.Image = ((System.Drawing.Image)(resources.GetObject("btnTuTruongBeMat.Image")));
             this.btnTuTruongBeMat.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnTuTruongBeMat.Location = new System.Drawing.Point(568, 0);
+            this.btnTuTruongBeMat.Location = new System.Drawing.Point(571, 0);
             this.btnTuTruongBeMat.Margin = new System.Windows.Forms.Padding(10);
             this.btnTuTruongBeMat.Name = "btnTuTruongBeMat";
             this.btnTuTruongBeMat.Padding = new System.Windows.Forms.Padding(7);
             this.btnTuTruongBeMat.Size = new System.Drawing.Size(134, 80);
-            this.btnTuTruongBeMat.TabIndex = 28;
+            this.btnTuTruongBeMat.TabIndex = 60;
             this.btnTuTruongBeMat.Text = "Điểm từ trường trên bề mặt";
             this.btnTuTruongBeMat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnTuTruongBeMat.UseVisualStyleBackColor = false;
@@ -1006,12 +1019,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnTimDiemTuTruongDuaVaoMatCat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTimDiemTuTruongDuaVaoMatCat.Image = ((System.Drawing.Image)(resources.GetObject("btnTimDiemTuTruongDuaVaoMatCat.Image")));
             this.btnTimDiemTuTruongDuaVaoMatCat.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnTimDiemTuTruongDuaVaoMatCat.Location = new System.Drawing.Point(434, 0);
+            this.btnTimDiemTuTruongDuaVaoMatCat.Location = new System.Drawing.Point(437, 0);
             this.btnTimDiemTuTruongDuaVaoMatCat.Margin = new System.Windows.Forms.Padding(10);
             this.btnTimDiemTuTruongDuaVaoMatCat.Name = "btnTimDiemTuTruongDuaVaoMatCat";
             this.btnTimDiemTuTruongDuaVaoMatCat.Padding = new System.Windows.Forms.Padding(7);
             this.btnTimDiemTuTruongDuaVaoMatCat.Size = new System.Drawing.Size(134, 80);
-            this.btnTimDiemTuTruongDuaVaoMatCat.TabIndex = 4;
+            this.btnTimDiemTuTruongDuaVaoMatCat.TabIndex = 59;
             this.btnTimDiemTuTruongDuaVaoMatCat.Text = "Điểm từ trường trên mặt cắt";
             this.btnTimDiemTuTruongDuaVaoMatCat.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnTimDiemTuTruongDuaVaoMatCat.UseVisualStyleBackColor = false;
@@ -1023,12 +1036,12 @@ namespace DieuHanhCongTruong.Forms
             this.btnVeMatCatTuTruong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVeMatCatTuTruong.Image = ((System.Drawing.Image)(resources.GetObject("btnVeMatCatTuTruong.Image")));
             this.btnVeMatCatTuTruong.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnVeMatCatTuTruong.Location = new System.Drawing.Point(300, 0);
+            this.btnVeMatCatTuTruong.Location = new System.Drawing.Point(303, 0);
             this.btnVeMatCatTuTruong.Margin = new System.Windows.Forms.Padding(10);
             this.btnVeMatCatTuTruong.Name = "btnVeMatCatTuTruong";
             this.btnVeMatCatTuTruong.Padding = new System.Windows.Forms.Padding(7);
             this.btnVeMatCatTuTruong.Size = new System.Drawing.Size(134, 80);
-            this.btnVeMatCatTuTruong.TabIndex = 3;
+            this.btnVeMatCatTuTruong.TabIndex = 58;
             this.btnVeMatCatTuTruong.Text = "Vẽ mặt cắt từ trường";
             this.btnVeMatCatTuTruong.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnVeMatCatTuTruong.UseVisualStyleBackColor = false;
@@ -1040,15 +1053,24 @@ namespace DieuHanhCongTruong.Forms
             this.btnTuDongPhanTich.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTuDongPhanTich.Image = ((System.Drawing.Image)(resources.GetObject("btnTuDongPhanTich.Image")));
             this.btnTuDongPhanTich.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnTuDongPhanTich.Location = new System.Drawing.Point(200, 0);
+            this.btnTuDongPhanTich.Location = new System.Drawing.Point(203, 0);
             this.btnTuDongPhanTich.Margin = new System.Windows.Forms.Padding(10);
             this.btnTuDongPhanTich.Name = "btnTuDongPhanTich";
             this.btnTuDongPhanTich.Padding = new System.Windows.Forms.Padding(7);
             this.btnTuDongPhanTich.Size = new System.Drawing.Size(100, 80);
-            this.btnTuDongPhanTich.TabIndex = 2;
+            this.btnTuDongPhanTich.TabIndex = 57;
             this.btnTuDongPhanTich.Text = "Tự động phân tích";
             this.btnTuDongPhanTich.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnTuDongPhanTich.UseVisualStyleBackColor = false;
+            // 
+            // splitter1
+            // 
+            this.splitter1.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.splitter1.Location = new System.Drawing.Point(200, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 80);
+            this.splitter1.TabIndex = 56;
+            this.splitter1.TabStop = false;
             // 
             // btnNhanDuLieuMayDo
             // 
@@ -1092,7 +1114,7 @@ namespace DieuHanhCongTruong.Forms
             this.axMap1.Margin = new System.Windows.Forms.Padding(2);
             this.axMap1.Name = "axMap1";
             this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(1555, 923);
+            this.axMap1.Size = new System.Drawing.Size(1555, 925);
             this.axMap1.TabIndex = 13;
             // 
             // pnlMain
@@ -1103,9 +1125,9 @@ namespace DieuHanhCongTruong.Forms
             this.pnlMain.Controls.Add(this.tsProgressSurface);
             this.pnlMain.Controls.Add(this.axMap1);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(347, 110);
+            this.pnlMain.Location = new System.Drawing.Point(347, 108);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1555, 923);
+            this.pnlMain.Size = new System.Drawing.Size(1555, 925);
             this.pnlMain.TabIndex = 11;
             // 
             // tabControlBottom
@@ -1113,7 +1135,7 @@ namespace DieuHanhCongTruong.Forms
             this.tabControlBottom.Controls.Add(this.tabPageTimDiemTuTruongMatCat);
             this.tabControlBottom.Controls.Add(this.tabPageBMVN);
             this.tabControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControlBottom.Location = new System.Drawing.Point(0, 452);
+            this.tabControlBottom.Location = new System.Drawing.Point(0, 454);
             this.tabControlBottom.Name = "tabControlBottom";
             this.tabControlBottom.SelectedIndex = 0;
             this.tabControlBottom.Size = new System.Drawing.Size(1555, 378);
@@ -1141,6 +1163,7 @@ namespace DieuHanhCongTruong.Forms
             this.tabCtrlLineChart.Size = new System.Drawing.Size(1541, 289);
             this.tabCtrlLineChart.TabIndex = 7;
             this.tabCtrlLineChart.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabCtrlLineChart_DrawItem);
+            this.tabCtrlLineChart.SelectedIndexChanged += new System.EventHandler(this.tabCtrlLineChart_SelectedIndexChanged);
             this.tabCtrlLineChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabCtrlLineChart_MouseDown);
             // 
             // pnlChonDiemMatCat
@@ -1215,7 +1238,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressPhanTich.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar2,
             this.toolStripLabel2});
-            this.tsProgressPhanTich.Location = new System.Drawing.Point(0, 830);
+            this.tsProgressPhanTich.Location = new System.Drawing.Point(0, 832);
             this.tsProgressPhanTich.Name = "tsProgressPhanTich";
             this.tsProgressPhanTich.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressPhanTich.Size = new System.Drawing.Size(1555, 31);
@@ -1243,7 +1266,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripLabel1});
-            this.tsProgressHistory.Location = new System.Drawing.Point(0, 861);
+            this.tsProgressHistory.Location = new System.Drawing.Point(0, 863);
             this.tsProgressHistory.Name = "tsProgressHistory";
             this.tsProgressHistory.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressHistory.Size = new System.Drawing.Size(1555, 31);
@@ -1271,7 +1294,7 @@ namespace DieuHanhCongTruong.Forms
             this.tsProgressSurface.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbProgress,
             this.lbProgressDescription});
-            this.tsProgressSurface.Location = new System.Drawing.Point(0, 892);
+            this.tsProgressSurface.Location = new System.Drawing.Point(0, 894);
             this.tsProgressSurface.Name = "tsProgressSurface";
             this.tsProgressSurface.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tsProgressSurface.Size = new System.Drawing.Size(1555, 31);
@@ -1297,7 +1320,7 @@ namespace DieuHanhCongTruong.Forms
             this.pnlToolTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.pnlToolTip.Controls.Add(this.lblToolTip);
             this.pnlToolTip.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlToolTip.Location = new System.Drawing.Point(347, 110);
+            this.pnlToolTip.Location = new System.Drawing.Point(347, 108);
             this.pnlToolTip.Name = "pnlToolTip";
             this.pnlToolTip.Size = new System.Drawing.Size(1555, 36);
             this.pnlToolTip.TabIndex = 12;
@@ -1315,10 +1338,10 @@ namespace DieuHanhCongTruong.Forms
             // managerCECMUserControl1
             // 
             this.managerCECMUserControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 110);
+            this.managerCECMUserControl1.Location = new System.Drawing.Point(0, 108);
             this.managerCECMUserControl1.Margin = new System.Windows.Forms.Padding(4);
             this.managerCECMUserControl1.Name = "managerCECMUserControl1";
-            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 923);
+            this.managerCECMUserControl1.Size = new System.Drawing.Size(347, 925);
             this.managerCECMUserControl1.TabIndex = 10;
             // 
             // MyMainMenu2
@@ -1442,9 +1465,6 @@ namespace DieuHanhCongTruong.Forms
         public System.Windows.Forms.ToolStripMenuItem tựĐộngPhânTíchDữLiệuToolStripMenuItem;
         private System.Windows.Forms.Panel toolBarContainer;
         private System.Windows.Forms.Panel pnlFilter;
-        private System.Windows.Forms.Button btnTimDiemTuTruongDuaVaoMatCat;
-        private System.Windows.Forms.Button btnVeMatCatTuTruong;
-        private System.Windows.Forms.Button btnTuDongPhanTich;
         private System.Windows.Forms.Button btnNhanDuLieuMayDo;
         private System.Windows.Forms.Button btnInManhBanDoOLuoi;
         public VNRaPaBomMin.ManagerCECMUserControl managerCECMUserControl1;
@@ -1452,14 +1472,6 @@ namespace DieuHanhCongTruong.Forms
         private System.Windows.Forms.GroupBox gbHistory;
         public System.Windows.Forms.Panel pnlToolBar;
         public System.Windows.Forms.ToolStripMenuItem phânTíchDữLiệuToolStripMenuItem;
-        private System.Windows.Forms.Button btnKhoangCach;
-        private System.Windows.Forms.Button btnDanhSachBMVN;
-        private System.Windows.Forms.Button btnBatTatDoiTuong;
-        private System.Windows.Forms.Button btnBieuDoTuTruong;
-        private System.Windows.Forms.Button btnPhanTichDaiMau;
-        private System.Windows.Forms.Button btnChiTietBMVNPhanTich;
-        private System.Windows.Forms.Button btnPhanTichDoSau;
-        private System.Windows.Forms.Button btnTuTruongBeMat;
         public AxMapWinGIS.AxMap axMap1;
         public System.Windows.Forms.Panel pnlMain;
         public System.Windows.Forms.TabControl tabControlBottom;
@@ -1485,5 +1497,18 @@ namespace DieuHanhCongTruong.Forms
         public System.Windows.Forms.RadioButton rbBomb;
         public System.Windows.Forms.RadioButton rbModel;
         public System.Windows.Forms.RadioButton rbUnmodel;
+        private System.Windows.Forms.Button btnKhoangCach;
+        private System.Windows.Forms.Button btnDanhSachBMVN;
+        private System.Windows.Forms.Button btnBatTatDoiTuong;
+        private System.Windows.Forms.Button btnBieuDoTuTruong;
+        private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.Button btnPhanTichDaiMau;
+        private System.Windows.Forms.Button btnChiTietBMVNPhanTich;
+        private System.Windows.Forms.Button btnPhanTichDoSau;
+        private System.Windows.Forms.Button btnTuTruongBeMat;
+        private System.Windows.Forms.Button btnTimDiemTuTruongDuaVaoMatCat;
+        private System.Windows.Forms.Button btnVeMatCatTuTruong;
+        private System.Windows.Forms.Button btnTuDongPhanTich;
+        private System.Windows.Forms.Splitter splitter1;
     }
 }

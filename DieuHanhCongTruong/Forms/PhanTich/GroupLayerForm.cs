@@ -248,7 +248,30 @@ namespace VNRaPaBomMin
                     hasCheckedItem = false;
                 }
             }
-
+            if(MapMenuCommand.flagBombLayer > 0)
+            {
+                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagBombLayer);
+                int index = DGVData.Rows.Add("Cờ (bom)", visible);
+                List<int> layers = new List<int>();
+                layers.Add(MapMenuCommand.flagBombLayer);
+                DGVData.Rows[index].Tag = layers;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
+            if (MapMenuCommand.flagMineLayer > 0)
+            {
+                bool visible = MapMenuCommand.axMap1.get_LayerVisible(MapMenuCommand.flagMineLayer);
+                int index = DGVData.Rows.Add("Cờ (mìn)", visible);
+                List<int> layers = new List<int>();
+                layers.Add(MapMenuCommand.flagMineLayer);
+                DGVData.Rows[index].Tag = layers;
+                if (!visible)
+                {
+                    hasCheckedItem = false;
+                }
+            }
             //if (MapMenuCommand.machinePointBombLayers.Count > 0)
             //{
             //    bool visiblePoint;
@@ -430,10 +453,15 @@ namespace VNRaPaBomMin
 
         private void DGVData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(e.RowIndex < 0)
+            {
+                return;
+            }
+
             if (e.ColumnIndex != 1)
                 return;
 
-            if (DGVData.Rows[e.RowIndex].Cells[0].Value.ToString() == "Tất cả" && (bool)DGVData.Rows[e.RowIndex].Cells[1].Value == true)
+            if (DGVData.Rows[e.RowIndex].Cells[cotLayer.Index].Value.ToString() == "Tất cả" && (bool)DGVData.Rows[e.RowIndex].Cells[cotVisible.Index].Value == true)
             {
                 foreach (DataGridViewRow item in DGVData.Rows)
                 {
@@ -443,13 +471,13 @@ namespace VNRaPaBomMin
                     }
                 }
             }
-            else if (DGVData.Rows[e.RowIndex].Cells[0].Value.ToString() == "Tất cả" && (bool)DGVData.Rows[e.RowIndex].Cells[1].Value == false)
+            else if (DGVData.Rows[e.RowIndex].Cells[cotLayer.Index].Value.ToString() == "Tất cả" && (bool)DGVData.Rows[e.RowIndex].Cells[cotVisible.Index].Value == false)
             {
                 foreach (DataGridViewRow item in DGVData.Rows)
                 {
                     if (item != null)
                     {
-                        item.Cells[1].Value = true;
+                        item.Cells[cotVisible.Index].Value = true;
                     }
                 }
             }

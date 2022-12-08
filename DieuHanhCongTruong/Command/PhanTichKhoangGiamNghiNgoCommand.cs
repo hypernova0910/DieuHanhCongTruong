@@ -99,39 +99,56 @@ namespace DieuHanhCongTruong.Command
                 int shapeIndex = MapMenuCommand.idKV__shapeIndex[selectVungDuAnForm.idKV];
                 Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.polygonAreaLayer);
                 Shape shp = sf.Shape[shapeIndex];
-                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
-                long.TryParse(shp.Key, out long idKV);
-                if (TINCommand.triangulations_bomb.ContainsKey(idKV))
+                RecalculateDeep(MapMenuCommand.suspectPointLayerBomb, KGNN, shp, true);
+                RecalculateDeep(MapMenuCommand.userSuspectPointLayerBomb, KGNN, shp, true);
+                RecalculateDeep(MapMenuCommand.suspectPointLayerMine, KGNN, shp, false);
+                RecalculateDeep(MapMenuCommand.userSuspectPointLayerMine, KGNN, shp, false);
+            }
+        }
+
+        private static void RecalculateDeep(int pointLayer, double KGNN, Shape shpPolygon, bool isBomb)
+        {
+            Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(pointLayer);
+            long.TryParse(shpPolygon.Key, out long idKV);
+            Dictionary<long, List<CustomFace>> triangulation;
+            if (isBomb)
+            {
+                triangulation = TINCommand.triangulations_bomb;
+            }
+            else
+            {
+                triangulation = TINCommand.triangulations_mine;
+            }
+            if (triangulation.ContainsKey(idKV))
+            {
+                List<CustomFace> triangle = triangulation[idKV];
+                //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
+                for (int i = 0; i < sf_bomb.NumShapes; i++)
                 {
-                    List<CustomFace> triangle = TINCommand.triangulations_bomb[idKV];
-                    //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
-                    for (int i = 0; i < sf_bomb.NumShapes; i++)
+                    Shape shapeBomb = sf_bomb.Shape[i];
+                    Point pnt = shapeBomb.Point[0];
+                    if (shpPolygon.PointInThisPoly(pnt))
                     {
-                        Shape shapeBomb = sf_bomb.Shape[i];
-                        Point pnt = shapeBomb.Point[0];
-                        if (shp.PointInThisPoly(pnt))
+                        CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
+                        //lstBMVN.Add(bmvn);
+                        List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
+                        double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo, true);
+                        bmvn.Area = area;
+                        bmvn.contour = contourGiamNghiNgo;
+                        if (contourGiamNghiNgo.Count > 2)
                         {
-                            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                            //lstBMVN.Add(bmvn);
-                            List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo, true);
-                            bmvn.Area = area;
-                            bmvn.contour = contourGiamNghiNgo;
-                            if (contourGiamNghiNgo.Count > 2)
-                            {
-                                FindDeep(bmvn);
-                            }
-                            else
-                            {
-                                bmvn.Deep = 0;
-                            }
-                            MapWinGIS.Label label = sf_bomb.Labels.Label[bmvn.indexLabel, 0];
-                            label.Text = Math.Round(bmvn.Deep, 3).ToString() + "m";
-                            shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
+                            FindDeep(bmvn);
                         }
+                        else
+                        {
+                            bmvn.Deep = 0;
+                        }
+                        MapWinGIS.Label label = sf_bomb.Labels.Label[bmvn.indexLabel, 0];
+                        label.Text = Math.Round(bmvn.Deep, 3).ToString() + "m";
+                        shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
                     }
-                    MyMainMenu2.Instance.axMap1.Redraw();
                 }
+                MyMainMenu2.Instance.axMap1.Redraw();
             }
         }
 
@@ -223,40 +240,11 @@ namespace DieuHanhCongTruong.Command
 
                 Shapefile sf = MapMenuCommand.axMap1.get_Shapefile(e.layerHandle);
                 Shape shp = sf.Shape[e.shapeIndex];
-                Shapefile sf_bomb = MapMenuCommand.axMap1.get_Shapefile(MapMenuCommand.suspectPointLayerBomb);
-                long.TryParse(shp.Key, out long idKV);
-                if (TINCommand.triangulations_bomb.ContainsKey(idKV))
-                {
-                    List<CustomFace> triangle = TINCommand.triangulations_bomb[idKV];
-                    //List<CecmReportPollutionAreaBMVN> lstBMVN = new List<CecmReportPollutionAreaBMVN>();
-                    for (int i = 0; i < sf_bomb.NumShapes; i++)
-                    {
-                        Shape shapeBomb = sf_bomb.Shape[i];
-                        Point pnt = shapeBomb.Point[0];
-                        if (shp.PointInThisPoly(pnt))
-                        {
-                            CecmReportPollutionAreaBMVN bmvn = JsonConvert.DeserializeObject<CecmReportPollutionAreaBMVN>(shapeBomb.Key);
-                            //lstBMVN.Add(bmvn);
-                            List<InfoConnect> contourGiamNghiNgo = new List<InfoConnect>();
-                            double area = FindArea(bmvn, KGNN, triangle, ref contourGiamNghiNgo, true);
-                            bmvn.Area = area;
-                            bmvn.contour = contourGiamNghiNgo;
-                            if (contourGiamNghiNgo.Count > 2)
-                            {
-                                FindDeep(bmvn);
-                            }
-                            else
-                            {
-                                bmvn.Deep = 0;
-                            }
-                            MapWinGIS.Label label = sf_bomb.Labels.Label[bmvn.indexLabel, 0];
-                            label.Text = Math.Round(bmvn.Deep, 3).ToString() + "m";
-                            shapeBomb.Key = JsonConvert.SerializeObject(bmvn);
-                        }
-                    }
-                    MyMainMenu2.Instance.axMap1.Redraw();
-                }
-                
+                RecalculateDeep(MapMenuCommand.suspectPointLayerBomb, KGNN, shp, true);
+                RecalculateDeep(MapMenuCommand.userSuspectPointLayerBomb, KGNN, shp, true);
+                RecalculateDeep(MapMenuCommand.suspectPointLayerMine, KGNN, shp, false);
+                RecalculateDeep(MapMenuCommand.userSuspectPointLayerMine, KGNN, shp, false);
+
 
                 Exit();
             }

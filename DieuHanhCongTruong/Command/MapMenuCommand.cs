@@ -51,8 +51,8 @@ namespace DieuHanhCongTruong.Command
         public static int suspectPointLayerMine = -1;
         public static int userSuspectPointLayerBomb = -1;
         public static int userSuspectPointLayerMine = -1;
-        private static int flagBombLayer = -1;
-        private static int flagMineLayer = -1;
+        public static int flagBombLayer = -1;
+        public static int flagMineLayer = -1;
         public static List<int> imageLayers = new List<int>();
         private static int deepLayer = -1;
         private static int pointLayer = -1;

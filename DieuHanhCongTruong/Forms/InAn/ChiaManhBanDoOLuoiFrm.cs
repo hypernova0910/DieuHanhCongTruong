@@ -62,6 +62,7 @@ namespace VNRaPaBomMin
 
         private void frmChiaManhBanDo_Load(object sender, EventArgs e)
         {
+            tbDuAn.Text = MyMainMenu2.tenDADH;
             SqlCommandBuilder sqlCommand = null;
             SqlDataAdapter sqlAdapter = null;
             System.Data.DataTable datatable = new System.Data.DataTable();
@@ -593,70 +594,6 @@ namespace VNRaPaBomMin
             //}
         }
 
-        private void tbletren_TextChanged(object sender, EventArgs e)
-        {
-            double maxMargin = double.NaN;
-            if (IsNumber(tbletren.Text) && m_DisPaperY != double.NaN)
-            {
-                maxMargin = (m_DisPaperY * 25) / 100;
-                if (double.Parse(tbletren.Text) > maxMargin)
-                {
-                    MessageBox.Show(String.Format("Lề không được vượt quá  giới hạn {0} của khổ giấy", maxMargin), "Cảnh báo");
-                    tbletren.Text = "0";
-                }
-            }
-            if (IsNumber(tbletren.Text) && IsNumber(tbleduoi.Text) && m_DisPaperY != double.NaN)
-                tbY.Text = (m_DisPaperY - double.Parse(tbletren.Text) - double.Parse(tbleduoi.Text) + m_letren + m_leduoi).ToString();
-        }
-
-        private void tbleduoi_TextChanged(object sender, EventArgs e)
-        {
-            double maxMargin = double.NaN;
-            if (IsNumber(tbletren.Text) && m_DisPaperY != double.NaN)
-            {
-                maxMargin = (m_DisPaperY * 25) / 100;
-                if (double.Parse(tbleduoi.Text) > maxMargin)
-                {
-                    MessageBox.Show(String.Format("Lề không được vượt quá  giới hạn {0} của khổ giấy", maxMargin), "Cảnh báo");
-                    tbleduoi.Text = "0";
-                }
-            }
-            if (IsNumber(tbletren.Text) && IsNumber(tbleduoi.Text))
-                tbY.Text = (m_DisPaperY - double.Parse(tbletren.Text) - double.Parse(tbleduoi.Text) + m_letren + m_leduoi).ToString();
-        }
-
-        private void tbletrai_TextChanged(object sender, EventArgs e)
-        {
-            double maxMargin = double.NaN;
-            if (IsNumber(tbletrai.Text) && m_DisPaperX != double.NaN)
-            {
-                maxMargin = (m_DisPaperX * 25) / 100;
-                if (double.Parse(tbletrai.Text) > maxMargin)
-                {
-                    MessageBox.Show(String.Format("Lề không được vượt quá  giới hạn {0} của khổ giấy", maxMargin), "Cảnh báo");
-                    tbletrai.Text = "0";
-                }
-            }
-            if (IsNumber(tbletrai.Text) && IsNumber(tblephai.Text))
-                tbX.Text = (m_DisPaperX - double.Parse(tbletrai.Text) - double.Parse(tblephai.Text) + m_letrai + m_lephai).ToString();
-        }
-
-        private void tblephai_TextChanged(object sender, EventArgs e)
-        {
-            double maxMargin = double.NaN;
-            if (IsNumber(tblephai.Text) && m_DisPaperX != double.NaN)
-            {
-                maxMargin = (m_DisPaperX * 25) / 100;
-                if (double.Parse(tblephai.Text) > maxMargin)
-                {
-                    MessageBox.Show(String.Format("Lề không được vượt quá  giới hạn {0} của khổ giấy", maxMargin), "Cảnh báo");
-                    tblephai.Text = "0";
-                }
-            }
-            if (IsNumber(tbletrai.Text) && IsNumber(tblephai.Text))
-                tbX.Text = (m_DisPaperX - double.Parse(tbletrai.Text) - double.Parse(tblephai.Text) + m_letrai + m_lephai).ToString();
-        }
-
         private void comboBoxScale_SelectedIndexChanged(object sender, EventArgs e)
         {
             //m_cbtileSelected = comboBoxScale.SelectedIndex;
@@ -855,26 +792,6 @@ namespace VNRaPaBomMin
             //AppUtils.SaveRecentInput(tbOffsetLe);
 
             this.DialogResult = DialogResult.OK;
-        }
-
-        private bool ValidateValue()
-        {
-            if (AppUtils.IsNumber(tbletren.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tbletrai.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tblephai.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tbleduoi.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tbOffsetLe.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tbX.Text) == false)
-                return false;
-            if (AppUtils.IsNumber(tbY.Text) == false)
-                return false;
-
-            return true;
         }
 
         private void tbgocx_TextChanged(object sender, EventArgs e)

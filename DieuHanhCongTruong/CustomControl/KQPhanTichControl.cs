@@ -1,4 +1,6 @@
-﻿using DieuHanhCongTruong.Forms.Account;
+﻿using DieuHanhCongTruong.Common;
+using DieuHanhCongTruong.Forms.Account;
+using DieuHanhCongTruong.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -235,17 +237,29 @@ namespace DieuHanhCongTruong.CustomControl
                 //double latt = 0, longt = 0;
                 SqlCommand cmd1 = new SqlCommand(
                     "INSERT INTO Cecm_VNTerrainMinePoint " +
-                    "(XPoint, YPoint, ZPoint, Deep, programId, idArea, idRectangle, TimeExecute) " +
-                    "VALUES(@Kinhdo, @Vido, @ZPoint, @Deep, @programId, @idArea, @idRectangle, @TimeExecute)", 
+                    "(Kinhdo, Vido, ZPoint, Deep, programId, idArea, idRectangle, TimeExecute, IsBomb, XPoint, YPoint) " +
+                    "VALUES(@Kinhdo, @Vido, @ZPoint, @Deep, @programId, @idArea, @idRectangle, @TimeExecute, @IsBomb, @XPoint, @YPoint)", 
                     frmLoggin.sqlCon);
+                //Kinhdo
+                SqlParameter Kinhdo = new SqlParameter("@Kinhdo", SqlDbType.Float);
+                Kinhdo.Value = longt;
+                cmd1.Parameters.Add(Kinhdo);
+
+                //Vido                  
+                SqlParameter Vido = new SqlParameter("@Vido", SqlDbType.Float);
+                Vido.Value = latt;
+                cmd1.Parameters.Add(Vido);
+
+                double[] utm = AppUtils.ConverLatLongToUTM(latt, longt);
+
                 //XPoint
-                SqlParameter XPoint = new SqlParameter("@Kinhdo", SqlDbType.Float);
-                XPoint.Value = longt;
+                SqlParameter XPoint = new SqlParameter("@XPoint", SqlDbType.Float);
+                XPoint.Value = utm[0];
                 cmd1.Parameters.Add(XPoint);
 
-                //YPoint                  
-                SqlParameter YPoint = new SqlParameter("@Vido", SqlDbType.Float);
-                YPoint.Value = latt;
+                //YPoint
+                SqlParameter YPoint = new SqlParameter("@YPoint", SqlDbType.Float);
+                YPoint.Value = utm[1];
                 cmd1.Parameters.Add(YPoint);
 
                 //ZPoint                  
@@ -277,6 +291,20 @@ namespace DieuHanhCongTruong.CustomControl
                 SqlParameter TimeExecute = new SqlParameter("@TimeExecute", SqlDbType.DateTime);
                 TimeExecute.Value = DateTime.Now;
                 cmd1.Parameters.Add(TimeExecute);
+
+                //IsBomb
+                int isBomb;
+                if(lblIsBomb.Text == COMIN)
+                {
+                    isBomb = 2;
+                }
+                else
+                {
+                    isBomb = 1;
+                }
+                SqlParameter IsBomb = new SqlParameter("@IsBomb", SqlDbType.Int);
+                IsBomb.Value = isBomb;
+                cmd1.Parameters.Add(IsBomb);
 
                 int temp1 = 0;
                 temp1 = cmd1.ExecuteNonQuery();

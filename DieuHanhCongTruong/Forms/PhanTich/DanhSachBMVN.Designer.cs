@@ -70,6 +70,7 @@ namespace VNRaPaBomMin
             this.cotOLuoi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cotViTri = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cotThoiGian = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cotXoa = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBMVN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
@@ -235,6 +236,7 @@ namespace VNRaPaBomMin
             this.cotOLuoi,
             this.cotViTri,
             this.cotThoiGian,
+            this.cotLoai,
             this.cotXoa});
             this.dgvBMVN.EnableHeadersVisualStyles = false;
             this.dgvBMVN.Location = new System.Drawing.Point(19, 128);
@@ -437,6 +439,14 @@ namespace VNRaPaBomMin
             this.cotThoiGian.Name = "cotThoiGian";
             this.cotThoiGian.ReadOnly = true;
             // 
+            // cotLoai
+            // 
+            this.cotLoai.FillWeight = 40F;
+            this.cotLoai.HeaderText = "Loại";
+            this.cotLoai.MinimumWidth = 6;
+            this.cotLoai.Name = "cotLoai";
+            this.cotLoai.ReadOnly = true;
+            // 
             // cotXoa
             // 
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -525,6 +535,7 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.DataGridViewTextBoxColumn cotOLuoi;
         private System.Windows.Forms.DataGridViewTextBoxColumn cotViTri;
         private System.Windows.Forms.DataGridViewTextBoxColumn cotThoiGian;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cotLoai;
         private System.Windows.Forms.DataGridViewImageColumn cotXoa;
     }
 }

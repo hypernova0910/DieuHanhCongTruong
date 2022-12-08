@@ -41,6 +41,12 @@ namespace DieuHanhCongTruong.Command
 
             List<DataRow> lst = UtilsDatabase.GetAllDataInTableWithId(UtilsDatabase._ExtraInfoConnettion, "DaiMauTuTruong", "IsBomb", isBomb ? "1" : "2");
 
+            int khoangPT = 3;
+            if (int.TryParse(AppUtils.GetRecentInput("$ParametersFrm$nudKhoangPT"), out int khoangPTTemp))
+            {
+                khoangPT = khoangPTTemp;
+            }
+
             if (lst.Count > 0)
             {
                 foreach (DataRow dr in lst)
@@ -66,15 +72,26 @@ namespace DieuHanhCongTruong.Command
                     }
                     
                 }
-                elevation = (contourMaxElevation - contourMinElevation) / lst.Count;
+                //elevation = (contourMaxElevation - contourMinElevation) / lst.Count;
+                elevation = (contourMaxElevation - contourMinElevation) / khoangPT;
                 contourMinElevation = contourMinElevation + elevation / 2;
                 contourMaxElevation = contourMaxElevation - elevation / 2;
             }
             else
             {
-                elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / Constants.magnetic_colors.Length;
-                contourMinElevation = Constants.MIN_Z_BOMB + elevation / 2;
-                contourMaxElevation = Constants.MAX_Z_BOMB - elevation / 2;
+                //elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / Constants.magnetic_colors.Length;
+                if (isBomb)
+                {
+                    elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / khoangPT;
+                    contourMinElevation = Constants.MIN_Z_BOMB + elevation / 2;
+                    contourMaxElevation = Constants.MAX_Z_BOMB - elevation / 2;
+                }
+                else
+                {
+                    elevation = (Constants.MAX_Z_MINE - Constants.MIN_Z_MINE) / khoangPT;
+                    contourMinElevation = Constants.MIN_Z_MINE + elevation / 2;
+                    contourMaxElevation = Constants.MAX_Z_MINE - elevation / 2;
+                }
             }
             //list các đường đồng mức
             //GetSuspectPoints(contourMaxElevation);

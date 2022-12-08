@@ -620,6 +620,7 @@ namespace VNRaPaBomMin
                 {
                     // Zoom to duong bao
                     //MaganerCecmUsercontrolCmd.ZoomToDuongBao(tenDuongBao);
+                    idKV = idFuAnVungDuAnSelected;
                     MapMenuCommand.SetBoundKVDA(idFuAnVungDuAnSelected);
                 }
             }

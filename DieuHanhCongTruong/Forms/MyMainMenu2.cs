@@ -1,6 +1,7 @@
 ﻿using DieuHanhCongTruong.Command;
 using DieuHanhCongTruong.Common;
 using DieuHanhCongTruong.Forms.Account;
+using DieuHanhCongTruong.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -210,6 +211,7 @@ namespace DieuHanhCongTruong.Forms
             btnChiTietBMVNPhanTich.Visible = enable;
             btnPhanTichDoSau.Visible = enable;
             btnTuTruongBeMat.Visible = enable;
+            splitter2.Visible = enable;
         }
 
         public void TogglePointMenu(bool enable)
@@ -311,6 +313,19 @@ namespace DieuHanhCongTruong.Forms
         private void rbUnmodel_CheckedChanged(object sender, EventArgs e)
         {
             MapMenuCommand.toggleLayer(rbBomb.Checked, rbModel.Checked);
+        }
+
+        private void tabCtrlLineChart_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage tabPage = tabCtrlLineChart.SelectedTab;
+            MapMenuCommand.axMap1.IdentifiedShapes.Clear();
+            if (tabPage != null)
+            {
+                TabPageTag tag = (TabPageTag)tabPage.Tag;
+                MapMenuCommand.axMap1.IdentifiedShapes.AddShape(MapMenuCommand.ranhDoLayer, tag.lineShapeIndex);
+                MapMenuCommand.Redraw();
+            }
+            
         }
     }
 }
