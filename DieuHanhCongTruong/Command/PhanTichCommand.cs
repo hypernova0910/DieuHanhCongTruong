@@ -79,15 +79,16 @@ namespace DieuHanhCongTruong.Command
             }
             else
             {
-                //elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / Constants.magnetic_colors.Length;
                 if (isBomb)
                 {
+                    //elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / Constants.magnetic_colors.Length;
                     elevation = (Constants.MAX_Z_BOMB - Constants.MIN_Z_BOMB) / khoangPT;
                     contourMinElevation = Constants.MIN_Z_BOMB + elevation / 2;
                     contourMaxElevation = Constants.MAX_Z_BOMB - elevation / 2;
                 }
                 else
                 {
+                    //elevation = (Constants.MAX_Z_MINE - Constants.MIN_Z_MINE) / Constants.magnetic_colors.Length;
                     elevation = (Constants.MAX_Z_MINE - Constants.MIN_Z_MINE) / khoangPT;
                     contourMinElevation = Constants.MIN_Z_MINE + elevation / 2;
                     contourMaxElevation = Constants.MAX_Z_MINE - elevation / 2;

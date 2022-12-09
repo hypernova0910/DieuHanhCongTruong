@@ -1082,7 +1082,7 @@ namespace DieuHanhCongTruong.Command
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
-            pathpng = System.IO.Path.Combine(pathpng, "marker.png");
+            pathpng = System.IO.Path.Combine(pathpng, "marker bomb 25px.png");
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
@@ -1114,7 +1114,7 @@ namespace DieuHanhCongTruong.Command
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
-            pathpng = System.IO.Path.Combine(pathpng, "marker min.png");
+            pathpng = System.IO.Path.Combine(pathpng, "marker mine 25px.png");
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
@@ -1146,7 +1146,7 @@ namespace DieuHanhCongTruong.Command
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
-            pathpng = System.IO.Path.Combine(pathpng, "marker.png");
+            pathpng = System.IO.Path.Combine(pathpng, "marker bomb 25px.png");
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;
@@ -1178,7 +1178,7 @@ namespace DieuHanhCongTruong.Command
             ShapeDrawingOptions options = sf.DefaultDrawingOptions;
             options.PointType = tkPointSymbolType.ptSymbolPicture;
             var pathpng = AppUtils.GetAppDataPath();
-            pathpng = System.IO.Path.Combine(pathpng, "marker min.png");
+            pathpng = System.IO.Path.Combine(pathpng, "marker mine 25px.png");
             options.Picture = AppUtils.OpenImage(pathpng);
             options.AlignPictureByBottom = false;
             sf.CollisionMode = tkCollisionMode.AllowCollisions;

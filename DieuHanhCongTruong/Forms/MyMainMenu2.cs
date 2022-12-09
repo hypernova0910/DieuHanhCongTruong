@@ -323,9 +323,8 @@ namespace DieuHanhCongTruong.Forms
             {
                 TabPageTag tag = (TabPageTag)tabPage.Tag;
                 MapMenuCommand.axMap1.IdentifiedShapes.AddShape(MapMenuCommand.ranhDoLayer, tag.lineShapeIndex);
-                MapMenuCommand.Redraw();
             }
-            
+            MapMenuCommand.Redraw();
         }
     }
 }

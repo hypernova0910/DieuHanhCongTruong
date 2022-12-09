@@ -1311,7 +1311,7 @@
       <VersionMinor>2</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
+      <Isolated>True</Isolated>
     </COMReference>
     <COMReference Include="MapWinGIS">
       <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
@@ -1319,7 +1319,7 @@
       <VersionMinor>2</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
+      <Isolated>True</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="stdole">

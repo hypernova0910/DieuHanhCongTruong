@@ -399,11 +399,18 @@ namespace DieuHanhCongTruong.Command
                     var lstDataMine = ReadDataMongo(idKV, false, model);
                     //double maxMine = double.MinValue;
                     //double minMine = double.MaxValue;
+                    List<InfoConnect> lstDataBombFinal = new List<InfoConnect>();
+                    List<InfoConnect> lstDataMineFinal = new List<InfoConnect>();
                     foreach (var infoConnect in lstDataBomb)
                     {
+                        //if(Math.Abs(infoConnect.the_value) >= 6.1)
+                        //{
+                        //    continue;
+                        //}
                         infoConnect.the_value *= heSoMayDoBom;
+                        lstDataBombFinal.Add(infoConnect);
                     }
-                    List<InfoConnect> lstDataMineFinal = new List<InfoConnect>();
+                    
                     foreach (var infoConnect in lstDataMine)
                     {
                         if (infoConnect.the_value > 13)
@@ -426,7 +433,7 @@ namespace DieuHanhCongTruong.Command
                     //}
                     //maxMine = lstDataMineFinal.Max(x => x.the_value);
                     //minMine = lstDataMineFinal.Min(x => x.the_value);
-                    dicMayDoDiemDo.Add(true, lstDataBomb);
+                    dicMayDoDiemDo.Add(true, lstDataBombFinal);
                     dicMayDoDiemDo.Add(false, lstDataMineFinal);
                     retVal.Add(idKV, dicMayDoDiemDo);
                     //retValTemp[vungDuAn.Key] = dicMayDoDiemDo;
