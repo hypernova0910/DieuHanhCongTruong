@@ -1779,22 +1779,27 @@ namespace DieuHanhCongTruong.Command
 
         public static void LoadDuAn(long idDA)
         {
-            foreach(int imageLayer in imageLayers)
+            axMap1.RemoveLayer(polygonAreaLayer);
+            initPolygonAreaLayer();
+            axMap1.MoveLayerBottom(axMap1.get_LayerPosition(polygonAreaLayer));
+            foreach (int imageLayer in imageLayers)
             {
                 axMap1.RemoveLayer(imageLayer);
             }
             imageLayers.Clear();
-            //axMap1.ClearDrawing(oluoiLayer);
-            //oluoiLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-            //axMap1.ClearDrawing(lineLayer);
-            //lineLayer = axMap1.NewDrawing(tkDrawReferenceList.dlSpatiallyReferencedList);
-            Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
-            sf.EditClear();
-            sf = axMap1.get_Shapefile(oluoiLayer);
-            sf.EditClear();
-            sf = axMap1.get_Shapefile(polygonAreaLayer);
-            sf.EditClear();
+            //Shapefile sf = axMap1.get_Shapefile(ranhDoLayer);
+            //sf.EditClear();
+            //sf = axMap1.get_Shapefile(oluoiLayer);
+            //sf.EditClear();
+            //sf = axMap1.get_Shapefile(polygonAreaLayer);
+            //sf.EditClear();
+            axMap1.RemoveLayer(ranhDoLayer);
+            InitRanhDoLayer();
+            axMap1.RemoveLayer(oluoiLayer);
+            InitOLuoiLayer();
+            
             idKV__shapeIndex.Clear();
+            idKV__shapeOLuoi.Clear();
             SqlDataAdapter sqlAdapter = null;
             DataTable datatable = new DataTable();
             string sql = "SELECT " +
