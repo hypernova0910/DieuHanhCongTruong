@@ -1486,6 +1486,7 @@ namespace DieuHanhCongTruong.Common
             {
                 return lstPolygon;
             }
+            multiPolygon = multiPolygon.Replace("POLYGON ", "POLYGON");
             multiPolygon = multiPolygon.Replace("POLYGON((", "");
             multiPolygon = multiPolygon.Replace("MULTI(", "");
             multiPolygon = multiPolygon.Replace("POLYGON ((", "");
@@ -1508,7 +1509,7 @@ namespace DieuHanhCongTruong.Common
                     string[] coordinates = polygon.Split(",".ToCharArray());
                     foreach (string coordinate in coordinates)
                     {
-                        string[] latLong = coordinate.Split(" ".ToCharArray());
+                        string[] latLong = coordinate.Trim().Split(" ".ToCharArray());
                         double lat = double.Parse(latLong[1]);
                         double lon = double.Parse(latLong[0]);
                         //if (lat > dto.top_lat || lat < dto.bottom_lat ||

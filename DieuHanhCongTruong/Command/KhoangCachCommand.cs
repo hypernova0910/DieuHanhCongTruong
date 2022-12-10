@@ -68,7 +68,7 @@ namespace DieuHanhCongTruong.Command
                     "Vĩ độ điểm 1: " + y1 + "\n" +
                     "Kinh độ điểm 2: " + x2 + "\n" +
                     "Vĩ độ điểm 2: " + y2 + "\n" +
-                    "Khoảng cách: " + distance + "m"
+                    "Khoảng cách: " + Math.Round(distance, 3) + "m"
                 );
                 MyMainMenu2.Instance.lblToolTip.Text = "Chọn điểm 1. Nhấn ESC để hủy";
                 //MapMenuCommand.axMap1.CursorMode = tkCursorMode.cmPan;
