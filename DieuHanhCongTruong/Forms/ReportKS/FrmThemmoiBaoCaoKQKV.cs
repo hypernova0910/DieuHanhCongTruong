@@ -1181,8 +1181,8 @@ namespace VNRaPaBomMin
                 "Cecm_VNTerrainMinePoint.idRectangle as idRectangle," +
                 "OLuoi.o_id as 'Mã ô'," +
                 "Cecm_VNTerrainMinePoint.[SL] as'SL'," +
-                "Cecm_VNTerrainMinePoint.XPoint as 'Kinh độ'," +
-                "Cecm_VNTerrainMinePoint.YPoint as 'Vĩ độ'," +
+                "Cecm_VNTerrainMinePoint.Kinhdo as 'Kinh độ'," +
+                "Cecm_VNTerrainMinePoint.Vido as 'Vĩ độ'," +
                 "Deep as 'Độ sâu'," +
                 "Cecm_VNTerrainMinePoint.[Tinhtrang] as 'Tình trạng' " +
                 "FROM Cecm_VNTerrainMinePoint " +
@@ -1306,9 +1306,9 @@ namespace VNRaPaBomMin
                 //DGV_KetQuaBom.Columns[3].HeaderText = "Kích thước";
                 //DGV_KetQuaBom.Columns[4].Name = "Deep";
                 //DGV_KetQuaBom.Columns[4].HeaderText = "Độ sâu";
-                //DGV_KetQuaBom.Columns[5].Name = "XPoint";
+                //DGV_KetQuaBom.Columns[5].Name = "Kinhdo";
                 //DGV_KetQuaBom.Columns[5].HeaderText = "Kinh độ";
-                //DGV_KetQuaBom.Columns[6].Name = "YPoint";
+                //DGV_KetQuaBom.Columns[6].Name = "Vido";
                 //DGV_KetQuaBom.Columns[6].HeaderText = "Vĩ độ";
                 //DGV_KetQuaBom.Columns[7].Name = "Tinhtrang";
                 //DGV_KetQuaBom.Columns[7].HeaderText = "Tình trạng";

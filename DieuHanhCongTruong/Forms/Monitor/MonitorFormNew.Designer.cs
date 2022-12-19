@@ -29,30 +29,18 @@ namespace VNRaPaBomMin
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonitorFormNew));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonitorFormNew));
             this.metroTabControl2 = new System.Windows.Forms.TabControl();
             this.machineBombTab = new System.Windows.Forms.TabPage();
             this.chart_bomb = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.machineMineTab = new System.Windows.Forms.TabPage();
             this.chart_mine = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dgvMessage = new System.Windows.Forms.DataGridView();
-            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.command = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.machineId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.magnetic = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GPS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.corner = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeGPS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotSoVeTinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cotSaiSo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.metroTabControl1 = new System.Windows.Forms.TabControl();
             this.chartTab = new System.Windows.Forms.TabPage();
             this.tableTab = new System.Windows.Forms.TabPage();
@@ -62,6 +50,7 @@ namespace VNRaPaBomMin
             this.btnPoint = new System.Windows.Forms.ToolStripButton();
             this.btnShowPoint = new System.Windows.Forms.ToolStripButton();
             this.btnModel = new System.Windows.Forms.ToolStripButton();
+            this.axMap1 = new AxMapWinGIS.AxMap();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnPara = new System.Windows.Forms.Button();
             this.cb50x50 = new System.Windows.Forms.ComboBox();
@@ -84,23 +73,34 @@ namespace VNRaPaBomMin
             this.btnModelHistory = new System.Windows.Forms.Button();
             this.btnModel_ = new System.Windows.Forms.Button();
             this.btnModelRealTime = new System.Windows.Forms.Button();
-            this.axMap1 = new AxMapWinGIS.AxMap();
+            this.dgvMessage = new System.Windows.Forms.DataGridView();
+            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.command = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.machineId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.magnetic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GPS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.corner = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeGPS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotSoVeTinh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cotSaiSo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.metroTabControl2.SuspendLayout();
             this.machineBombTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_bomb)).BeginInit();
             this.machineMineTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_mine)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMessage)).BeginInit();
             this.metroTabControl1.SuspendLayout();
             this.chartTab.SuspendLayout();
             this.tableTab.SuspendLayout();
             this.mapTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.machineTab.SuspendLayout();
             this.resultTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMessage)).BeginInit();
             this.SuspendLayout();
             // 
             // metroTabControl2
@@ -129,17 +129,17 @@ namespace VNRaPaBomMin
             // 
             // chart_bomb
             // 
-            chartArea1.AxisX.LineWidth = 3;
-            chartArea1.AxisX.Maximum = 60D;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.ScaleBreakStyle.Enabled = true;
-            chartArea1.AxisX.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
-            chartArea1.AxisX2.Minimum = -100000D;
-            chartArea1.AxisY.LineWidth = 3;
-            chartArea1.Name = "ChartArea1";
-            this.chart_bomb.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart_bomb.Legends.Add(legend1);
+            chartArea3.AxisX.LineWidth = 3;
+            chartArea3.AxisX.Maximum = 60D;
+            chartArea3.AxisX.Minimum = 0D;
+            chartArea3.AxisX.ScaleBreakStyle.Enabled = true;
+            chartArea3.AxisX.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
+            chartArea3.AxisX2.Minimum = -100000D;
+            chartArea3.AxisY.LineWidth = 3;
+            chartArea3.Name = "ChartArea1";
+            this.chart_bomb.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart_bomb.Legends.Add(legend3);
             this.chart_bomb.Location = new System.Drawing.Point(8, 8);
             this.chart_bomb.Margin = new System.Windows.Forms.Padding(2);
             this.chart_bomb.Name = "chart_bomb";
@@ -159,151 +159,23 @@ namespace VNRaPaBomMin
             // 
             // chart_mine
             // 
-            chartArea2.AxisX.LineWidth = 3;
-            chartArea2.AxisX.Maximum = 60D;
-            chartArea2.AxisX.Minimum = 0D;
-            chartArea2.AxisX.ScaleBreakStyle.Enabled = true;
-            chartArea2.AxisX.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
-            chartArea2.AxisX2.Minimum = -100000D;
-            chartArea2.AxisY.LineWidth = 3;
-            chartArea2.Name = "ChartArea1";
-            this.chart_mine.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_mine.Legends.Add(legend2);
+            chartArea4.AxisX.LineWidth = 3;
+            chartArea4.AxisX.Maximum = 60D;
+            chartArea4.AxisX.Minimum = 0D;
+            chartArea4.AxisX.ScaleBreakStyle.Enabled = true;
+            chartArea4.AxisX.ScaleBreakStyle.StartFromZero = System.Windows.Forms.DataVisualization.Charting.StartFromZero.Yes;
+            chartArea4.AxisX2.Minimum = -100000D;
+            chartArea4.AxisY.LineWidth = 3;
+            chartArea4.Name = "ChartArea1";
+            this.chart_mine.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart_mine.Legends.Add(legend4);
             this.chart_mine.Location = new System.Drawing.Point(8, 8);
             this.chart_mine.Margin = new System.Windows.Forms.Padding(2);
             this.chart_mine.Name = "chart_mine";
             this.chart_mine.Size = new System.Drawing.Size(952, 602);
             this.chart_mine.TabIndex = 2;
             this.chart_mine.Text = "Gía trị từ trường máy dò bom";
-            // 
-            // dgvMessage
-            // 
-            this.dgvMessage.AllowUserToDeleteRows = false;
-            this.dgvMessage.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvMessage.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMessage.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvMessage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMessage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.count,
-            this.command,
-            this.machineId,
-            this.time,
-            this.magnetic,
-            this.GPS,
-            this.corner,
-            this.timeGPS,
-            this.status,
-            this.cotSoVeTinh,
-            this.cotSaiSo});
-            this.dgvMessage.EnableHeadersVisualStyles = false;
-            this.dgvMessage.Location = new System.Drawing.Point(10, 20);
-            this.dgvMessage.Margin = new System.Windows.Forms.Padding(2);
-            this.dgvMessage.Name = "dgvMessage";
-            this.dgvMessage.ReadOnly = true;
-            this.dgvMessage.RowHeadersVisible = false;
-            this.dgvMessage.RowHeadersWidth = 51;
-            this.dgvMessage.RowTemplate.Height = 24;
-            this.dgvMessage.RowTemplate.ReadOnly = true;
-            this.dgvMessage.Size = new System.Drawing.Size(980, 650);
-            this.dgvMessage.TabIndex = 2;
-            // 
-            // count
-            // 
-            this.count.FillWeight = 35.70382F;
-            this.count.HeaderText = "STT";
-            this.count.MinimumWidth = 6;
-            this.count.Name = "count";
-            this.count.ReadOnly = true;
-            // 
-            // command
-            // 
-            this.command.FillWeight = 80F;
-            this.command.HeaderText = "Loại máy dò";
-            this.command.MinimumWidth = 20;
-            this.command.Name = "command";
-            this.command.ReadOnly = true;
-            // 
-            // machineId
-            // 
-            this.machineId.FillWeight = 114.8156F;
-            this.machineId.HeaderText = "SH máy";
-            this.machineId.MinimumWidth = 6;
-            this.machineId.Name = "machineId";
-            this.machineId.ReadOnly = true;
-            // 
-            // time
-            // 
-            this.time.FillWeight = 101.417F;
-            this.time.HeaderText = "Thời gian gửi";
-            this.time.MinimumWidth = 6;
-            this.time.Name = "time";
-            this.time.ReadOnly = true;
-            // 
-            // magnetic
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.magnetic.DefaultCellStyle = dataGridViewCellStyle2;
-            this.magnetic.FillWeight = 170.5584F;
-            this.magnetic.HeaderText = "Gía trị từ trường";
-            this.magnetic.MinimumWidth = 6;
-            this.magnetic.Name = "magnetic";
-            this.magnetic.ReadOnly = true;
-            // 
-            // GPS
-            // 
-            this.GPS.FillWeight = 126.7711F;
-            this.GPS.HeaderText = "Tọa độ";
-            this.GPS.MinimumWidth = 6;
-            this.GPS.Name = "GPS";
-            this.GPS.ReadOnly = true;
-            // 
-            // corner
-            // 
-            this.corner.FillWeight = 42.25705F;
-            this.corner.HeaderText = "Góc";
-            this.corner.MinimumWidth = 6;
-            this.corner.Name = "corner";
-            this.corner.ReadOnly = true;
-            // 
-            // timeGPS
-            // 
-            this.timeGPS.FillWeight = 101.417F;
-            this.timeGPS.HeaderText = "Thời gian";
-            this.timeGPS.MinimumWidth = 6;
-            this.timeGPS.Name = "timeGPS";
-            this.timeGPS.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.FillWeight = 73.59273F;
-            this.status.HeaderText = "Trạng thái";
-            this.status.MinimumWidth = 6;
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            // 
-            // cotSoVeTinh
-            // 
-            this.cotSoVeTinh.FillWeight = 50F;
-            this.cotSoVeTinh.HeaderText = "Số vệ tinh";
-            this.cotSoVeTinh.MinimumWidth = 6;
-            this.cotSoVeTinh.Name = "cotSoVeTinh";
-            this.cotSoVeTinh.ReadOnly = true;
-            // 
-            // cotSaiSo
-            // 
-            this.cotSaiSo.FillWeight = 50F;
-            this.cotSaiSo.HeaderText = "Sai số";
-            this.cotSaiSo.MinimumWidth = 6;
-            this.cotSaiSo.Name = "cotSaiSo";
-            this.cotSaiSo.ReadOnly = true;
             // 
             // metroTabControl1
             // 
@@ -364,7 +236,7 @@ namespace VNRaPaBomMin
             this.btnModel});
             this.toolStrip1.Location = new System.Drawing.Point(2, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(998, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(998, 27);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -374,7 +246,7 @@ namespace VNRaPaBomMin
             this.btnDistance.Image = global::DieuHanhCongTruong.Properties.Resources.distance;
             this.btnDistance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDistance.Name = "btnDistance";
-            this.btnDistance.Size = new System.Drawing.Size(29, 28);
+            this.btnDistance.Size = new System.Drawing.Size(29, 24);
             this.btnDistance.Text = "Đo khoảng cách";
             this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
             // 
@@ -384,7 +256,7 @@ namespace VNRaPaBomMin
             this.btnPoint.Image = global::DieuHanhCongTruong.Properties.Resources.marker;
             this.btnPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPoint.Name = "btnPoint";
-            this.btnPoint.Size = new System.Drawing.Size(29, 28);
+            this.btnPoint.Size = new System.Drawing.Size(29, 24);
             this.btnPoint.Text = "Lấy tọa độ điểm";
             this.btnPoint.Click += new System.EventHandler(this.btnPoint_Click);
             // 
@@ -394,7 +266,7 @@ namespace VNRaPaBomMin
             this.btnShowPoint.Image = global::DieuHanhCongTruong.Properties.Resources.show;
             this.btnShowPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowPoint.Name = "btnShowPoint";
-            this.btnShowPoint.Size = new System.Drawing.Size(29, 28);
+            this.btnShowPoint.Size = new System.Drawing.Size(29, 24);
             this.btnShowPoint.Tag = "";
             this.btnShowPoint.Text = "Hiện điểm dò được";
             this.btnShowPoint.Click += new System.EventHandler(this.btnShowPoint_Click);
@@ -406,10 +278,21 @@ namespace VNRaPaBomMin
             this.btnModel.Image = global::DieuHanhCongTruong.Properties.Resources.model_on;
             this.btnModel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnModel.Name = "btnModel";
-            this.btnModel.Size = new System.Drawing.Size(29, 28);
+            this.btnModel.Size = new System.Drawing.Size(29, 24);
             this.btnModel.Text = "Bật nắn điểm";
             this.btnModel.ToolTipText = "Bật nắn điểm";
             this.btnModel.Click += new System.EventHandler(this.btnModel_Click);
+            // 
+            // axMap1
+            // 
+            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axMap1.Enabled = true;
+            this.axMap1.Location = new System.Drawing.Point(2, 2);
+            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
+            this.axMap1.Name = "axMap1";
+            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
+            this.axMap1.Size = new System.Drawing.Size(998, 698);
+            this.axMap1.TabIndex = 0;
             // 
             // panel2
             // 
@@ -682,16 +565,134 @@ namespace VNRaPaBomMin
             this.btnModelRealTime.UseVisualStyleBackColor = true;
             this.btnModelRealTime.Click += new System.EventHandler(this.btnModelRealTime_Click);
             // 
-            // axMap1
+            // dgvMessage
             // 
-            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMap1.Enabled = true;
-            this.axMap1.Location = new System.Drawing.Point(2, 2);
-            this.axMap1.Margin = new System.Windows.Forms.Padding(2);
-            this.axMap1.Name = "axMap1";
-            this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(998, 698);
-            this.axMap1.TabIndex = 0;
+            this.dgvMessage.AllowUserToDeleteRows = false;
+            this.dgvMessage.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMessage.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMessage.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvMessage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMessage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.count,
+            this.command,
+            this.machineId,
+            this.time,
+            this.magnetic,
+            this.GPS,
+            this.corner,
+            this.timeGPS,
+            this.status,
+            this.cotSoVeTinh,
+            this.cotSaiSo});
+            this.dgvMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMessage.EnableHeadersVisualStyles = false;
+            this.dgvMessage.Location = new System.Drawing.Point(0, 0);
+            this.dgvMessage.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvMessage.Name = "dgvMessage";
+            this.dgvMessage.ReadOnly = true;
+            this.dgvMessage.RowHeadersVisible = false;
+            this.dgvMessage.RowHeadersWidth = 51;
+            this.dgvMessage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvMessage.RowTemplate.Height = 24;
+            this.dgvMessage.RowTemplate.ReadOnly = true;
+            this.dgvMessage.Size = new System.Drawing.Size(1002, 702);
+            this.dgvMessage.TabIndex = 4;
+            // 
+            // count
+            // 
+            this.count.FillWeight = 35.70382F;
+            this.count.HeaderText = "STT";
+            this.count.MinimumWidth = 6;
+            this.count.Name = "count";
+            this.count.ReadOnly = true;
+            // 
+            // command
+            // 
+            this.command.FillWeight = 80F;
+            this.command.HeaderText = "Loại máy dò";
+            this.command.MinimumWidth = 20;
+            this.command.Name = "command";
+            this.command.ReadOnly = true;
+            // 
+            // machineId
+            // 
+            this.machineId.FillWeight = 114.8156F;
+            this.machineId.HeaderText = "SH máy";
+            this.machineId.MinimumWidth = 6;
+            this.machineId.Name = "machineId";
+            this.machineId.ReadOnly = true;
+            // 
+            // time
+            // 
+            this.time.FillWeight = 150F;
+            this.time.HeaderText = "Thời gian gửi";
+            this.time.MinimumWidth = 6;
+            this.time.Name = "time";
+            this.time.ReadOnly = true;
+            // 
+            // magnetic
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.magnetic.DefaultCellStyle = dataGridViewCellStyle2;
+            this.magnetic.HeaderText = "Gía trị từ trường";
+            this.magnetic.MinimumWidth = 6;
+            this.magnetic.Name = "magnetic";
+            this.magnetic.ReadOnly = true;
+            // 
+            // GPS
+            // 
+            this.GPS.FillWeight = 126.7711F;
+            this.GPS.HeaderText = "Tọa độ";
+            this.GPS.MinimumWidth = 6;
+            this.GPS.Name = "GPS";
+            this.GPS.ReadOnly = true;
+            // 
+            // corner
+            // 
+            this.corner.FillWeight = 42.25705F;
+            this.corner.HeaderText = "Góc";
+            this.corner.MinimumWidth = 6;
+            this.corner.Name = "corner";
+            this.corner.ReadOnly = true;
+            // 
+            // timeGPS
+            // 
+            this.timeGPS.FillWeight = 101.417F;
+            this.timeGPS.HeaderText = "Thời gian";
+            this.timeGPS.MinimumWidth = 6;
+            this.timeGPS.Name = "timeGPS";
+            this.timeGPS.ReadOnly = true;
+            // 
+            // status
+            // 
+            this.status.FillWeight = 73.59273F;
+            this.status.HeaderText = "Trạng thái";
+            this.status.MinimumWidth = 6;
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
+            // cotSoVeTinh
+            // 
+            this.cotSoVeTinh.FillWeight = 50F;
+            this.cotSoVeTinh.HeaderText = "Số vệ tinh";
+            this.cotSoVeTinh.MinimumWidth = 6;
+            this.cotSoVeTinh.Name = "cotSoVeTinh";
+            this.cotSoVeTinh.ReadOnly = true;
+            // 
+            // cotSaiSo
+            // 
+            this.cotSaiSo.FillWeight = 50F;
+            this.cotSaiSo.HeaderText = "Sai số";
+            this.cotSaiSo.MinimumWidth = 6;
+            this.cotSaiSo.Name = "cotSaiSo";
+            this.cotSaiSo.ReadOnly = true;
             // 
             // MonitorFormNew
             // 
@@ -721,7 +722,6 @@ namespace VNRaPaBomMin
             ((System.ComponentModel.ISupportInitialize)(this.chart_bomb)).EndInit();
             this.machineMineTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart_mine)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMessage)).EndInit();
             this.metroTabControl1.ResumeLayout(false);
             this.chartTab.ResumeLayout(false);
             this.tableTab.ResumeLayout(false);
@@ -729,12 +729,13 @@ namespace VNRaPaBomMin
             this.mapTab.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.machineTab.ResumeLayout(false);
             this.resultTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMessage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -749,7 +750,6 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.TabPage machineMineTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_bomb;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_mine;
-        private System.Windows.Forms.DataGridView dgvMessage;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbIP;
@@ -773,6 +773,13 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.ToolStripButton btnPoint;
         private System.Windows.Forms.ToolStripButton btnShowPoint;
         private System.Windows.Forms.ToolStripButton btnModel;
+        private System.Windows.Forms.Button btnPara;
+        private System.Windows.Forms.Button btnHistory;
+        private System.Windows.Forms.Button btnRealTime;
+        private System.Windows.Forms.Button btnModelHistory;
+        private System.Windows.Forms.Button btnModel_;
+        private System.Windows.Forms.Button btnModelRealTime;
+        public System.Windows.Forms.DataGridView dgvMessage;
         private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.DataGridViewTextBoxColumn command;
         private System.Windows.Forms.DataGridViewTextBoxColumn machineId;
@@ -784,12 +791,6 @@ namespace VNRaPaBomMin
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn cotSoVeTinh;
         private System.Windows.Forms.DataGridViewTextBoxColumn cotSaiSo;
-        private System.Windows.Forms.Button btnPara;
-        private System.Windows.Forms.Button btnHistory;
-        private System.Windows.Forms.Button btnRealTime;
-        private System.Windows.Forms.Button btnModelHistory;
-        private System.Windows.Forms.Button btnModel_;
-        private System.Windows.Forms.Button btnModelRealTime;
         //public GsPreviewCtrl mPreviewCtrl;
     }
 }

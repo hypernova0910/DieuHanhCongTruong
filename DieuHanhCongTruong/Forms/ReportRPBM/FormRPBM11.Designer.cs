@@ -343,7 +343,7 @@ namespace DieuHanhCongTruong
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "FormRPBM11";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormRPBM11";
+            this.Text = "BIÊN BẢN XÁC NHẬN SỐ LƯỢNG, CHỦNG LOẠI BOM MÌN VẬT NỔ TRONG THI CÔNG";
             this.Load += new System.EventHandler(this.FormRPBM11_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

@@ -120,6 +120,7 @@ namespace DieuHanhCongTruong.CustomControl
             this.lblDepth.TabIndex = 4;
             this.lblDepth.Text = "2m";
             this.lblDepth.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblDepth.Visible = false;
             // 
             // lblIsBomb
             // 
@@ -164,6 +165,7 @@ namespace DieuHanhCongTruong.CustomControl
             this.Controls.Add(this.pboxIconAlert);
             this.Location = new System.Drawing.Point(1022, 540);
             this.Size = new System.Drawing.Size(572, 68);
+            this.Dock = DockStyle.Top;
             //this.TabIndex = 1;
             // 
             // lblMachineCode
@@ -348,6 +350,7 @@ namespace DieuHanhCongTruong.CustomControl
             }
             this.lblDepth.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblDepth.Click += ChildControlClick;
+            this.lblDepth.Visible = false;
             // 
             // lblIsBomb
             // 

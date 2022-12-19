@@ -52,6 +52,7 @@ using DieuHanhCongTruong;
 using DieuHanhCongTruong.Forms.Account;
 using DieuHanhCongTruong.Command;
 using DieuHanhCongTruong.Properties;
+using DieuHanhCongTruong.Forms.Monitor;
 
 namespace VNRaPaBomMin
 {
@@ -130,6 +131,8 @@ namespace VNRaPaBomMin
         private Dictionary<string, DateTime> machineActive__lastRealTime = new Dictionary<string, DateTime>();
         private Dictionary<string, DateTime> machineActive__lastRealTimeModel = new Dictionary<string, DateTime>();
         private Dictionary<string, string> macID__code = new Dictionary<string, string>();
+        private Dictionary<string, DataGridView> macID__table = new Dictionary<string, DataGridView>();
+        private Dictionary<string, int> macID__rowCount = new Dictionary<string, int>();
 
         //private Dictionary<string, Dictionary<int, DateTime>> machine__shapeIndex_time = new Dictionary<string, Dictionary<int, DateTime>>();
         //private Dictionary<string, int> machineActive__currentLineShapeIndex = new Dictionary<string, int>();
@@ -1256,14 +1259,7 @@ namespace VNRaPaBomMin
                                                         //labels.OffsetY = 20;
                                                         //axMap1.set_DrawingLabels(handleLayer, labels);
                                                         addFlagRealTime(dLong, dLat, 0);
-                                                        labelText = string.Format(
-                                                            "Mã máy: {0}\n" +
-                                                            "Kinh độ: {1}\n" +
-                                                            "Vĩ độ: {2}\n" +
-                                                            "Cường độ từ trường: {3}\n" +
-                                                            "Độ sâu: {4}m",
-                                                            codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData * _HeSoMayDoBom), 0
-                                                        );
+                                                        labelText = getLabelText(codeMachine, dLong, dLat, dValData, true, 0);
                                                         labels.AddLabel(labelText, dLong, dLat);
                                                         //axMap1.set_DrawingLabels(labelLayer, labels);
                                                         //axMap1.Redraw();
@@ -1286,14 +1282,7 @@ namespace VNRaPaBomMin
                                                             //labels.OffsetY = 20;
                                                             //axMap1.set_DrawingLabels(handleLayer, labels);
                                                             addFlagRealTime(dLong, dLat, diemDoGanNhat.DepthBoom);
-                                                            labelText = string.Format(
-                                                                "Mã máy: {0}\n" +
-                                                                "Kinh độ: {1}\n" +
-                                                                "Vĩ độ: {2}\n" +
-                                                                "Cường độ từ trường: {3}\n" +
-                                                                "Độ sâu: {4}m",
-                                                                codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData * _HeSoMayDoBom), diemDoGanNhat.DepthBoom
-                                                            );
+                                                            labelText = getLabelText(codeMachine, dLong, dLat, dValData, true, diemDoGanNhat.DepthBoom);
                                                             labels.AddLabel(labelText, dLong, dLat);
                                                             //axMap1.set_DrawingLabels(labelLayer, labels);
                                                             //axMap1.Redraw();
@@ -1308,14 +1297,7 @@ namespace VNRaPaBomMin
                                                             //labels.OffsetY = 20;
                                                             //axMap1.set_DrawingLabels(handleLayer, labels);
                                                             addFlagRealTime(dLong, dLat, 0);
-                                                            labelText = string.Format(
-                                                                "Mã máy: {0}\n" +
-                                                                "Kinh độ: {1}\n" +
-                                                                "Vĩ độ: {2}\n" +
-                                                                "Cường độ từ trường: {3}\n" +
-                                                                "Độ sâu: {4}m",
-                                                                codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData * _HeSoMayDoBom), 0
-                                                            );
+                                                            labelText = getLabelText(codeMachine, dLong, dLat, dValData, true, 0);
                                                             labels.AddLabel(labelText, dLong, dLat);
                                                             //axMap1.set_DrawingLabels(labelLayer, labels);
                                                             //axMap1.Redraw();
@@ -1683,14 +1665,7 @@ namespace VNRaPaBomMin
                                                         //labels.OffsetY = 20;
                                                         //axMap1.set_DrawingLabels(handleLayer, labels);
                                                         addFlagRealTime(dLong, dLat, 0);
-                                                        labelText = string.Format(
-                                                            "Mã máy: {0}\n" +
-                                                            "Kinh độ: {1}\n" +
-                                                            "Vĩ độ: {2}\n" +
-                                                            "Cường độ từ trường: {3}\n" +
-                                                            "Độ sâu: {4}m",
-                                                            codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData * _HeSoMayDoBom), 0
-                                                        );
+                                                        labelText = getLabelText(codeMachine, dLong, dLat, dValData, true, 0);
                                                         labels.AddLabel(labelText, dLong, dLat);
                                                         //axMap1.set_DrawingLabels(labelLayer, labels);
                                                         //axMap1.Redraw();
@@ -1713,14 +1688,7 @@ namespace VNRaPaBomMin
                                                             //labels.OffsetY = 20;
                                                             //axMap1.set_DrawingLabels(handleLayer, labels);
                                                             addFlagRealTime(dLong, dLat, diemDoGanNhat.DepthBoom);
-                                                            labelText = string.Format(
-                                                                "Mã máy: {0}\n" +
-                                                                "Kinh độ: {1}\n" +
-                                                                "Vĩ độ: {2}\n" +
-                                                                "Cường độ từ trường: {3}\n" +
-                                                                "Độ sâu: {4}m",
-                                                                codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData), diemDoGanNhat.DepthBoom
-                                                            );
+                                                            labelText = getLabelText(codeMachine, dLong, dLat, dValData, false, diemDoGanNhat.DepthBoom);
                                                             labels.AddLabel(labelText, dLong, dLat);
                                                             //axMap1.set_DrawingLabels(labelLayer, labels);
                                                             //axMap1.Redraw();
@@ -1735,14 +1703,7 @@ namespace VNRaPaBomMin
                                                             //labels.OffsetY = 20;
                                                             //axMap1.set_DrawingLabels(handleLayer, labels);
                                                             addFlagRealTime(dLong, dLat, 0);
-                                                            labelText = string.Format(
-                                                                "Mã máy: {0}\n" +
-                                                                "Kinh độ: {1}\n" +
-                                                                "Vĩ độ: {2}\n" +
-                                                                "Cường độ từ trường: {3}\n" +
-                                                                "Độ sâu: {4}m",
-                                                                codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData), 0
-                                                            );
+                                                            labelText = getLabelText(codeMachine, dLong, dLat, dValData, false, 0);
                                                             labels.AddLabel(labelText, dLong, dLat);
                                                             //axMap1.set_DrawingLabels(labelLayer, labels);
                                                             //axMap1.Redraw();
@@ -5988,6 +5949,7 @@ namespace VNRaPaBomMin
                                 "Độ sâu: {4}m",
                                 item.MachineCode, Math.Round(longt, 6), Math.Round(latt, 6), Math.Round(item.Z * _HeSoMayDoBom), 0
                             );
+                            labelText2 = getLabelText(item.MachineCode, longt, latt, item.Z, true, 0);
                             //labels_info.AddLabel(labelText2, longt, latt);
                             //axMap1.Redraw();
                             phanTichControl.setDepth(0);
@@ -6007,14 +5969,7 @@ namespace VNRaPaBomMin
                                 //labels.OffsetY = 20;
                                 //axMap1.set_DrawingLabels(handleLayer, labels);
                                 addFlag(longt, latt, diemDoGanNhat.DepthBoom);
-                                string labelText2 = string.Format(
-                                    "Mã máy: {0}\n" +
-                                    "Kinh độ: {1}\n" +
-                                    "Vĩ độ: {2}\n" +
-                                    "Cường độ từ trường: {3}\n" +
-                                    "Độ sâu: {4}m",
-                                    item.MachineCode, Math.Round(longt, 6), Math.Round(latt, 6), Math.Round(item.Z * _HeSoMayDoBom), diemDoGanNhat.DepthBoom
-                                );
+                                string labelText2 = getLabelText(item.MachineCode, longt, latt, item.Z, true, diemDoGanNhat.DepthBoom);
                                 //labels_info.AddLabel(labelText2, longt, latt);
                                 //axMap1.Redraw();
                                 phanTichControl.setDepth(diemDoGanNhat.DepthBoom);
@@ -6026,14 +5981,7 @@ namespace VNRaPaBomMin
                                 //labels.OffsetY = 20;
                                 //axMap1.set_DrawingLabels(handleLayer, labels);
                                 addFlag(longt, latt, 0);
-                                string labelText2 = string.Format(
-                                    "Mã máy: {0}\n" +
-                                    "Kinh độ: {1}\n" +
-                                    "Vĩ độ: {2}\n" +
-                                    "Cường độ từ trường: {3}\n" +
-                                    "Độ sâu: {4}m",
-                                    item.MachineCode, Math.Round(longt, 6), Math.Round(latt, 6), Math.Round(item.Z * _HeSoMayDoBom), 0
-                                );
+                                string labelText2 = getLabelText(item.MachineCode, longt, latt, item.Z, true, 0);
                                 //labels_info.AddLabel(labelText2, longt, latt);
                                 //axMap1.Redraw();
                                 phanTichControl.setDepth(0);
@@ -6117,13 +6065,14 @@ namespace VNRaPaBomMin
                         //Labels labels = axMap1.get_DrawingLabels(labelLayer);
                         Labels labels = new Labels();
                         labels.FontSize = 12;
-                        string labelText = string.Format(
-                            "Kinh độ: {0}\n" +
-                            "Vĩ độ: {1}\n" +
-                            "Độ sâu: {2}m\n" +
-                            "Cường độ từ trường: {3}",
-                            Math.Round(longt, 6), Math.Round(latt, 6), Math.Round(item.depth, 6), Math.Round(item.Z, 6)
-                        );
+                        //string labelText = string.Format(
+                        //    "Kinh độ: {0}\n" +
+                        //    "Vĩ độ: {1}\n" +
+                        //    "Độ sâu: {2}m\n" +
+                        //    "Cường độ từ trường: {3}",
+                        //    Math.Round(longt, 6), Math.Round(latt, 6), Math.Round(item.depth, 6), Math.Round(item.Z, 6)
+                        //);
+                        string labelText = getLabelText(item.MachineCode, longt, latt, item.Z, false, item.depth);
                         double pxX = 0, pxY = 0;
                         //axMap1.ProjToPixel(longt, latt, ref pxX, ref pxY);
                         //axMap1.PixelToProj(pxX + 10, pxY + 10, ref longt, ref latt);
@@ -6268,9 +6217,20 @@ namespace VNRaPaBomMin
 
         private void AddDataToTable(string codeMachine, DateTime updateTimeData, double dValData, double dLong, double dLat, DateTime timeActionData, int bitSent, int satelliteCount, double dilution, bool isButton1Press, string type)
         {
+            //if (!macID__table.ContainsKey(codeMachine))
+            //{
+            //    TabPage tabPage = new TabPage();
+            //    tabPage.Text = codeMachine;
+            //    TableDataPoint tableDataPoint = new TableDataPoint();
+            //    tabPage.Controls.Add(tableDataPoint);
+            //    tabCtrlDataPoint.TabPages.Add(tabPage);
+            //    macID__table.Add(codeMachine, tableDataPoint.dgvMessage);
+            //    macID__rowCount.Add(codeMachine, 0);
+            //}
             //add data to table
+            //DataGridView dgvMessage = macID__table[codeMachine];
             DataGridViewRow row = (DataGridViewRow)dgvMessage.Rows[0].Clone();
-            //row.Cells[0].Value = dgvMessage.Rows.Count;
+            //row.Cells[0].Value = ++macID__rowCount[codeMachine];
             row.Cells[0].Value = ++rowCount;
             row.Cells[1].Value = type;
             if (macID__code.ContainsKey(codeMachine))
@@ -6501,6 +6461,19 @@ namespace VNRaPaBomMin
                 }
             }
             return obj;
+        }
+
+        private string getLabelText(string codeMachine, double dLong, double dLat, double dValData, bool isBomb, double depth)
+        {
+            string labelText = string.Format(
+                "Mã máy: {0}\n" +
+                "Kinh độ: {1}\n" +
+                "Vĩ độ: {2}\n" +
+                "Cường độ từ trường: {3}",
+                //"Độ sâu: {4}m",
+                codeMachine, Math.Round(dLong, 6), Math.Round(dLat, 6), Math.Round(dValData * (isBomb ? _HeSoMayDoBom : 1), 3)//, depth
+            );
+            return labelText;
         }
     }
 

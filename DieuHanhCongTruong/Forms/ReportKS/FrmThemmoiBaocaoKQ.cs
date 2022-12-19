@@ -826,7 +826,7 @@ namespace VNRaPaBomMin
                 SqlCommandBuilder sqlCommand = null;
                 SqlDataAdapter sqlAdapter = null;
                 System.Data.DataTable datatable = new System.Data.DataTable();
-                sqlAdapter = new SqlDataAdapter(string.Format("SELECT Cecm_VNTerrainMinePoint.id as 'STT',Cecm_VNTerrainMinePoint.[Kyhieu] as 'Kí hiệu',Cecm_VNTerrainMinePoint.[Loai] as 'Loại',Cecm_TerrainRectangle.code as 'Mã ô',Cecm_VNTerrainMinePoint.[SL] as'SL',Cecm_VNTerrainMinePoint.XPoint as 'Kinh độ',Cecm_VNTerrainMinePoint.YPoint as 'Vĩ độ',Deep as 'Độ sâu',Cecm_VNTerrainMinePoint.[Tinhtrang] as 'Tình trạng' FROM Cecm_VNTerrainMinePoint left join cecm_program_area_map on cecm_program_area_map.id = Cecm_VNTerrainMinePoint.programId left join Cecm_TerrainRectangle on Cecm_TerrainRectangle.id = Cecm_VNTerrainMinePoint.idRectangle where idRectangle != -1 and (cecm_program_area_map.cecm_program_id = {0} or cecm_program_area_map.cecm_program_id = {1})", dem, dem1), _cn.Connection as SqlConnection);
+                sqlAdapter = new SqlDataAdapter(string.Format("SELECT Cecm_VNTerrainMinePoint.id as 'STT',Cecm_VNTerrainMinePoint.[Kyhieu] as 'Kí hiệu',Cecm_VNTerrainMinePoint.[Loai] as 'Loại',Cecm_TerrainRectangle.code as 'Mã ô',Cecm_VNTerrainMinePoint.[SL] as'SL',Cecm_VNTerrainMinePoint.Kinhdo as 'Kinh độ',Cecm_VNTerrainMinePoint.Vido as 'Vĩ độ',Deep as 'Độ sâu',Cecm_VNTerrainMinePoint.[Tinhtrang] as 'Tình trạng' FROM Cecm_VNTerrainMinePoint left join cecm_program_area_map on cecm_program_area_map.id = Cecm_VNTerrainMinePoint.programId left join Cecm_TerrainRectangle on Cecm_TerrainRectangle.id = Cecm_VNTerrainMinePoint.idRectangle where idRectangle != -1 and (cecm_program_area_map.cecm_program_id = {0} or cecm_program_area_map.cecm_program_id = {1})", dem, dem1), _cn.Connection as SqlConnection);
                 sqlCommand = new SqlCommandBuilder(sqlAdapter);
                 sqlAdapter.Fill(datatable);
                 dgvBMVN.DataSource = null;
@@ -952,8 +952,8 @@ namespace VNRaPaBomMin
                     "Cecm_VNTerrainMinePoint.idRectangle as idRectangle," + 
                     "OLuoi.o_id as 'Mã ô'," +
                     "Cecm_VNTerrainMinePoint.[SL] as'SL'," +
-                    "Cecm_VNTerrainMinePoint.XPoint as 'Kinh độ'," +
-                    "Cecm_VNTerrainMinePoint.YPoint as 'Vĩ độ'," +
+                    "Cecm_VNTerrainMinePoint.Kinhdo as 'Kinh độ'," +
+                    "Cecm_VNTerrainMinePoint.Vido as 'Vĩ độ'," +
                     "Deep as 'Độ sâu'," +
                     "Cecm_VNTerrainMinePoint.[Tinhtrang] as 'Tình trạng' " +
                     "FROM Cecm_VNTerrainMinePoint " +

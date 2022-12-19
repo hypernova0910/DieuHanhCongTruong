@@ -499,6 +499,12 @@
     <Compile Include="Forms\Monitor\SelectDieuHanhRPBMForm.Designer.cs">
       <DependentUpon>SelectDieuHanhRPBMForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Monitor\TableDataPoint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Monitor\TableDataPoint.Designer.cs">
+      <DependentUpon>TableDataPoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MyMainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1065,6 +1071,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Monitor\SelectDieuHanhRPBMForm.resx">
       <DependentUpon>SelectDieuHanhRPBMForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Monitor\TableDataPoint.resx">
+      <DependentUpon>TableDataPoint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MyMainMenu.resx">
       <DependentUpon>MyMainMenu.cs</DependentUpon>

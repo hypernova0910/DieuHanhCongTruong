@@ -113,7 +113,8 @@ namespace DieuHanhCongTruong.CustomControl
             this.Controls.Add(this.lblLatLong);
             this.Controls.Add(this.lblStaff);
             this.Controls.Add(this.pboxIconMachine);
-            this.Size = new System.Drawing.Size(572, 68);
+            this.Size = new System.Drawing.Size(772, 68);
+            this.Dock = DockStyle.Top;
             //this.TabIndex = 0;
             //
             // lblMachineCode
@@ -130,7 +131,7 @@ namespace DieuHanhCongTruong.CustomControl
             // lblMagnetic
             // 
             this.lblMagnetic.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMagnetic.Location = new System.Drawing.Point(320, 36);
+            this.lblMagnetic.Location = new System.Drawing.Point(524, 36);
             this.lblMagnetic.Size = new System.Drawing.Size(200, 20);
             this.lblMagnetic.TabIndex = 3;
             this.lblMagnetic.Text = "0";
@@ -140,11 +141,11 @@ namespace DieuHanhCongTruong.CustomControl
             // lblLatLong
             // 
             this.lblLatLong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLatLong.Location = new System.Drawing.Point(324, 11);
+            this.lblLatLong.Location = new System.Drawing.Point(424, 11);
             this.lblLatLong.Name = "lblLatLong";
-            this.lblLatLong.Size = new System.Drawing.Size(196, 20);
+            this.lblLatLong.Size = new System.Drawing.Size(296, 20);
             this.lblLatLong.TabIndex = 2;
-            this.lblLatLong.Text = "17.086545, 20.075544";
+            this.lblLatLong.Text = "";
             this.lblLatLong.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblLatLong.Click += ChildControlClick;
             // 

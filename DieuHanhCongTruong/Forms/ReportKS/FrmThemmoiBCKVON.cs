@@ -659,7 +659,7 @@ namespace VNRaPaBomMin
                 SqlCommandBuilder sqlCommand = null;
                 SqlDataAdapter sqlAdapter = null;
                 System.Data.DataTable datatable = new System.Data.DataTable();
-                sqlAdapter = new SqlDataAdapter(string.Format("SELECT Cecm_VNTerrainMinePoint_CHA.id as 'STT',Cecm_VNTerrainMinePoint_CHA.XPoint as 'Kinh độ',Cecm_VNTerrainMinePoint_CHA.YPoint as 'Vĩ độ',Cecm_VNTerrainMinePoint_CHA.[Loai] as 'Loại',Cecm_VNTerrainMinePoint_CHA.[SL] as 'Lượng', Cecm_VNTerrainMinePoint_CHA.[Tinhtrang] as 'Tình trạng', Cecm_VNTerrainMinePoint_CHA.Ghichu as 'Ghi chú' FROM Cecm_VNTerrainMinePoint_CHA where idRectangle != -1 and Cecm_VNTerrainMinePoint_CHA.programId = {0}", dem), _Cn);
+                sqlAdapter = new SqlDataAdapter(string.Format("SELECT Cecm_VNTerrainMinePoint_CHA.id as 'STT',Cecm_VNTerrainMinePoint_CHA.Kinhdo as 'Kinh độ',Cecm_VNTerrainMinePoint_CHA.Vido as 'Vĩ độ',Cecm_VNTerrainMinePoint_CHA.[Loai] as 'Loại',Cecm_VNTerrainMinePoint_CHA.[SL] as 'Lượng', Cecm_VNTerrainMinePoint_CHA.[Tinhtrang] as 'Tình trạng', Cecm_VNTerrainMinePoint_CHA.Ghichu as 'Ghi chú' FROM Cecm_VNTerrainMinePoint_CHA where idRectangle != -1 and Cecm_VNTerrainMinePoint_CHA.programId = {0}", dem), _Cn);
                 sqlCommand = new SqlCommandBuilder(sqlAdapter);
                 sqlAdapter.Fill(datatable);
 
@@ -710,8 +710,8 @@ namespace VNRaPaBomMin
                     "Cecm_VNTerrainMinePoint.idRectangle as idRectangle," +
                     "OLuoi.o_id as 'Mã ô'," +
                     "Cecm_VNTerrainMinePoint.[SL] as'SL'," +
-                    "Cecm_VNTerrainMinePoint.XPoint as 'Kinh độ'," +
-                    "Cecm_VNTerrainMinePoint.YPoint as 'Vĩ độ'," +
+                    "Cecm_VNTerrainMinePoint.Kinhdo as 'Kinh độ'," +
+                    "Cecm_VNTerrainMinePoint.Vido as 'Vĩ độ'," +
                     "Deep as 'Độ sâu'," +
                     "Cecm_VNTerrainMinePoint.[Tinhtrang] as 'Tình trạng' " +
                     "FROM Cecm_VNTerrainMinePoint " +
